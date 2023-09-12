@@ -59,7 +59,8 @@ class SampleUseCaseTest {
 
         assertThatThrownBy(()-> {
             sampleUseCase.getSample(request);
-        }).isInstanceOf(MemberException.class);
+        }).isInstanceOf(MemberException.class)
+          .hasMessageContaining("해당 회원을 찾을 수 없습니다");
     }
 
 
