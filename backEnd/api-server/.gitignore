@@ -26,6 +26,11 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 
+application-local.yml
+application-dev.yml
+
+docker-compose/db*
+
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
