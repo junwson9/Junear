@@ -10,7 +10,7 @@ import hasix.junear.member.domain.Member;
 import hasix.junear.member.domain.MemberRepository;
 import hasix.junear.member.domain.OauthId;
 import hasix.junear.member.domain.OauthProvider;
-import hasix.junear.member.domain.ROLE;
+import hasix.junear.member.domain.Role;
 import hasix.junear.member.exception.MemberException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -70,7 +70,7 @@ class SampleUseCaseTest {
                             .oauthId(oauthId)
                             .profileImage("..")
                             .oauthProvider(requestProvider)
-                            .role(ROLE.USER)
+                            .role(Role.USER)
                             .build();
         // auto_increment인 id 값을 모킹해준다.
         ReflectionTestUtils.setField(member,"id",1L);

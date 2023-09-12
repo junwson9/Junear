@@ -1,5 +1,5 @@
 package hasix.junear.member.domain;
 
-public enum ROLE {
+public enum Role {
     USER,MANAGER,ADMIN
 }

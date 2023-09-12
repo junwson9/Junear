@@ -49,11 +49,11 @@ public class Member extends BaseTimeEntity {
     private OauthId oauthId = new OauthId();
 
     @Column(nullable = false)
-    private ROLE role;
+    private Role role;
 
     @Builder
     public Member(String name, String profileImage, OauthProvider oauthProvider, OauthId oauthId,
-            ROLE role) {
+            Role role) {
         this.name = name;
         this.profileImage = profileImage;
         this.oauthProvider = oauthProvider;
