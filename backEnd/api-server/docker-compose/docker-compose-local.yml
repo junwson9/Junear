@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  junear-mysql:
+    container_name: junear-mysql
+    image: mysql:8
+    ports:
+      - 3307:3306
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    environment:
+      - TZ=Asia/Seoul
+      - MYSQL_ROOT_PASSWORD=localpwd
+      - MYSQL_DATABASE=junearlocal
+    restart: always
+    volumes:
+      - ./db/mysql:/var/lib/mysql
+  junear-redis:
+    container_name: junear-redis
+    image: redis
+    ports:
+      - 6380:6379
+    command: redis-server --requirepass localpwd --port 6379
+    restart: on-failure
