@@ -20,17 +20,13 @@ public class SampleUseCase {
 
     private final MemberRepository memberRepository;
 
-    public SampleResponse getSample(SampleRequest sampleRequest){
+    public SampleResponse getSample(SampleRequest sampleRequest) {
         Member member = findMember(sampleRequest.getOauthProvider(), sampleRequest.getOauthId());
         return SampleResponse.from(member);
     }
 
-    private Member findMember(OauthProvider oAuthProvider, OauthId oAuthId){
-        Member findMember = memberRepository.findByOauthIdAndProvider(oAuthId,
-                oAuthProvider);
-        if(findMember == null){
-            throw new MemberException(MemberErrorCode.NOT_FOUND_MEMBER);
-        }
-        return findMember;
+    private Member findMember(OauthProvider oAuthProvider, OauthId oAuthId) {
+        return memberRepository.findByOauthIdAndProvider(oAuthId, oAuthProvider)
+                               .orElseThrow(() -> new MemberException(MemberErrorCode.NOT_FOUND_MEMBER));
     }
 }
