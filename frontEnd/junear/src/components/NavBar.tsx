@@ -15,7 +15,7 @@ import { ReactComponent as Logo } from 'assets/image/nav-logo.svg';
 import { Link, useLocation } from 'react-router-dom';
 
 const pages = [
-  { label: '기업검색', link: '/company-search' },
+  { label: '기업검색', link: '/corperation-search' },
   { label: '뉴스보기', link: '/news' },
   { label: '포트폴리오 생성', link: '/portfolio' },
   { label: '내 포트폴리오', link: '/my-portfolio' },
@@ -49,7 +49,7 @@ function ResponsiveAppBar() {
     <AppBar position="static" sx={{ backgroundColor: '#222831' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Link to="/">
+          <Link to="/home">
             <Container sx={{ alignItems: 'center', display: { xs: 'none', md: 'flex' } }}>
               <Logo />
               <Typography
@@ -117,7 +117,7 @@ function ResponsiveAppBar() {
           <Typography
             noWrap
             component="a"
-            href="/"
+            href="/home"
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
