@@ -1,3 +1,4 @@
+// import { ReactComponent as Srank } from 'assets/image/Srank.svg';
 function HomePage() {
   return (
     <>
@@ -5,6 +6,7 @@ function HomePage() {
         <p className="text-white font-bold text-[28px] text-left">내 포트폴리오</p>
       </div>
       <div className="col-start-1 col-end-5 mt-[30px]  h-[332px] bg-zinc-700 rounded-[20px]"></div>
+
       <div className="col-start-5 col-end-13 mt-[30px]  h-[332px] bg-zinc-700 rounded-[20px]"></div>
       <div className="col-span-3 mt-[30px]">
         <p className="text-white font-bold text-[28px] text-left">최신 뉴스</p>
