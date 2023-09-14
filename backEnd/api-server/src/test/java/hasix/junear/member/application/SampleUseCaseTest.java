@@ -70,7 +70,7 @@ class SampleUseCaseTest {
                             .oauthId(oauthId)
                             .profileImage("..")
                             .oauthProvider(requestProvider)
-                            .role(Role.USER)
+                            .role(Role.MEMBER)
                             .build();
         // auto_increment인 id 값을 모킹해준다.
         ReflectionTestUtils.setField(member,"id",1L);

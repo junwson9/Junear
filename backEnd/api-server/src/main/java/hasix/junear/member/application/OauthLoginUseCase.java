@@ -1,6 +1,10 @@
 package hasix.junear.member.application;
 
 
+import hasix.junear.member.application.dto.OauthLoginRequest;
+import hasix.junear.member.application.dto.OauthLoginResponse;
+import hasix.junear.member.domain.Member;
+import hasix.junear.member.domain.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,8 +14,30 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class OauthLoginUseCase {
 
+    private final IdTokenValidator idTokenValidator;
+    private final MemberRepository memberRepository;
+    private final TokenService tokenService;
 
-    public void login(){
+    public OauthLoginResponse login(OauthLoginRequest oauthLoginRequest) {
+        OauthMemberInfo oauthMemberInfo = idTokenValidator.validateIdToken(
+                oauthLoginRequest.getIdToken(), oauthLoginRequest.getOauthProvider());
 
+        Member oauthMember = memberRepository.findByOauthIdAndProvider(
+                                                     oauthMemberInfo.getOauthId(),
+                                                     oauthMemberInfo.getOauthProvider())
+                                             .orElse(null);
+
+        if (isRequireSignUp(oauthMember)) {
+            oauthMember = memberRepository.save(oauthMemberInfo.toMember());
+        }
+
+        String accessToken = tokenService.createAccessToken(oauthMember);
+        String refreshToken = tokenService.createRefreshToken(oauthMember);
+        tokenService.saveRefreshToken(refreshToken, oauthMember.getId());
+        return new OauthLoginResponse(accessToken, refreshToken);
+    }
+
+    private boolean isRequireSignUp(Member oauthMember) {
+        return oauthMember == null;
     }
 }

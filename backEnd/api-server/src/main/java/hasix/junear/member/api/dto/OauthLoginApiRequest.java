@@ -1,4 +1,4 @@
-package hasix.junear.member.application.dto;
+package hasix.junear.member.api.dto;
 
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
