@@ -46,11 +46,10 @@ scheduler = BackgroundScheduler(timezone = 'Asia/Seoul')
 def get_stock_close(db: Session):
 
     time1 = time.time()
+    print(time1)
     corporation_codes = db.query(Cor.corporation_code).all()
     corporation_codes = [code[0] for code in corporation_codes]
 
-    corporation_codes = corporation_codes[:5]
-    corporation_codes = [20,37270,37560,37710,39130]
     # df_table = pd.DataFrame()
     current_date = datetime.now()
     one_day = timedelta(days=1)
@@ -61,7 +60,6 @@ def get_stock_close(db: Session):
 
     li_close = []
     for i in corporation_codes:
-        cnt += 1
         i = str(i)
         while len(i) < 6:
             i = '0' + i
@@ -103,14 +101,16 @@ def get_stock_close(db: Session):
 
     # print("1111")
     # engine.dispose()
-
+    print(time2)
+    print("==========")
+    print(time2-time1)
     return
 
 # Add a job to the scheduler that runs every hour
 # scheduler.add_job(scrape_and_store_news_scheduler, 'interval', hours = 1)
 
 # scheduler.add_job(get_stock_close, 'cron', hour = '6', minute='00')
-scheduler.add_job(get_stock_close, 'cron', hour = '16', minute='21', args=[SessionLocal()])
+scheduler.add_job(get_stock_close, 'cron', hour = '06', minute='00', args=[SessionLocal()])
 
 # Start the scheduler
 scheduler.start()
