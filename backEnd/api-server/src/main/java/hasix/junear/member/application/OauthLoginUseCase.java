@@ -5,6 +5,7 @@ import hasix.junear.member.application.dto.OauthLoginRequest;
 import hasix.junear.member.application.dto.OauthLoginResponse;
 import hasix.junear.member.domain.Member;
 import hasix.junear.member.domain.MemberRepository;
+import hasix.junear.member.domain.Token;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,8 +32,8 @@ public class OauthLoginUseCase {
             oauthMember = memberRepository.save(oauthMemberInfo.toMember());
         }
 
-        String accessToken = tokenService.createAccessToken(oauthMember);
-        String refreshToken = tokenService.createRefreshToken(oauthMember);
+        Token accessToken = tokenService.createAccessToken(oauthMember);
+        Token refreshToken = tokenService.createRefreshToken();
         tokenService.saveRefreshToken(refreshToken, oauthMember.getId());
         return new OauthLoginResponse(accessToken, refreshToken);
     }

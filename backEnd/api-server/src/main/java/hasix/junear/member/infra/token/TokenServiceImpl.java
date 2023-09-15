@@ -3,6 +3,7 @@ package hasix.junear.member.infra.token;
 import hasix.junear.common.jwt.JwtProvider;
 import hasix.junear.member.application.TokenService;
 import hasix.junear.member.domain.Member;
+import hasix.junear.member.domain.Token;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -15,17 +16,19 @@ public class TokenServiceImpl implements TokenService {
 
     private final JwtProvider jwtProvider;
     @Override
-    public String createAccessToken(Member member) {
-        return jwtProvider.createAccessToken(member.getId());
+    public Token createAccessToken(Member member) {
+        String accessToken = jwtProvider.createAccessToken(member.getId());
+        return Token.of(accessToken);
     }
 
     @Override
-    public String createRefreshToken(Member member) {
-        return jwtProvider.createRefreshToken();
+    public Token createRefreshToken() {
+        String refreshToken = jwtProvider.createRefreshToken();
+        return Token.of(refreshToken);
     }
 
     @Override
-    public void saveRefreshToken(String refreshToken, Long memberId) {
+    public void saveRefreshToken(Token refreshToken, Long memberId) {
         log.info("Save refresh token memberId => " + memberId);
     }
 }

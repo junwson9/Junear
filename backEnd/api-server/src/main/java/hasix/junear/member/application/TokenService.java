@@ -1,13 +1,14 @@
 package hasix.junear.member.application;
 
 import hasix.junear.member.domain.Member;
+import hasix.junear.member.domain.Token;
 import org.springframework.stereotype.Component;
 
 @Component
 public interface TokenService {
 
-    String createAccessToken(Member member);
-    String createRefreshToken(Member member);
+    Token createAccessToken(Member member);
+    Token createRefreshToken();
 
-    void saveRefreshToken(String refreshToken, Long memberId);
+    void saveRefreshToken(Token refreshToken, Long memberId);
 }
