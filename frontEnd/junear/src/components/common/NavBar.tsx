@@ -46,7 +46,7 @@ function ResponsiveAppBar() {
   };
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: '#222831' }}>
+    <AppBar position="fixed" sx={{ backgroundColor: '#222831' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Link to="/home">

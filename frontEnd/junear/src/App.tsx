@@ -1,8 +1,9 @@
 import './App.css';
-import NavBar from 'components/NavBar';
+import NavBar from 'components/common/NavBar';
 import { Routes, Route } from 'react-router-dom';
 import LoginPage from 'pages/member/LoginPage';
 import HomePage from 'pages/main/HomePage';
+import CreatePort from 'pages/Portfolio/CreatePort';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Routes>
           <Route path="/home" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/portfolio" element={<CreatePort />} />
         </Routes>
       </div>
     </div>
