@@ -3,10 +3,12 @@ package hasix.junear.member.infra.oidc;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Getter
 @NoArgsConstructor
-public class OIDCPublicKey {
+@ToString
+public class OidcPublicKey {
 
     private String kid;
     private String alg;
@@ -14,7 +16,7 @@ public class OIDCPublicKey {
     private String n;
     private String e;
 
-    public OIDCPublicKey(String kid, String alg, String use, String n, String e) {
+    public OidcPublicKey(String kid, String alg, String use, String n, String e) {
         this.kid = kid;
         this.alg = alg;
         this.use = use;

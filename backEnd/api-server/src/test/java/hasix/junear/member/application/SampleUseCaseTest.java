@@ -12,6 +12,7 @@ import hasix.junear.member.domain.OauthId;
 import hasix.junear.member.domain.OauthProvider;
 import hasix.junear.member.domain.Role;
 import hasix.junear.member.exception.MemberException;
+import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -40,7 +41,8 @@ class SampleUseCaseTest {
     void sample_return_response() {
         //given
         Member member = mockMember();
-        given(memberRepository.findByOauthIdAndProvider(oauthId, requestProvider)).willReturn(member);
+        given(memberRepository.findByOauthIdAndProvider(oauthId, requestProvider)).willReturn(
+                Optional.ofNullable(member));
 
         //when
         SampleResponse result = sampleUseCase.getSample(request);

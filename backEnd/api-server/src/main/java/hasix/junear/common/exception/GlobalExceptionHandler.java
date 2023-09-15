@@ -15,6 +15,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(CustomException.class)
     public ResponseEntity<?> handleCustomException(CustomException e){
+        e.printStackTrace();
         return ResponseFactory.fail(e.getErrorCode());
     }
 

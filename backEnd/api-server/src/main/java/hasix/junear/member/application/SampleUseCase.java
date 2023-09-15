@@ -1,6 +1,7 @@
 package hasix.junear.member.application;
 
 
+import hasix.junear.common.exception.CustomException;
 import hasix.junear.member.application.dto.SampleRequest;
 import hasix.junear.member.application.dto.SampleResponse;
 import hasix.junear.member.domain.Member;
@@ -8,7 +9,6 @@ import hasix.junear.member.domain.MemberRepository;
 import hasix.junear.member.domain.OauthId;
 import hasix.junear.member.domain.OauthProvider;
 import hasix.junear.member.exception.MemberErrorCode;
-import hasix.junear.member.exception.MemberException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +27,6 @@ public class SampleUseCase {
 
     private Member findMember(OauthProvider oAuthProvider, OauthId oAuthId) {
         return memberRepository.findByOauthIdAndProvider(oAuthId, oAuthProvider)
-                               .orElseThrow(() -> new MemberException(MemberErrorCode.NOT_FOUND_MEMBER));
+                               .orElseThrow(() -> new CustomException(MemberErrorCode.NOT_FOUND_MEMBER));
     }
 }
