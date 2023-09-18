@@ -13,7 +13,7 @@ DB_HOST = os.getenv("db_host")
 DB_PORT = os.getenv("db_port")
 DB_NAME = os.getenv("db_name")
 
-# Database connection string
+# Database connection
 DATABASE_URL = f"mysql+mysqlconnector://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 
 # Create the database engine
