@@ -8,7 +8,7 @@ function CreatePort() {
       <div className="col-span-12 mt-[5px]"></div>
       <div className="relative col-span-12">
         <button className="absolute text-white bg-teal-500 rounded-[20px] p-[14px] w-[250px] whitespace-nowrap left-[430px]">
-          포트폴리오 만들기
+          포트폴리오 생성하기
         </button>
       </div>
 
