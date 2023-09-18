@@ -3,7 +3,7 @@ package hasix.junear.member.infra.oidc;
 
 import hasix.junear.common.exception.CommonErrorCode;
 import hasix.junear.common.exception.CustomException;
-import hasix.junear.common.jwt.IdTokenResolver;
+import hasix.junear.member.infra.jwt.IdTokenResolver;
 import hasix.junear.member.application.OauthMemberInfo;
 import hasix.junear.member.domain.OauthProvider;
 import hasix.junear.member.infra.oauth.KakaoOAuthProvider;

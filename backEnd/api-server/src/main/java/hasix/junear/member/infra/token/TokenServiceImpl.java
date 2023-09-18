@@ -1,6 +1,6 @@
 package hasix.junear.member.infra.token;
 
-import hasix.junear.common.jwt.JwtProvider;
+import hasix.junear.member.infra.jwt.JwtProvider;
 import hasix.junear.member.application.TokenService;
 import hasix.junear.member.domain.Member;
 import hasix.junear.member.domain.Token;

@@ -1,4 +1,4 @@
-package hasix.junear.common.jwt;
+package hasix.junear.member.infra.jwt;
 
 import hasix.junear.common.exception.CustomException;
 import hasix.junear.member.exception.AuthenticationErrorCode;
