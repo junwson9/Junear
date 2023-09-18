@@ -7,14 +7,14 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "life_quotes")
-public class Phrase {
+public class LifeQuotes {
 
     @Id
     @Column(name = "life_quotes_id")
     private Long id;
 
     @Column(nullable = false)
-    private String name;
+    private String phrase;
 
     @Column(name = "billionaire_id")
     private Long billionaireId;
