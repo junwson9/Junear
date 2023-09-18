@@ -1,21 +1,20 @@
 package hasix.junear.member.application.dto;
 
-
-import hasix.junear.member.domain.OauthId;
 import hasix.junear.member.domain.OauthProvider;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class SampleRequest {
+public class OauthLoginRequest {
 
-    private final OauthId oauthId;
+    private final String idToken;
     private final OauthProvider oauthProvider;
 
 
     @Builder
-    public SampleRequest(OauthId oauthId, OauthProvider oauthProvider) {
-        this.oauthId = oauthId;
+    public OauthLoginRequest(String idToken, OauthProvider oauthProvider) {
+        this.idToken = idToken;
         this.oauthProvider = oauthProvider;
     }
+
 }
