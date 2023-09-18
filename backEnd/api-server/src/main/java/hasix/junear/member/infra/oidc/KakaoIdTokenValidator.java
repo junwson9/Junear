@@ -38,7 +38,9 @@ public class KakaoIdTokenValidator extends AbstractIdTokenValidator {
         String oauthId = (String) payload.get(KAKAO_ID_KEY);
         String name = (String) payload.get(KAKAO_NAME_KEY);
         String profileImage = (String) payload.get(KAKAO_PROFILE_IMAGE_KEY);
-        checkValue(oauthId, name, profileImage);
+        if(requireValueIsNull(oauthId, name, profileImage)){
+            throw new CustomException(CommonErrorCode.SERVER_ERROR);
+        };
 
         return OauthMemberInfo.builder()
                               .oauthId(oauthId)
@@ -52,9 +54,7 @@ public class KakaoIdTokenValidator extends AbstractIdTokenValidator {
     /*
      * 해당 예외가 발생하는건 카카오에서 프로퍼티 key 값을 바꾸지 않는 이상은 발생하지 않는다.
      */
-    private void checkValue(String oauthId, String name, String profileImage) {
-        if (oauthId == null || name == null || profileImage == null) {
-            throw new CustomException(CommonErrorCode.SERVER_ERROR);
-        }
+    private boolean requireValueIsNull(String oauthId, String name, String profileImage) {
+        return oauthId == null || name == null || profileImage == null;
     }
 }
