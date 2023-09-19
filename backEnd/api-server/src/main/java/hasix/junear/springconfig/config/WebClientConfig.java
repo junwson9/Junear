@@ -21,16 +21,6 @@ public class WebClientConfig {
     }
 
     @Bean
-    public WebClient kakaoKapiWebClient() {
-        return WebClient.builder()
-                        .baseUrl("https://kapi.kakao.com")
-                        .filter(webClientLoggingFilter)
-                        .defaultHeader("Content-type",
-                                "application/x-www-form-urlencoded;charset=utf-8")
-                        .build();
-    }
-
-    @Bean
     public WebClient googleAccountWebClient() {
         return WebClient.builder()
                         .baseUrl("https://accounts.google.com")
