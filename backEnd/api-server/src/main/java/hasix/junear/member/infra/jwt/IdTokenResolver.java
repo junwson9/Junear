@@ -53,7 +53,6 @@ public class IdTokenResolver {
             String modulus,
             String exponent) {
         try {
-            System.out.println(aud);
             Jws<Claims> claimsJws = Jwts.parserBuilder()
                                         .requireAudience(aud)
                                         .requireIssuer(issuer)
