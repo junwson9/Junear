@@ -5,20 +5,26 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
-
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
-public class BillionaireLifeQuotesResponse implements Serializable {
+public class TodayLifeQuotes {
     private String name;
     private String imageUrl;
     private String phrase;
 
     @Builder
-    public BillionaireLifeQuotesResponse(String name, String imageUrl, String phrase) {
+    public TodayLifeQuotes(String name, String imageUrl, String phrase) {
         this.name = name;
         this.imageUrl = imageUrl;
         this.phrase = phrase;
     }
+
+//    public static TodayLifeQuotes from(LifeQuotesResponse response) {
+//        return TodayLifeQuotes.builder()
+//                .name(response.getName())
+//                .phrase(response.getPhrase())
+//                .imageUrl(response.getImageUrl())
+//                .build();
+//    }
 }
