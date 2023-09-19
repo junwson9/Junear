@@ -41,7 +41,7 @@ public class SecurityConfig {
         http.cors()
             .and()
             .authorizeRequests()
-            .antMatchers(HttpMethod.GET, "/api/member/info")
+            .antMatchers(HttpMethod.GET, "/api/member/info", "/api/member/logout")
             .authenticated()
             .antMatchers("/")
             .permitAll();

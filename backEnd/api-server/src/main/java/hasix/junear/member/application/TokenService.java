@@ -9,6 +9,7 @@ public interface TokenService {
 
     Token createAccessToken(Member member);
     Token createRefreshToken();
-
     void saveRefreshToken(Token refreshToken, Long memberId);
+
+    void deleteRefreshToken(Long memberId);
 }

@@ -45,6 +45,11 @@ public class TokenServiceImpl implements TokenService {
         valueOperations.set(refreshKey,refreshToken.getToken());
     }
 
+    @Override
+    public void deleteRefreshToken(Long memberId) {
+        valueOperations.getAndDelete(getRefreshKey(memberId));
+    }
+
     private String getRefreshKey(Long memberId) {
         return REDIS_REFRESH_PREFIX + memberId.toString();
     }
