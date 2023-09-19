@@ -1,8 +1,16 @@
 package hasix.junear.billionaire.application.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-public class BillionaireLifeQuotesResponse {
+import java.io.Serializable;
+
+@Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@NoArgsConstructor
+public class BillionaireLifeQuotesResponse implements Serializable {
     private String name;
     private String imageUrl;
     private String phrase;
