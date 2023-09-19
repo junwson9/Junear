@@ -1,18 +1,25 @@
-import logo from './logo.svg';
 import './App.css';
+import NavBar from 'components/common/NavBar';
+import { Routes, Route } from 'react-router-dom';
+import LoginPage from 'pages/member/LoginPage';
+import MyPage from 'pages/member/MyPage';
+import HomePage from 'pages/main/HomePage';
+import CreatePort from 'pages/Portfolio/CreatePort';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a className="App-link" href="https://reactjs.org" target="blank" rel="noopener noreferrer">
-          Learn React
-        </a>
-      </header>
+      <NavBar />
+      <div className="grid grid-cols-12 gap-[25px] mx-[200px]">
+        <Routes>
+          <Route path="/mypage" element={<MyPage />} />
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/portfolio" element={<CreatePort />} />
+        </Routes>
+      </div>
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+      </Routes>
     </div>
   );
 }

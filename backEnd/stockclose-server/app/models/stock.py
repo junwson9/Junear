@@ -1,6 +1,4 @@
-from pydantic import BaseModel
 from sqlalchemy import Column, Integer, String, DECIMAL
-from datetime import datetime
 from db import Base
 
 class Cor(Base):
