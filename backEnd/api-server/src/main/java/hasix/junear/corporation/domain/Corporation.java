@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class Corporation extends BaseTimeEntity {
+public class Corporation{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
