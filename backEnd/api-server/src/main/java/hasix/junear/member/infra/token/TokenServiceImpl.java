@@ -17,7 +17,7 @@ public class TokenServiceImpl implements TokenService {
     private final JwtProvider jwtProvider;
     @Override
     public Token createAccessToken(Member member) {
-        String accessToken = jwtProvider.createAccessToken(member.getId());
+        String accessToken = jwtProvider.createAccessToken(member);
         return Token.of(accessToken);
     }
 
