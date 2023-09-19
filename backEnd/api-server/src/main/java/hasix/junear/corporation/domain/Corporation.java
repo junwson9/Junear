@@ -20,6 +20,9 @@ public class Corporation extends BaseTimeEntity {
     @Column(name = "corporation_id")
     private Long id;
 
+    @Column(name = "industry_id")
+    private Long industryId;
+
     @Column(name = "corporation_code")
     private Long corporationCode;
 
