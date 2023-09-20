@@ -8,6 +8,7 @@ import hasix.junear.member.infra.jwt.IdTokenResolver;
 import hasix.junear.member.infra.oauth.GoogleOAuthProperty;
 import hasix.junear.member.infra.oauth.GoogleOAuthProvider;
 import hasix.junear.member.infra.oauth.dto.GoogleOpenSearchDocsResponse;
+import hasix.junear.member.infra.repository.RedisCacheRepository;
 import java.util.List;
 import java.util.Map;
 import org.springframework.stereotype.Component;
@@ -17,14 +18,19 @@ public class GoogleIdTokenValidator extends AbstractIdTokenValidator {
 
     private final GoogleOAuthProvider googleOAuthProvider;
     private final String GOOGLE_ID_KEY = "sub";
-    private final String  GOOGLE_NAME_KEY = "name";
+    private final String GOOGLE_NAME_KEY = "name";
     private final String GOOGLE_PROFILE_IMAGE_KEY = "picture";
+    private final String OIDC_DOCS_CACHE_KEY = "google-open-docs";
+    private final String GOOGLE_JWKS_CACHE_KEY = "google-jwks";
+    private final RedisCacheRepository redisCacheRepository;
 
 
     public GoogleIdTokenValidator(GoogleOAuthProperty googleOAuthProperty,
-            IdTokenResolver idTokenResolver, GoogleOAuthProvider googleOAuthProvider) {
+            IdTokenResolver idTokenResolver, GoogleOAuthProvider googleOAuthProvider,
+            RedisCacheRepository redisCacheRepository) {
         super(googleOAuthProperty.toIdTokenProperty(), idTokenResolver);
         this.googleOAuthProvider = googleOAuthProvider;
+        this.redisCacheRepository = redisCacheRepository;
     }
 
     /* Google Public Key를 받는 로직
@@ -34,9 +40,29 @@ public class GoogleIdTokenValidator extends AbstractIdTokenValidator {
      */
     @Override
     List<OidcPublicKey> getOIDCPublicKeys() {
-        GoogleOpenSearchDocsResponse googleOpenSearchDocs = googleOAuthProvider.getGoogleOpenSearchDocs();
+        GoogleOpenSearchDocsResponse googleOpenSearchDocs = getOIDCDocs();
+        return getPublicKeys(googleOpenSearchDocs.getJwks_uri());
+    }
 
-        return googleOAuthProvider.getPublcKeys(googleOpenSearchDocs.getJwks_uri());
+    private List<OidcPublicKey> getPublicKeys(String url){
+        List<OidcPublicKey> oidcPublicKeys = redisCacheRepository.getOIDCPublicKeys(
+                GOOGLE_JWKS_CACHE_KEY);
+        if(oidcPublicKeys == null){
+            List<OidcPublicKey> publicKeys = googleOAuthProvider.getPublcKeys(url);
+            redisCacheRepository.savePublicKey(GOOGLE_JWKS_CACHE_KEY, publicKeys);
+            oidcPublicKeys = publicKeys;
+        }
+        return oidcPublicKeys;
+    }
+
+    private GoogleOpenSearchDocsResponse getOIDCDocs(){
+        GoogleOpenSearchDocsResponse oidcDocs = redisCacheRepository.getOidcDocs(OIDC_DOCS_CACHE_KEY);
+        if(oidcDocs ==null){
+            GoogleOpenSearchDocsResponse googleOpenSearchDocs = googleOAuthProvider.getGoogleOpenSearchDocs();
+            redisCacheRepository.saveGoogleOidcDocs(OIDC_DOCS_CACHE_KEY, googleOpenSearchDocs);
+            oidcDocs = googleOpenSearchDocs;
+        }
+        return oidcDocs;
     }
 
     @Override
@@ -44,9 +70,10 @@ public class GoogleIdTokenValidator extends AbstractIdTokenValidator {
         String oauthId = (String) payload.get(GOOGLE_ID_KEY);
         String name = (String) payload.get(GOOGLE_NAME_KEY);
         String profileImage = (String) payload.get(GOOGLE_PROFILE_IMAGE_KEY);
-        if(requireValueIsNull(oauthId, name, profileImage)){
+        if (requireValueIsNull(oauthId, name, profileImage)) {
             throw new CustomException(CommonErrorCode.SERVER_ERROR);
-        };
+        }
+        ;
 
         return OauthMemberInfo.builder()
                               .oauthId(oauthId)
@@ -55,6 +82,7 @@ public class GoogleIdTokenValidator extends AbstractIdTokenValidator {
                               .oauthProvider(OauthProvider.GOOGLE)
                               .build();
     }
+
     private boolean requireValueIsNull(String oauthId, String name, String profileImage) {
         return oauthId == null || name == null || profileImage == null;
     }
