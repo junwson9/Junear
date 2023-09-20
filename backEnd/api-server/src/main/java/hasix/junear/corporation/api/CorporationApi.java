@@ -27,6 +27,12 @@ public class CorporationApi {
     public ResponseEntity<?> getCorporationDetails(@PathVariable("corportaion_id") Long id) {
 
         ViewCorporationDetailsResponse result = viewCorporationDetails.getCorporationDetails(id);
+        /*
+        TODO
+        - bookmark 여부 제공
+        - news list 제공
+         */
+
         return ResponseFactory.success("기업 상세 조회 성공", CorporationApiResponse.from(result));
     }
 

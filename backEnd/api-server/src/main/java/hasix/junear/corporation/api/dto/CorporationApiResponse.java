@@ -4,7 +4,9 @@ import hasix.junear.corporation.application.ViewCorporationDetails;
 import hasix.junear.corporation.application.dto.SearchCorporationResponse;
 import hasix.junear.corporation.application.dto.ViewCorporationDetailsResponse;
 import lombok.Builder;
+import lombok.Getter;
 
+@Getter
 public class CorporationApiResponse {
 
     private Long corporationId;
@@ -54,5 +56,4 @@ public class CorporationApiResponse {
         return CorporationApiResponse.builder()
                                 .build();
     }
-
 }
