@@ -1,5 +1,6 @@
 package hasix.junear.corporation.application;
 
+import hasix.junear.corporation.application.dto.ViewCorporationDetailsRequest;
 import hasix.junear.corporation.application.dto.ViewCorporationDetailsResponse;
 import hasix.junear.corporation.domain.Corporation;
 import hasix.junear.corporation.domain.CorporationRepository;
@@ -17,8 +18,8 @@ public class ViewCorporationDetails {
 
     private final CorporationRepository corporationRepository;
 
-    public ViewCorporationDetailsResponse getCorporationDetails(Long id) {
-        Corporation corporation = findCorporation(id);
+    public ViewCorporationDetailsResponse getCorporationDetails(ViewCorporationDetailsRequest request) {
+        Corporation corporation = findCorporation(request.getId());
         return ViewCorporationDetailsResponse.from(corporation);
     }
 
