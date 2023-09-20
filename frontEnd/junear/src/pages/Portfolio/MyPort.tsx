@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { ReactComponent as Filter } from '../../assets/image/filter.svg';
 import { ReactComponent as Plus } from '../../assets/image/plus.svg';
 import { ReactComponent as Srank } from '../../assets/image/Srank.svg';
-import AbstractChart from 'components/portfolio/AbstractChart';
 
 function MyPort() {
   const [activeButton, setActiveButton] = useState('등급');
@@ -41,7 +40,6 @@ function MyPort() {
               금액
             </button>
           </div>
-          <AbstractChart />
           {/* 여기에 차트가 들어가야함 등급일땐 등급관한거 금액일땐 금액관한거 랜더링 */}
         </div>
         <div className="h-[25px]"></div>
