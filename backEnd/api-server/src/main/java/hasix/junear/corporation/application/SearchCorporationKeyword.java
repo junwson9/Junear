@@ -30,8 +30,20 @@ public class SearchCorporationKeyword {
 
     private List<Corporation> findContainedKeyword(String keyword) {
 
-        return corporationRepository.findByNameIsContaining(keyword);
-//        return corporationRepository.findByIndustryIdIsContaining(keyword);
+        String separator = determineKeyword(keyword);
+        if(separator.equals("isAlphabet")) return corporationRepository.findByNameIsContaining(keyword);
+        else if(separator.equals("isDigit")) return corporationRepository.findByIndustryIdIsContaining(keyword);
+        return null;
+    }
+
+    private String determineKeyword(String keyword) {
+
+        boolean isAlphabet = keyword.split("")[0].matches("[a-zA-Z]");
+        boolean isDigit = keyword.split("")[0].matches("\\d");
+
+        if(isAlphabet) return "isAlphabet";
+        else if(isDigit) return "isDigit";
+        return "null";
     }
 
 }
