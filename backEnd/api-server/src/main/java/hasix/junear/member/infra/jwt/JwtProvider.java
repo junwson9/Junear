@@ -90,17 +90,15 @@ public class JwtProvider {
     }
 
 
-    public Long getUserIdFromExpiredAccessToken(String accessToken) {
+    public Claims getClaimFromExpiredAccessToken(String accessToken) {
         try {
-            Claims claims = Jwts.parserBuilder()
-                                .setSigningKey(accessKey)
-                                .build()
-                                .parseClaimsJws(accessToken)
-                                .getBody();
-            return Long.valueOf(claims.getSubject());
+            return Jwts.parserBuilder()
+                       .setSigningKey(accessKey)
+                       .build()
+                       .parseClaimsJws(accessToken)
+                       .getBody();
         } catch (ExpiredJwtException e) {
-            return Long.valueOf(e.getClaims()
-                                 .getSubject());
+            return e.getClaims();
         } catch (Exception e){
             throw new CustomException(AuthenticationErrorCode.INVALID_JWT);
         }
