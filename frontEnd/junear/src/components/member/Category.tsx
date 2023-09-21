@@ -4,18 +4,20 @@ import CategoryButton from 'components/button/CategoryButton';
 function Category() {
   return (
     <div>
-      <div className="relative top-[50px] left-[20px]">
-        <CheckboxLabels />
-        <CheckboxLabels />
-        <CheckboxLabels />
-        <CheckboxLabels />
-        <CheckboxLabels />
-        <CheckboxLabels />
-        <CheckboxLabels />
-        <CheckboxLabels />
-        <CheckboxLabels />
-        <CheckboxLabels />
-        <div className="w-[127.77px] h-[390px] left-[152.23px] top-0 absolute flex-col justify-start items-start inline-flex">
+      <div className="flex">
+        <div className="flex-1 mt-8 mr-8">
+          <CheckboxLabels />
+          <CheckboxLabels />
+          <CheckboxLabels />
+          <CheckboxLabels />
+          <CheckboxLabels />
+          <CheckboxLabels />
+          <CheckboxLabels />
+          <CheckboxLabels />
+          <CheckboxLabels />
+          <CheckboxLabels />
+        </div>
+        <div className="flex-2 mt-8">
           <CheckboxLabels />
           <CheckboxLabels />
           <CheckboxLabels />
@@ -28,7 +30,7 @@ function Category() {
           <CheckboxLabels />
         </div>
       </div>
-      <div className="top-[40px] relative">
+      <div className="top-[20px] relative">
         <CategoryButton />
       </div>
     </div>
