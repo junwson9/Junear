@@ -30,20 +30,26 @@ public class SearchCorporationKeyword {
 
     private List<Corporation> findContainedKeyword(String keyword) {
 
-        String separator = determineKeyword(keyword);
-        if(separator.equals("isAlphabet")) return corporationRepository.findByNameIsContaining(keyword);
-        else if(separator.equals("isDigit")) return corporationRepository.findByIndustryIdIsContaining(keyword);
-        return null;
+        if (isNumeric(keyword)) {
+            return corporationRepository.findByCorporationCodeIsContaining(Long.parseLong(keyword));
+        } else {
+            return corporationRepository.findByNameIsContaining(keyword);
+        }
+
     }
 
-    private String determineKeyword(String keyword) {
-
-        boolean isAlphabet = keyword.split("")[0].matches("[a-zA-Z]");
-        boolean isDigit = keyword.split("")[0].matches("\\d");
-
-        if(isAlphabet) return "isAlphabet";
-        else if(isDigit) return "isDigit";
-        return "null";
+    private static boolean isNumeric(String str) {
+        if (str == null || str.isEmpty()) {
+            return false;
+        }
+        try {
+            System.out.println(str);
+            Long.parseLong(str);
+            System.out.println("yes");
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 
 }
