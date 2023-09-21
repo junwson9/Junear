@@ -24,13 +24,13 @@ public class TokenReissueUseCase {
         Token token = tokenService.getRefreshTokenFromMember(member)
                                   .orElseThrow(() -> new CustomException(
                                           AuthenticationErrorCode.REQUIRE_LOGIN));
-        if(!isCorrenspondToken(request.getRefreshToken(), token)){
+        if(!isCorrespondToken(request.getRefreshToken(), token)){
             throw new CustomException(AuthenticationErrorCode.UN_AUTHORIZATION);
         }
         return new TokenReissueResponse(tokenService.createAccessToken(member));
     }
 
-    private boolean isCorrenspondToken(Token inputToken, Token savedToken){
+    private boolean isCorrespondToken(Token inputToken, Token savedToken){
         return inputToken.getToken().equals(savedToken.getToken());
     }
 
