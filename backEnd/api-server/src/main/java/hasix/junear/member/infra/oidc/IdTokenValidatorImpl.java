@@ -12,14 +12,15 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class IdTokenValidatorImpl implements IdTokenValidator {
 
-    private final KakaoIdTokenValidator kakaoIdTokenValidator;
+    private final AbstractIdTokenValidator kakaoIdTokenValidator;
+    private final AbstractIdTokenValidator googleIdTokenValidator;
 
     @Override
     public OauthMemberInfo validateIdToken(String idToken, OauthProvider oauthProvider) {
         if (oauthProvider.equals(OauthProvider.KAKAO)) {
             return kakaoIdTokenValidator.validateIdToken(idToken);
         } else if (oauthProvider.equals(OauthProvider.GOOGLE)) {
-            return null;
+            return googleIdTokenValidator.validateIdToken(idToken);
         } else {
             throw new CustomException(MemberErrorCode.NOT_SUPPORT_OAUTH_PROVIDER);
         }
