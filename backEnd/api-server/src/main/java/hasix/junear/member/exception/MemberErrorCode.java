@@ -4,7 +4,11 @@ import hasix.junear.common.exception.ErrorCode;
 
 public enum MemberErrorCode implements ErrorCode {
 
-    NOT_FOUND_MEMBER("해당 회원을 찾을 수 없습니다","001",404);
+    NOT_FOUND_MEMBER("해당 회원을 찾을 수 없습니다","MEM_001",404),
+    INVALID_ID_TOKEN("유효하지 않는 idToken 입니다","AUTH_001",400),
+    EXPIRED_ID_TOKEN("만료된 idToken 입니다","AUTH_002",400),
+    NOT_SUPPORT_OAUTH_PROVIDER("지원하지 않는 OAuth 인증 방식입니다.","AUTH_004",409);
+
     private final String message;
     private final String errorCode;
     private final int statusCode;

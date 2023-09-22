@@ -18,4 +18,8 @@ public class OauthId {
     public OauthId(String oauthId) {
         this.oauthId = oauthId;
     }
+
+    public static OauthId of(String oauthId){
+        return new OauthId(oauthId);
+    }
 }

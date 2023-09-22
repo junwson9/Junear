@@ -1,6 +1,7 @@
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import { useState } from 'react';
 import { ReactComponent as Icon_loginPage } from '../../assets/image/login-logo.svg';
+import { ReactComponent as IconKakaoLogin } from '../../assets/image/kakao-logo.svg';
 import KakaoLogin from 'react-kakao-login';
 
 function LoginPage() {
@@ -12,6 +13,7 @@ function LoginPage() {
   const kakaoSuccessHandler = (data: any) => {
     console.log('------카카오 로그인 성공---');
     setIdToken(data.response.id_token);
+    console.log(idToken);
     setProvider('카카오');
   };
   const kakaoFailHandler = (err: any) => {
@@ -29,28 +31,35 @@ function LoginPage() {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '100vh',
+      }}
+    >
       <div>
         <Icon_loginPage />
       </div>
-      <h1>테스트 로그인 Project</h1>
       <KakaoLogin
         token={kakaoID || ''}
         onSuccess={kakaoSuccessHandler}
         onFail={kakaoFailHandler}
         render={(props) => (
           <div>
-            <button onClick={props.onClick}>카카오 로그인</button>
+            {/* <button onClick={props.onClick}>카카오 로그인</button> */}
+            <IconKakaoLogin onClick={props.onClick} />
           </div>
         )}
       />
       <br />
       <GoogleOAuthProvider clientId={googleID || ''}>
-        <GoogleLogin onSuccess={googleSuccessHandler} onError={googleFailHandler} />
+        <div>
+          <GoogleLogin onSuccess={googleSuccessHandler} onError={googleFailHandler} />
+        </div>
       </GoogleOAuthProvider>
-
-      {/* <button onClick={() => googleLoign()}>구글 로그인</button> */}
-      <hr />
       <div>-----IDTOKEN-----{provider}</div>
       <div>{idToken}</div>
     </div>
