@@ -24,7 +24,7 @@ public class Corporation{
     private Long industryId;
 
     @Column(name = "corporation_code")
-    private Long corporationCode;
+    private String corporationCode;
 
     @Column
     private String name;

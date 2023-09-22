@@ -8,6 +8,6 @@ public interface JpaCorporationRepository extends JpaRepository<Corporation, Lon
 
     List<Corporation> findByNameIsContaining(String keyword);
 
-    List<Corporation> findByCorporationCodeIsContaining(Long keyword);
+    List<Corporation> findByCorporationCodeIsContaining(String keyword);
 
 }

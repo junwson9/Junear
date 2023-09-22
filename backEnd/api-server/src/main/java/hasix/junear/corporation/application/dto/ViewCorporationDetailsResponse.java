@@ -1,7 +1,6 @@
 package hasix.junear.corporation.application.dto;
 
 import hasix.junear.corporation.domain.Corporation;
-import javax.persistence.Column;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -10,7 +9,7 @@ public class ViewCorporationDetailsResponse {
 
     private Long corporationId;
     private Long industryId;
-    private Long corporationCode;
+    private String corporationCode;
     private String name;
     private Long stabilityRank;
     private Long growthRank;
@@ -20,7 +19,7 @@ public class ViewCorporationDetailsResponse {
     private Long stockClose;
 
     @Builder
-    public ViewCorporationDetailsResponse(Long corporationId, Long industryId, Long corporationCode,
+    public ViewCorporationDetailsResponse(Long corporationId, Long industryId, String corporationCode,
             String name, Long stabilityRank, Long growthRank, Long profitabilityRank,
             Long activityRank,
             Double totalRank, Long stockClose) {

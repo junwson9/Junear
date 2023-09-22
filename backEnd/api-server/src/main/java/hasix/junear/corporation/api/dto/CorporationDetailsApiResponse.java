@@ -13,7 +13,7 @@ public class CorporationDetailsApiResponse {
 
     private Long corporationId;
     private Long industryId;
-    private Long corporationCode;
+    private String corporationCode;
     private String name;
     private Long stabilityRank;
     private Long growthRank;
@@ -23,7 +23,7 @@ public class CorporationDetailsApiResponse {
     private Long stockClose;
 
     @Builder
-    public CorporationDetailsApiResponse(Long corporationId, Long industryId, Long corporationCode,
+    public CorporationDetailsApiResponse(Long corporationId, Long industryId, String corporationCode,
             String name, Long stabilityRank, Long growthRank, Long profitabilityRank,
             Long activityRank,
             Double totalRank, Long stockClose) {

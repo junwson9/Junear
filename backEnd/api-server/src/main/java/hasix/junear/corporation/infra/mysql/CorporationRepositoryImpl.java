@@ -24,7 +24,7 @@ public class CorporationRepositoryImpl implements CorporationRepository {
     }
 
     @Override
-    public List<Corporation> findByCorporationCodeIsContaining(Long keyword) {
+    public List<Corporation> findByCorporationCodeIsContaining(String keyword) {
         return jpaCorporationRepository.findByCorporationCodeIsContaining(keyword);
     }
 }

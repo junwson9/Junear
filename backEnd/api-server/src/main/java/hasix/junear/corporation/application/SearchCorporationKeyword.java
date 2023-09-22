@@ -31,7 +31,7 @@ public class SearchCorporationKeyword {
     private List<Corporation> findContainedKeyword(String keyword) {
 
         if (isNumeric(keyword)) {
-            return corporationRepository.findByCorporationCodeIsContaining(Long.parseLong(keyword));
+            return corporationRepository.findByCorporationCodeIsContaining(keyword);
         } else {
             return corporationRepository.findByNameIsContaining(keyword);
         }
