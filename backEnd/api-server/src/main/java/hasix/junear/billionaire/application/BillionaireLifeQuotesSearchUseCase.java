@@ -25,11 +25,9 @@ public class BillionaireLifeQuotesSearchUseCase {
     private final String phraseKey = "today_phrase";
 
     public List<TodayLifeQuotes> search() {
-        log.info("억만장자 데이터 조회 시작");
         List<TodayLifeQuotes> todayLifeQuotesList = billionaireRepository.findLifeQuotes(phraseKey);
 
         if (todayLifeQuotesList.size() == 0) {
-            log.info("redis update 시작");
             updateLifeQuotes(phraseKey);
         }
 

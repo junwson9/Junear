@@ -11,6 +11,6 @@ import java.util.List;
 public interface MysqlJpaBillionaireRepository extends JpaRepository<Billionaire, Long> {
 
     // JPQL join 쿼리
-    @Query("SELECT NEW hasix.junear.billionaire.application.dto.TodayLifeQuotes(b.name, b.imageUrl, p.phrase) FROM Billionaire b JOIN LifeQuotes p ON b.id = p.billionaireId WHERE p.id IN :ids")
+    @Query("SELECT b.name, b.imageUrl, p.phrase FROM Billionaire b JOIN LifeQuotes p ON b.id = p.billionaireId WHERE p.id IN :ids")
     List<TodayLifeQuotes> findBillionaireLifeQuotesByIds(@Param("ids") List<Long> ids);
 }
