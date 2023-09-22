@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/corporation" )
+@RequestMapping("/api/corporation" )
 @RequiredArgsConstructor
 public class CorporationApi {
 
@@ -45,6 +45,7 @@ public class CorporationApi {
         List<SearchCorporationKeywordResponse> result = searchCorporationKeyword.searchCorporation(
                 SearchCorporationKeywordRequest.from(keyword));
 
+        if(result == null) return ResponseFactory.success("검색된 키워드가 없습니다.");
         return ResponseFactory.success("기업 키워드 검색 성공", CorporationSearchApiResponse.from(result));
     }
 
