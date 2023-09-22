@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @Setter
-public class KakaoOidcPublicKeyResponse {
+public class OidcPublicKeyResponse {
 
     private List<OidcPublicKey> keys;
 
