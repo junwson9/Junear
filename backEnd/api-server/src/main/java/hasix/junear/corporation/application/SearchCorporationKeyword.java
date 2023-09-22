@@ -18,17 +18,11 @@ public class SearchCorporationKeyword {
 
     public List<SearchCorporationKeywordResponse> searchCorporation(
             SearchCorporationKeywordRequest request) {
-        /*
-        TODO
-        키워드 구분하기: 기업 코드, 기업 이름 등
-        예외처리
-         */
-        List<Corporation> corporationList = findContainedKeyword(request.getKeyword());
 
-        return SearchCorporationKeywordResponse.from(corporationList);
+        return findContainedKeyword(request.getKeyword());
     }
 
-    private List<Corporation> findContainedKeyword(String keyword) {
+    private List<SearchCorporationKeywordResponse> findContainedKeyword(String keyword) {
         if (keyword == null || keyword.isEmpty()) {
             return null;
         }

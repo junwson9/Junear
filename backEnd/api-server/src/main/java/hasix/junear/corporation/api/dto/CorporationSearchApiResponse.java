@@ -10,13 +10,13 @@ import lombok.Getter;
 public class CorporationSearchApiResponse {
 
     private Long corporation_id;
-    private Long industry_id;
+    private String industry_type;
     private String name;
 
     @Builder
-    public CorporationSearchApiResponse(Long corporation_id, Long industry_id, String name) {
+    public CorporationSearchApiResponse(Long corporation_id, String industry_type, String name) {
         this.corporation_id = corporation_id;
-        this.industry_id = industry_id;
+        this.industry_type = industry_type;
         this.name = name;
     }
 
@@ -30,7 +30,7 @@ public class CorporationSearchApiResponse {
         return CorporationSearchApiResponse.builder()
                                            .corporation_id(resource.getCorporationId())
                                            .name(resource.getName())
-                                           .industry_id(resource.getIndustryId())
+                                           .industry_type(resource.getIndustryType())
                                            .build();
     }
 }
