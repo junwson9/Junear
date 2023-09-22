@@ -1,5 +1,6 @@
 package hasix.junear.corporation.infra.mysql;
 
+import hasix.junear.corporation.application.dto.SearchCorporationKeywordResponse;
 import hasix.junear.corporation.application.dto.ViewCorporationDetailsResponse;
 import hasix.junear.corporation.domain.Corporation;
 import hasix.junear.corporation.domain.CorporationRepository;
@@ -20,12 +21,12 @@ public class CorporationRepositoryImpl implements CorporationRepository {
     }
 
     @Override
-    public List<Corporation> findByNameIsContaining(String keyword) {
+    public List<SearchCorporationKeywordResponse> findByNameIsContaining(String keyword) {
         return jpaCorporationRepository.findByNameIsContaining(keyword);
     }
 
     @Override
-    public List<Corporation> findByCorporationCodeIsContaining(String keyword) {
+    public List<SearchCorporationKeywordResponse> findByCorporationCodeIsContaining(String keyword) {
         return jpaCorporationRepository.findByCorporationCodeIsContaining(keyword);
     }
 }

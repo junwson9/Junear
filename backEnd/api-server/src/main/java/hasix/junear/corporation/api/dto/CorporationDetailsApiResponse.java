@@ -8,6 +8,7 @@ import lombok.Getter;
 public class CorporationDetailsApiResponse {
 
     private Long corporation_id;
+    private Long industry_id;
     private String industry_type;
     private String corporation_code;
     private String name;
@@ -19,11 +20,12 @@ public class CorporationDetailsApiResponse {
     private Long stock_close;
 
     @Builder
-    public CorporationDetailsApiResponse(Long corporation_id, String industry_type, String corporation_code,
+    public CorporationDetailsApiResponse(Long corporation_id, Long industry_id, String industry_type, String corporation_code,
             String name, Long stability_rank, Long growth_rank, Long profitability_rank,
             Long activity_rank,
             Double total_rank, Long stock_close) {
         this.corporation_id = corporation_id;
+        this.industry_id = industry_id;
         this.industry_type = industry_type;
         this.corporation_code = corporation_code;
         this.name = name;
@@ -38,6 +40,7 @@ public class CorporationDetailsApiResponse {
     public static CorporationDetailsApiResponse from(ViewCorporationDetailsResponse result){
         return CorporationDetailsApiResponse.builder()
                                             .corporation_id(result.getCorporationId())
+                                            .industry_id(result.getIndustryId())
                                             .industry_type(result.getIndustryType())
                                             .corporation_code(result.getCorporationCode())
                                             .name(result.getName())
