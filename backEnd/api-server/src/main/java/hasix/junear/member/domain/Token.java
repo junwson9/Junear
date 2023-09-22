@@ -1,7 +1,6 @@
 package hasix.junear.member.domain;
 
 
-import javax.servlet.http.Cookie;
 import lombok.Getter;
 
 
@@ -17,9 +16,5 @@ public class Token {
         return new Token(token);
     }
 
-    public Cookie createCookie(){
-        Cookie cookie = new Cookie("refreshToken",this.token);
-        cookie.setHttpOnly(true);
-        return cookie;
-    }
+
 }

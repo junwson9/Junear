@@ -1,4 +1,4 @@
-package hasix.junear.member.infra.mysql;
+package hasix.junear.member.infra.repository;
 
 import hasix.junear.member.domain.Member;
 import hasix.junear.member.domain.OauthId;

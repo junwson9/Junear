@@ -2,6 +2,7 @@ package hasix.junear.member.infra.jwt;
 
 
 import hasix.junear.common.exception.CustomException;
+import hasix.junear.member.domain.Member;
 import hasix.junear.member.exception.AuthenticationErrorCode;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -11,6 +12,8 @@ import java.security.Key;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Base64Utils;
 
@@ -35,16 +38,18 @@ public class JwtProvider {
     }
 
 
-    public String createAccessToken(Long memberId) {
+    public String createAccessToken(Member member) {
         Instant accessExpiredTime = Instant.now()
                                            .plus(this.accessExpiredMin, ChronoUnit.MINUTES);
+        Map<String,Object> payload = new HashMap<>();
+        payload.put("role", member.getRole().toString());
         return Jwts.builder()
-                   .setSubject(memberId.toString())
+                   .setSubject(member.getId().toString())
                    .setIssuer(APP_ISSUER)
                    .setExpiration(Date.from(accessExpiredTime))
+                   .addClaims(payload)
                    .signWith(accessKey)
                    .compact();
-
     }
 
     public String createRefreshToken() {
@@ -85,17 +90,15 @@ public class JwtProvider {
     }
 
 
-    public Long getUserIdFromExpiredAccessToken(String accessToken) {
+    public Claims getClaimFromExpiredAccessToken(String accessToken) {
         try {
-            Claims claims = Jwts.parserBuilder()
-                                .setSigningKey(accessKey)
-                                .build()
-                                .parseClaimsJws(accessToken)
-                                .getBody();
-            return Long.valueOf(claims.getSubject());
+            return Jwts.parserBuilder()
+                       .setSigningKey(accessKey)
+                       .build()
+                       .parseClaimsJws(accessToken)
+                       .getBody();
         } catch (ExpiredJwtException e) {
-            return Long.valueOf(e.getClaims()
-                                 .getSubject());
+            return e.getClaims();
         } catch (Exception e){
             throw new CustomException(AuthenticationErrorCode.INVALID_JWT);
         }

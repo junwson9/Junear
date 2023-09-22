@@ -1,7 +1,7 @@
 package hasix.junear.member.infra.oauth;
 
 
-import hasix.junear.member.infra.oauth.dto.KakaoOidcPublicKeyResponse;
+import hasix.junear.member.infra.oauth.dto.OidcPublicKeyResponse;
 import hasix.junear.member.infra.oidc.OidcPublicKey;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -19,12 +19,12 @@ public class KakaoOAuthProvider {
     public List<OidcPublicKey> getOidcPublicKeys(){
         log.info("[KAKAO-PUBLIC-KEY CALL]");
         String publicKeyUrl = "/.well-known/jwks.json";
-        KakaoOidcPublicKeyResponse result = kakaoKAuthWebClient.get()
-                                                             .uri(publicKeyUrl)
-                                                             .retrieve()
-                                                             .bodyToMono(
-                                                                     KakaoOidcPublicKeyResponse.class)
-                                                             .block();
+        OidcPublicKeyResponse result = kakaoKAuthWebClient.get()
+                                                          .uri(publicKeyUrl)
+                                                          .retrieve()
+                                                          .bodyToMono(
+                                                                     OidcPublicKeyResponse.class)
+                                                          .block();
         return result.getKeys();
     }
 
