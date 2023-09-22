@@ -1,10 +1,6 @@
 package hasix.junear.corporation.api.dto;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import hasix.junear.corporation.application.dto.SearchCorporationKeywordResponse;
 import hasix.junear.corporation.application.dto.ViewCorporationDetailsResponse;
-import java.util.List;
-import java.util.stream.Collectors;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -12,7 +8,7 @@ import lombok.Getter;
 public class CorporationDetailsApiResponse {
 
     private Long corporationId;
-    private Long industryId;
+    private String industryType;
     private String corporationCode;
     private String name;
     private Long stabilityRank;
@@ -23,12 +19,12 @@ public class CorporationDetailsApiResponse {
     private Long stockClose;
 
     @Builder
-    public CorporationDetailsApiResponse(Long corporationId, Long industryId, String corporationCode,
+    public CorporationDetailsApiResponse(Long corporationId, String industryType, String corporationCode,
             String name, Long stabilityRank, Long growthRank, Long profitabilityRank,
             Long activityRank,
             Double totalRank, Long stockClose) {
         this.corporationId = corporationId;
-        this.industryId = industryId;
+        this.industryType = industryType;
         this.corporationCode = corporationCode;
         this.name = name;
         this.stabilityRank = stabilityRank;
@@ -42,7 +38,7 @@ public class CorporationDetailsApiResponse {
     public static CorporationDetailsApiResponse from(ViewCorporationDetailsResponse result){
         return CorporationDetailsApiResponse.builder()
                                             .corporationId(result.getCorporationId())
-                                            .industryId(result.getIndustryId())
+                                            .industryType(result.getIndustryType())
                                             .corporationCode(result.getCorporationCode())
                                             .name(result.getName())
                                             .stabilityRank(result.getStabilityRank())
