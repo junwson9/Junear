@@ -1,9 +1,9 @@
-function Card() {
+const Card: React.FC = () => {
   return (
-    <div className="col-span-4 mt-[30px]  h-[332px] bg-zinc-700 rounded-[20px]">
-      <div></div>
+    <div>
+      <div>zz</div>
     </div>
   );
-}
+};
 
 export default Card;
