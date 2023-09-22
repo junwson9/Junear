@@ -1,6 +1,5 @@
 package hasix.junear.corporation.domain;
 
-import hasix.junear.common.model.BaseTimeEntity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
