@@ -2,11 +2,9 @@ package hasix.junear.corporation.application;
 
 import hasix.junear.corporation.application.dto.ViewCorporationDetailsRequest;
 import hasix.junear.corporation.application.dto.ViewCorporationDetailsResponse;
-import hasix.junear.corporation.domain.Corporation;
 import hasix.junear.corporation.domain.CorporationRepository;
 import hasix.junear.corporation.exception.CorporationErrorCode;
 import hasix.junear.corporation.exception.CorporationException;
-import hasix.junear.member.application.dto.SampleRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,12 +17,11 @@ public class ViewCorporationDetails {
     private final CorporationRepository corporationRepository;
 
     public ViewCorporationDetailsResponse getCorporationDetails(ViewCorporationDetailsRequest request) {
-        Corporation corporation = findCorporation(request.getId());
-        return ViewCorporationDetailsResponse.from(corporation);
+        return findCorporation(request.getId());
     }
 
-    private Corporation findCorporation(Long id) {
-        return corporationRepository.findById(id)
+    private ViewCorporationDetailsResponse findCorporation(Long id) {
+        return corporationRepository.findViewCorporationDetailsResponseById(id)
                 .orElseThrow(() -> new CorporationException(CorporationErrorCode.NOT_FOUND_CORPORATION));
     }
 }
