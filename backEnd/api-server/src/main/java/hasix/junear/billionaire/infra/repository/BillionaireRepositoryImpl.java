@@ -13,8 +13,9 @@ import java.util.List;
 @Slf4j
 public class BillionaireRepositoryImpl implements BillionaireRepository {
 
-    private final MysqlJpaBillionaireRepository mysqlJpaBillionaireRepository;
+    private final JpaBillionaireRepository jpaBillionaireRepository;
     private final RedisBillionaireRepository redisBillionaireRepository;
+    private final QuerydslBillionaireRepository querydslBillionaireRepository;
 
     @Override
     public List<TodayLifeQuotes> findLifeQuotes(String key) {
@@ -23,11 +24,18 @@ public class BillionaireRepositoryImpl implements BillionaireRepository {
 
     @Override
     public List<TodayLifeQuotes> findLifeQuotesByIds(List<Long> ids) {
-        return mysqlJpaBillionaireRepository.findBillionaireLifeQuotesByIds(ids);
+        return querydslBillionaireRepository.findBillionaireLifeQuotesByIds(ids);
     }
 
     @Override
     public void saveLifeQuotesList(String key, Long ttl, List<TodayLifeQuotes> todayLifeQuotesList) {
         redisBillionaireRepository.saveListToRedis(key, ttl, todayLifeQuotesList);
     }
+
+    @Override
+    public Long countById() {
+        return jpaBillionaireRepository.count();
+    }
+
+
 }

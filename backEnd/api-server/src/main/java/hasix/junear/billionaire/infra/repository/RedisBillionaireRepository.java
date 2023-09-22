@@ -22,6 +22,7 @@ public class RedisBillionaireRepository {
     public void saveListToRedis(String key, Long ttl, List<TodayLifeQuotes> todayLifeQuotesList) {
         listOperations.leftPushAll(key, todayLifeQuotesList.toArray(new TodayLifeQuotes[0]));
         redisTemplate.expire(key, ttl, TimeUnit.SECONDS);
+        log.info("redis 저장 완료");
     }
 
     public List<TodayLifeQuotes> findBillionaireLifeQuotesByKey(String key) {
