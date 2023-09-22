@@ -20,7 +20,7 @@ public class SearchCorporationKeywordResponse {
     }
 
     public static List<SearchCorporationKeywordResponse> from(List<Corporation> corporationList) {
-        if(corporationList == null) return null;
+        if(corporationList == null || corporationList.isEmpty()) return null;
         return corporationList.stream()
                               .map(corporation -> SearchCorporationKeywordResponse.from(corporation))
                 .collect(Collectors.toList());

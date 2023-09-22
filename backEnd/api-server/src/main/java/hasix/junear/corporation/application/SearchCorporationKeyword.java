@@ -34,17 +34,12 @@ public class SearchCorporationKeyword {
         }
 
         if (isCorporationCode(keyword)) return corporationRepository.findByCorporationCodeIsContaining(keyword);
-        else if(isCorporationName(keyword)) return corporationRepository.findByNameIsContaining(keyword);
-        return null;
+        else return corporationRepository.findByNameIsContaining(keyword);
 
     }
 
     private static boolean isCorporationCode(String keyword) {
         return keyword.matches("^[0-9]{1,6}$");
-    }
-
-    private boolean isCorporationName(String keyword) {
-        return keyword.matches("^[a-zA-Z가-힣]*$");
     }
 
 }
