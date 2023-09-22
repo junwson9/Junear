@@ -9,14 +9,14 @@ import lombok.Getter;
 @Getter
 public class CorporationSearchApiResponse {
 
-    private Long corporationId;
-    private Long industryId;
+    private Long corporation_id;
+    private Long industry_id;
     private String name;
 
     @Builder
-    public CorporationSearchApiResponse(Long corporationId, Long industryId, String name) {
-        this.corporationId = corporationId;
-        this.industryId = industryId;
+    public CorporationSearchApiResponse(Long corporation_id, Long industry_id, String name) {
+        this.corporation_id = corporation_id;
+        this.industry_id = industry_id;
         this.name = name;
     }
 
@@ -28,9 +28,9 @@ public class CorporationSearchApiResponse {
 
     public static CorporationSearchApiResponse from(SearchCorporationKeywordResponse resource){
         return CorporationSearchApiResponse.builder()
-                                           .corporationId(resource.getCorporationId())
+                                           .corporation_id(resource.getCorporationId())
                                            .name(resource.getName())
-                                           .industryId(resource.getIndustryId())
+                                           .industry_id(resource.getIndustryId())
                                            .build();
     }
 }

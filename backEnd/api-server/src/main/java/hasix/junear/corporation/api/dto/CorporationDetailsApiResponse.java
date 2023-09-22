@@ -7,46 +7,46 @@ import lombok.Getter;
 @Getter
 public class CorporationDetailsApiResponse {
 
-    private Long corporationId;
-    private String industryType;
-    private String corporationCode;
+    private Long corporation_id;
+    private String industry_type;
+    private String corporation_code;
     private String name;
-    private Long stabilityRank;
-    private Long growthRank;
-    private Long profitabilityRank;
-    private Long activityRank;
-    private Double totalRank;
-    private Long stockClose;
+    private Long stability_rank;
+    private Long growth_rank;
+    private Long profitability_rank;
+    private Long activity_rank;
+    private Double total_rank;
+    private Long stock_close;
 
     @Builder
-    public CorporationDetailsApiResponse(Long corporationId, String industryType, String corporationCode,
-            String name, Long stabilityRank, Long growthRank, Long profitabilityRank,
-            Long activityRank,
-            Double totalRank, Long stockClose) {
-        this.corporationId = corporationId;
-        this.industryType = industryType;
-        this.corporationCode = corporationCode;
+    public CorporationDetailsApiResponse(Long corporation_id, String industry_type, String corporation_code,
+            String name, Long stability_rank, Long growth_rank, Long profitability_rank,
+            Long activity_rank,
+            Double total_rank, Long stock_close) {
+        this.corporation_id = corporation_id;
+        this.industry_type = industry_type;
+        this.corporation_code = corporation_code;
         this.name = name;
-        this.stabilityRank = stabilityRank;
-        this.growthRank = growthRank;
-        this.profitabilityRank = profitabilityRank;
-        this.activityRank = activityRank;
-        this.totalRank = totalRank;
-        this.stockClose = stockClose;
+        this.stability_rank = stability_rank;
+        this.growth_rank = growth_rank;
+        this.profitability_rank = profitability_rank;
+        this.activity_rank = activity_rank;
+        this.total_rank = total_rank;
+        this.stock_close = stock_close;
     }
 
     public static CorporationDetailsApiResponse from(ViewCorporationDetailsResponse result){
         return CorporationDetailsApiResponse.builder()
-                                            .corporationId(result.getCorporationId())
-                                            .industryType(result.getIndustryType())
-                                            .corporationCode(result.getCorporationCode())
+                                            .corporation_id(result.getCorporationId())
+                                            .industry_type(result.getIndustryType())
+                                            .corporation_code(result.getCorporationCode())
                                             .name(result.getName())
-                                            .stabilityRank(result.getStabilityRank())
-                                            .growthRank(result.getGrowthRank())
-                                            .profitabilityRank(result.getProfitabilityRank())
-                                            .activityRank(result.getActivityRank())
-                                            .totalRank(result.getTotalRank())
-                                            .stockClose(result.getStockClose())
+                                            .stability_rank(result.getStabilityRank())
+                                            .growth_rank(result.getGrowthRank())
+                                            .profitability_rank(result.getProfitabilityRank())
+                                            .activity_rank(result.getActivityRank())
+                                            .total_rank(result.getTotalRank())
+                                            .stock_close(result.getStockClose())
                                             .build();
     }
 }
