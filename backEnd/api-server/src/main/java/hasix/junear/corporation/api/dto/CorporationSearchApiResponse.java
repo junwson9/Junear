@@ -1,7 +1,6 @@
 package hasix.junear.corporation.api.dto;
 
 import hasix.junear.corporation.application.dto.SearchCorporationKeywordResponse;
-import hasix.junear.corporation.application.dto.ViewCorporationDetailsResponse;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.Builder;
