@@ -43,9 +43,7 @@ public class SearchCorporationKeyword {
             return false;
         }
         try {
-            System.out.println(str);
             Long.parseLong(str);
-            System.out.println("yes");
             return true;
         } catch (NumberFormatException e) {
             return false;
