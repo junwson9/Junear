@@ -2,7 +2,9 @@ package hasix.junear.billionaire.api.dto;
 
 import hasix.junear.billionaire.application.dto.TodayLifeQuotes;
 import lombok.Builder;
+import lombok.Getter;
 
+@Getter
 public class BillionaireApiResponse {
     private String name;
     private String imageUrl;

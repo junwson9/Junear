@@ -5,10 +5,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
-public class TodayLifeQuotes {
+public class TodayLifeQuotes implements Serializable {
     private String name;
     private String imageUrl;
     private String phrase;

@@ -25,7 +25,9 @@ public class BillionaireApi {
 
         List<TodayLifeQuotes> todayLifeQuotesList = billionaireLifeQuotesSearchUseCase.search();
 
-        List<BillionaireApiResponse> list = todayLifeQuotesList.stream().map(BillionaireApiResponse::from).collect(Collectors.toList());
+        List<BillionaireApiResponse> list = todayLifeQuotesList.stream()
+                .map(BillionaireApiResponse::from)
+                .collect(Collectors.toList());
 
         return ResponseFactory.success("억만장자 조회 성공", list);
 
