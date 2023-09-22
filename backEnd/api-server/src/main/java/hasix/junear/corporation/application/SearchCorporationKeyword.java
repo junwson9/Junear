@@ -29,25 +29,22 @@ public class SearchCorporationKeyword {
     }
 
     private List<Corporation> findContainedKeyword(String keyword) {
-
-        if (isNumeric(keyword)) {
-            return corporationRepository.findByCorporationCodeIsContaining(keyword);
-        } else {
-            return corporationRepository.findByNameIsContaining(keyword);
+        if (keyword == null || keyword.isEmpty()) {
+            return null;
         }
+
+        if (isCorporationCode(keyword)) return corporationRepository.findByCorporationCodeIsContaining(keyword);
+        else if(isCorporationName(keyword)) return corporationRepository.findByNameIsContaining(keyword);
+        return null;
 
     }
 
-    private static boolean isNumeric(String str) {
-        if (str == null || str.isEmpty()) {
-            return false;
-        }
-        try {
-            Long.parseLong(str);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
+    private static boolean isCorporationCode(String keyword) {
+        return keyword.matches("^[0-9]{1,6}$");
+    }
+
+    private boolean isCorporationName(String keyword) {
+        return keyword.matches("^[a-zA-Z가-힣]*$");
     }
 
 }

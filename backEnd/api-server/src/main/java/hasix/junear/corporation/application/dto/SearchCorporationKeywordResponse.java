@@ -20,12 +20,13 @@ public class SearchCorporationKeywordResponse {
     }
 
     public static List<SearchCorporationKeywordResponse> from(List<Corporation> corporationList) {
+        if(corporationList == null) return null;
         return corporationList.stream()
                               .map(corporation -> SearchCorporationKeywordResponse.from(corporation))
                 .collect(Collectors.toList());
     }
 
-    public static SearchCorporationKeywordResponse from(Corporation corporation) {
+    private static SearchCorporationKeywordResponse from(Corporation corporation) {
         return SearchCorporationKeywordResponse.builder()
                 .corporationId(corporation.getId())
                 .name(corporation.getName())
