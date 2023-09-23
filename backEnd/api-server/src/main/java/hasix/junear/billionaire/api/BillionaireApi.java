@@ -1,7 +1,7 @@
 package hasix.junear.billionaire.api;
 
 import hasix.junear.billionaire.api.dto.BillionaireApiResponse;
-import hasix.junear.billionaire.application.BillionaireLifeQuotesSearchUseCase;
+import hasix.junear.billionaire.application.TodayLifeQuotesSearchUseCase;
 import hasix.junear.billionaire.application.dto.TodayLifeQuotes;
 import hasix.junear.common.response.ResponseFactory;
 import lombok.RequiredArgsConstructor;
@@ -18,12 +18,12 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/billionaire")
 public class BillionaireApi {
 
-    private final BillionaireLifeQuotesSearchUseCase billionaireLifeQuotesSearchUseCase;
+    private final TodayLifeQuotesSearchUseCase todayLifeQuotesSearchUseCase;
 
     @GetMapping("/today")
     public ResponseEntity<?> getTodayBillionairePhrase() {
 
-        List<TodayLifeQuotes> todayLifeQuotesList = billionaireLifeQuotesSearchUseCase.search();
+        List<TodayLifeQuotes> todayLifeQuotesList = todayLifeQuotesSearchUseCase.search();
 
         List<BillionaireApiResponse> list = todayLifeQuotesList.stream()
                 .map(BillionaireApiResponse::from)

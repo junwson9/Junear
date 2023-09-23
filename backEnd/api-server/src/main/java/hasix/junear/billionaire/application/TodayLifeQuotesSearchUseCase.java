@@ -4,7 +4,6 @@ import hasix.junear.billionaire.application.dto.TodayLifeQuotes;
 import hasix.junear.billionaire.domain.BillionaireRepository;
 import hasix.junear.billionaire.domain.LifeQuotesRepository;
 import hasix.junear.billionaire.exception.LifeQuotesErrorCode;
-import hasix.junear.common.exception.CommonErrorCode;
 import hasix.junear.common.exception.CustomException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +21,7 @@ import java.util.Random;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 @Slf4j
-public class BillionaireLifeQuotesSearchUseCase {
+public class TodayLifeQuotesSearchUseCase {
     // 억만장자 데이터 조회
     private final BillionaireRepository billionaireRepository;
     private final LifeQuotesRepository lifeQuotesRepository;
@@ -31,7 +30,7 @@ public class BillionaireLifeQuotesSearchUseCase {
     public List<TodayLifeQuotes> search() {
         List<TodayLifeQuotes> todayLifeQuotesList = billionaireRepository.findLifeQuotes(phraseKey);
 
-        if (todayLifeQuotesList.size() == 0) {
+        if (!hasData(todayLifeQuotesList)) {
             updateLifeQuotes(phraseKey);
             log.info("데이터 조회 재시도");
             todayLifeQuotesList = billionaireRepository.findLifeQuotes(phraseKey);
@@ -48,13 +47,16 @@ public class BillionaireLifeQuotesSearchUseCase {
         billionaireRepository.saveLifeQuotesList(key, getTTL(6, 0, LocalDateTime.now()), todayLifeQuotesList);
     }
 
+    private boolean hasData(List<TodayLifeQuotes> list) {
+        return list.size() != 0;
+    }
+
     private List<Long> getRandomIndex(int number) {
         List<Long> randomIndexList = new ArrayList<>();
         Random random = new Random(); // 랜덤 객체 생성
         random.setSeed(System.currentTimeMillis());
 
         int billionaireCount = Math.toIntExact(getBillionaireCount());
-        log.info("billionaire count : {}", billionaireCount);
         long[] randomIndexArray = new long[number];
 
         for (int i = 0; i < number; i++) {
@@ -71,11 +73,9 @@ public class BillionaireLifeQuotesSearchUseCase {
             if (range == 0) {
                 throw new CustomException(LifeQuotesErrorCode.NOT_FOUND_LIFE_QUOTES);
             }
-            log.info("life quotes range : {}", range);
 
             randomIndexList.add(((randomIndexArray[i] - 1) * 10L) + (random.nextInt(range) + 1));
         }
-        log.info("random index : {}", randomIndexList);
 
         return randomIndexList;
     }
