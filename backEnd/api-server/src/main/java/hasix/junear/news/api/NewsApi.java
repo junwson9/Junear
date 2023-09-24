@@ -7,6 +7,7 @@ import hasix.junear.news.application.dto.RecentNewsResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,5 +31,12 @@ public class NewsApi {
                 .collect(Collectors.toList());
 
         return ResponseFactory.success("최신 뉴스 조회 성공", responseList);
+    }
+
+    @GetMapping
+    public ResponseEntity<?> getIndustryNews(@PathVariable("industry_id") String industryId) {
+
+
+        return ResponseFactory.success("산업 뉴스 조회 성공");
     }
 }

@@ -1,6 +1,7 @@
 package hasix.junear.news.application;
 
 import hasix.junear.common.exception.CustomException;
+import hasix.junear.news.application.dto.IndustryNewsResponse;
 import hasix.junear.news.application.dto.RecentNewsResponse;
 import hasix.junear.news.domain.NewsRepository;
 import hasix.junear.news.exception.NewsException;

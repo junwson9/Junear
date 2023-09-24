@@ -1,5 +1,6 @@
 package hasix.junear.news.infra;
 
+import hasix.junear.news.application.dto.IndustryNewsResponse;
 import hasix.junear.news.application.dto.RecentNewsResponse;
 import hasix.junear.news.domain.NewsRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,8 @@ public class NewsRepositoryImpl implements NewsRepository {
     }
 
     @Override
-    public List<RecentNewsResponse> findNewsByIndustryId(Long id) {
-        return null;
+    public List<IndustryNewsResponse> findNewsByIndustryId(Long industryId) {
+
+        return querydslNewsRepository.findNewsByIndustryId(industryId);
     }
 }
