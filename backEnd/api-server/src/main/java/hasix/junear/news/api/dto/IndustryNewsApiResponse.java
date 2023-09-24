@@ -2,6 +2,7 @@ package hasix.junear.news.api.dto;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import hasix.junear.news.application.dto.IndustryNewsResponse;
 import hasix.junear.news.application.dto.RecentNewsResponse;
 import lombok.Builder;
 import lombok.Getter;
@@ -31,7 +32,7 @@ public class IndustryNewsApiResponse {
         this.media = media;
     }
 
-    public static IndustryNewsApiResponse from(RecentNewsResponse response) {
+    public static IndustryNewsApiResponse from(IndustryNewsResponse response) {
         return IndustryNewsApiResponse.builder()
                 .industry(response.getIndustry())
                 .title(response.getTitle())

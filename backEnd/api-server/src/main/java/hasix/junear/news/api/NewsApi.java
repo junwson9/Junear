@@ -1,15 +1,15 @@
 package hasix.junear.news.api;
 
 import hasix.junear.common.response.ResponseFactory;
+import hasix.junear.news.api.dto.IndustryNewsApiResponse;
 import hasix.junear.news.api.dto.RecentNewsApiResponse;
+import hasix.junear.news.application.IndustryNewsSearchUseCase;
 import hasix.junear.news.application.RecentNewsSearchUseCase;
+import hasix.junear.news.application.dto.IndustryNewsResponse;
 import hasix.junear.news.application.dto.RecentNewsResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 public class NewsApi {
 
     private final RecentNewsSearchUseCase recentNewsSearchUseCase;
+    private final IndustryNewsSearchUseCase industryNewsSearchUseCase;
 
     @GetMapping("/recent")
     public ResponseEntity<?> getRecentNews() {
@@ -33,10 +34,15 @@ public class NewsApi {
         return ResponseFactory.success("최신 뉴스 조회 성공", responseList);
     }
 
-    @GetMapping
-    public ResponseEntity<?> getIndustryNews(@PathVariable("industry_id") String industryId) {
+    @GetMapping()
+    public ResponseEntity<?> getIndustryNews(@RequestParam("industry_id") Long industryId) {
 
+        List<IndustryNewsResponse> industryNewsList = industryNewsSearchUseCase.getIndustryNews(industryId);
 
-        return ResponseFactory.success("산업 뉴스 조회 성공");
+        List<IndustryNewsApiResponse> responseList = industryNewsList.stream()
+                .map(IndustryNewsApiResponse::from)
+                .collect(Collectors.toList());
+
+        return ResponseFactory.success("산업 뉴스 조회 성공", responseList);
     }
 }
