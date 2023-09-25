@@ -15,6 +15,7 @@ import hasix.junear.portfolio.application.dto.RemoveEachPortfolioRequest;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -66,7 +67,7 @@ public class PortfolioApi {
     //포트폴리어 기업 수정(수량 및 평단가); portfolioModify
     @PatchMapping("/each")
     public ResponseEntity<?> portfolioModify(@RequestParam Long memberId,
-            @RequestBody PortFolioModifyApiRequest portFolioModifyApiRequest) {
+            @Validated @RequestBody PortFolioModifyApiRequest portFolioModifyApiRequest) {
 
         eachPortfolioModifyUseCase.updatePortfolio(ModifyEachPortfolioRequest.from(memberId, portFolioModifyApiRequest));
 
