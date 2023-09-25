@@ -1,5 +1,4 @@
 FROM openjdk:17-jdk-slim AS builder
-ENV APP_NAME = junear
 WORKDIR app
 
 COPY gradlew .
