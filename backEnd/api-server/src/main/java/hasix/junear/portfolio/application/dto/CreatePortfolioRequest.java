@@ -30,9 +30,9 @@ public class CreatePortfolioRequest {
         return requestList.stream()
                           .map(request -> CreatePortfolioRequest.builder()
                                                                 .memberId(memberId)
-                                                                .corporationId(request.getCorporation_id())
-                                                                .stockCount(request.getStock_count())
-                                                                .averagePrice(request.getAverage_price())
+                                                                .corporationId(request.getCorporationId())
+                                                                .stockCount(request.getStockCount())
+                                                                .averagePrice(request.getAveragePrice())
                                                                 .build())
                         .collect(Collectors.toList());
     }

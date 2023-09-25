@@ -26,9 +26,9 @@ public class ModifyEachPortfolioRequest {
 
         return ModifyEachPortfolioRequest.builder()
                                          .memberId(memberId)
-                                         .corporationId(request.getCorporation_id())
-                                         .stockCount(request.getStock_count())
-                                         .averagePrice(request.getAverage_price())
+                                         .corporationId(request.getCorporationId())
+                                         .stockCount(request.getStockCount())
+                                         .averagePrice(request.getAveragePrice())
                                          .build();
     }
 }
