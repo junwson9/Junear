@@ -1,9 +1,11 @@
 package hasix.junear.member.infra.oidc;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import hasix.junear.common.exception.CustomException;
 import hasix.junear.member.infra.jwt.IdTokenResolver;
 import hasix.junear.member.application.OauthMemberInfo;
 import hasix.junear.member.exception.MemberErrorCode;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 

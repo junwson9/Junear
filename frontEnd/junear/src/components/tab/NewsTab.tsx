@@ -11,7 +11,7 @@ export default function NewsTab() {
   };
 
   return (
-    <Box sx={{ maxWidth: { xs: 1200, sm: 1000 }, color: 'white', fontFamily: 'Noto Sans KR' }}>
+    <Box sx={{ color: 'white', fontFamily: 'Noto Sans KR' }}>
       <Tabs
         value={value}
         onChange={handleChange}

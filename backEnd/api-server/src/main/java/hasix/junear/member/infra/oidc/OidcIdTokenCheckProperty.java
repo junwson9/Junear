@@ -2,6 +2,7 @@ package hasix.junear.member.infra.oidc;
 
 import lombok.Getter;
 
+
 @Getter
 public class OidcIdTokenCheckProperty {
 

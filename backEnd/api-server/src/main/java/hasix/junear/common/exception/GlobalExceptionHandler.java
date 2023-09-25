@@ -37,6 +37,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleException(Exception e){
+        e.printStackTrace();
         ErrorCode serverError = CommonErrorCode.SERVER_ERROR;
         return ResponseFactory.fail(e.getMessage(), serverError.getErrorCode(),serverError.getStatusCode());
     }
