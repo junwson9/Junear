@@ -17,7 +17,7 @@ function App() {
       <div className="grid grid-cols-12 gap-[25px] mx-[200px]">
         <Routes>
           <Route path="/mypage" element={<MyPage />} />
-          <Route path="/home" element={<HomePage />} />
+          <Route path="/" element={<HomePage />} />
           <Route path="/portfolio" element={<CreatePort />} />
           <Route path="/my-portfolio" element={<MyPort />} />
           <Route path="/news" element={<News />} />
