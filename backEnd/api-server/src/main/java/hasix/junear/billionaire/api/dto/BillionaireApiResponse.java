@@ -1,10 +1,13 @@
 package hasix.junear.billionaire.api.dto;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import hasix.junear.billionaire.application.dto.TodayLifeQuotes;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
+@JsonNaming(SnakeCaseStrategy.class)
 public class BillionaireApiResponse {
     private String name;
     private String imageUrl;
