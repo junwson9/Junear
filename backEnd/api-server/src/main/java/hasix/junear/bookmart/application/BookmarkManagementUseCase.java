@@ -1,6 +1,5 @@
 package hasix.junear.bookmart.application;
 
-import hasix.junear.bookmart.domain.Bookmark;
 import hasix.junear.bookmart.domain.BookmarkRepository;
 import hasix.junear.bookmart.exception.BookmarkException;
 import hasix.junear.common.exception.CustomException;
@@ -12,12 +11,14 @@ import org.springframework.stereotype.Service;
 public class BookmarkManagementUseCase {
 
     private final BookmarkRepository bookmarkRepository;
+    private final CorporationValidator corporationValidator;
 
     public void addBookmark(BookmarkInfo bookmarkInfo) {
-        Bookmark bookmark = bookmarkRepository.save(bookmarkInfo.toBookmark());
-
-        if (!isAdded(bookmark)) {
-            throw new CustomException(BookmarkException.NOT_FOUND_BOOKMARK);
+        // 기업 검증
+        if (corporationValidator.validateCorporation(bookmarkInfo.getCorporationId())) {
+            bookmarkRepository.save(bookmarkInfo.toBookmark());
+        } else {
+            throw new CustomException(BookmarkException.NOT_FOUND_CORPORATION);
         }
     }
 
@@ -27,10 +28,6 @@ public class BookmarkManagementUseCase {
         if (!isDeleted(removedCount)) {
             throw new CustomException(BookmarkException.PERMISSION_DENIED);
         }
-    }
-
-    private boolean isAdded(Bookmark bookmark) {
-        return bookmark != null;
     }
 
     private boolean isDeleted(Long removeCount) {
