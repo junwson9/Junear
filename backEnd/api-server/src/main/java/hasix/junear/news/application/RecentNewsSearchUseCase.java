@@ -21,16 +21,6 @@ public class RecentNewsSearchUseCase {
     private final NewsRepository newsRepository;
 
     public List<RecentNewsResponse> getRecentNews() {
-        List<RecentNewsResponse> recentNewsList = newsRepository.findRecentNews();
-
-        if (!hasNewsData(recentNewsList)) {
-            throw new CustomException(NewsException.NOT_FOUND_RECENT_NEWS);
-        }
-
-        return recentNewsList;
-    }
-
-    private boolean hasNewsData(List<RecentNewsResponse> list) {
-        return list.size() != 0;
+        return newsRepository.findRecentNews();
     }
 }

@@ -19,16 +19,7 @@ public class IndustryNewsSearchUseCase {
     private final NewsRepository newsRepository;
 
     public List<IndustryNewsResponse> getIndustryNews(Long industryId) {
-
-        // industry id 검증 로직 필요
-
-        List<IndustryNewsResponse> industryNewsList = newsRepository.findNewsByIndustryId(industryId);
-
-        if (!hasIndustryNewsData(industryNewsList)) {
-            throw new CustomException(NewsException.NOT_FOUND_INDUSTRY_NEWS);
-        }
-
-        return industryNewsList;
+         return newsRepository.findNewsByIndustryId(industryId);
     }
 
     private boolean hasIndustryNewsData(List<IndustryNewsResponse> list) {
