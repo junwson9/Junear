@@ -30,7 +30,7 @@ public class BookmarkManagementUseCase {
         Long removedCount = bookmarkRepository.deleteByMemberIdAndCorporationId(bookmarkRequest);
 
         if (!isDeleted(removedCount)) {
-            throw new CustomException(BookmarkException.PERMISSION_DENIED);
+            throw new CustomException(BookmarkException.NOT_FOUND_BOOKMARK);
         }
     }
 
