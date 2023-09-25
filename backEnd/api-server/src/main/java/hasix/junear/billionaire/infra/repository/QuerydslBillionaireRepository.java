@@ -20,7 +20,6 @@ public class QuerydslBillionaireRepository {
     public List<TodayLifeQuotes> findBillionaireLifeQuotesByIds(List<Long> ids) {
         QBillionaire billionaire = QBillionaire.billionaire;
         QLifeQuotes lifeQuotes = QLifeQuotes.lifeQuotes;
-        log.info("ids : {}", ids);
 
         List<TodayLifeQuotes> result = queryFactory
                 .select(
@@ -35,10 +34,6 @@ public class QuerydslBillionaireRepository {
                 .join(lifeQuotes).on(billionaire.id.eq(lifeQuotes.billionaireId))
                 .where(lifeQuotes.id.in(ids))
                 .fetch();
-
-        for (TodayLifeQuotes todayLifeQuotes : result) {
-            log.info("{}",todayLifeQuotes);
-        }
 
         return result;
     }
