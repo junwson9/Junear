@@ -45,6 +45,13 @@ function ResponsiveAppBar() {
     setAnchorElUser(null);
   };
 
+  const handleLogout = () => {
+    // 로그아웃을 클릭하면 localStorage에서 access_token을 제거합니다.
+    localStorage.removeItem('access_token');
+    // 로그아웃 후 로그인 페이지로 이동합니다.
+    handleCloseUserMenu();
+  };
+
   return (
     <AppBar position="fixed" sx={{ backgroundColor: '#222831' }}>
       <Container maxWidth="xl">
@@ -170,7 +177,10 @@ function ResponsiveAppBar() {
             >
               {settings.map((setting) => (
                 <Link to={setting.link}>
-                  <MenuItem key={setting.label} onClick={handleCloseUserMenu}>
+                  <MenuItem
+                    key={setting.label}
+                    onClick={setting.label === '로그아웃' ? handleLogout : handleCloseUserMenu}
+                  >
                     <Typography textAlign="center">{setting.label}</Typography>
                   </MenuItem>
                 </Link>
