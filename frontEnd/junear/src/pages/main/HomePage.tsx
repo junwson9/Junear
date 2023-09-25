@@ -1,5 +1,5 @@
-// import { ReactComponent as Srank } from 'assets/image/Srank.svg';
-import Card from 'components/main/Card';
+import Card from '../../components/main/Card';
+
 function HomePage() {
   return (
     <>
@@ -18,11 +18,39 @@ function HomePage() {
       <div className="col-span-12 mt-[30px]">
         <p className="text-white font-bold text-[28px] text-left nowrap">오늘의 억만장자 명언</p>
       </div>
-      <Card />
-      <Card />
-      <Card />
+      <div className="col-start-1 col-end-5 h-[350px] mt-[30px]">
+        <Card
+          front={
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>Front</div>
+          }
+          back={
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>Back</div>
+          }
+        />
+      </div>
+      <div className="col-start-5 col-end-9 h-[350px] mt-[30px]">
+        <Card
+          front={
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>Front</div>
+          }
+          back={
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>Back</div>
+          }
+        />
+      </div>
+      <div className="col-start-9 col-end-13 h-[350px] mt-[30px]">
+        <Card
+          front={
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>Front</div>
+          }
+          back={
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>Back</div>
+          }
+        />
+      </div>
+
+      <div className="col-span-12 mt-[200px]"></div>
     </>
   );
 }
-
 export default HomePage;

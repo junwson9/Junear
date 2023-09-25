@@ -1,11 +1,30 @@
 import Profile from 'components/member/Profile';
 import Category from 'components/member/Category';
+import axiosInstance from './../../state/AxiosInterceptor';
+import React, { useEffect, useState } from 'react';
 
 function MyPage() {
+  const [name, setName] = useState<string>('');
+  const [profileImg, setProfileImg] = useState<string>('');
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axiosInstance.get('/member/info');
+        setName(response.data.data.name);
+        setProfileImg(response.data.data.profile_image);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <>
       <div className="col-span-3 mt-[100px]">
-        <Profile />
+        <Profile name={name} profileImg={profileImg} />
       </div>
       <div className="col-start-1 col-end-5 ml-[20px] mt-[20px]">
         <p className="text-white font-bold text-[28px] text-left">카테고리</p>
@@ -19,11 +38,6 @@ function MyPage() {
         </div>
       </div>
       <div className="col-start-5 col-end-13 mt-[10px] mb-[20px] h-[557px] bg-zinc-700 rounded-[20px] "></div>
-
-      {/* <div className=" text-white text-[28px] font-bold ">카테고리 필터</div> */}
-      {/* <div className="mt-[40px] col-start-1 col-end-4">
-        <Category />
-      </div> */}
     </>
   );
 }
