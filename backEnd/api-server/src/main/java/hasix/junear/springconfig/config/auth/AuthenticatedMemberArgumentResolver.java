@@ -2,6 +2,7 @@ package hasix.junear.springconfig.config.auth;
 
 import hasix.junear.common.exception.CommonErrorCode;
 import hasix.junear.common.exception.CustomException;
+import hasix.junear.member.exception.AuthenticationErrorCode;
 import org.springframework.core.MethodParameter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,7 +28,7 @@ public class AuthenticatedMemberArgumentResolver  implements HandlerMethodArgume
                                                              .getAuthentication();
 
         if(authentication == null || authentication.getPrincipal() == null){
-            throw new CustomException(CommonErrorCode.UN_AUTHORIZATION);
+            throw new CustomException(AuthenticationErrorCode.REQUIRE_LOGIN);
         }
 
         Long memberId = Long.valueOf(authentication.getPrincipal()
