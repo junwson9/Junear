@@ -15,4 +15,5 @@ public interface PortfolioRepository {
 
     void deleteByMemberIdAndCorporationId (Long memberId, Long corporationId);
 
+    List<Portfolio> findAllByMemberId(Long memberId);
 }

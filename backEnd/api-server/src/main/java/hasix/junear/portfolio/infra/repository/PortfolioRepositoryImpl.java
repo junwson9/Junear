@@ -38,4 +38,9 @@ public class PortfolioRepositoryImpl implements PortfolioRepository {
     public void deleteByMemberIdAndCorporationId(Long memberId, Long corporationId) {
         jpaPortfolioRepository.deleteByMemberIdAndCorporationId(memberId, corporationId);
     }
+
+    @Override
+    public List<Portfolio> findAllByMemberId(Long memberId) {
+        return jpaPortfolioRepository.findAllByMemberId(memberId);
+    }
 }
