@@ -48,6 +48,7 @@ public class PortfolioApi {
 
         return ResponseFactory.success("포트폴리오 초기 생성 성공");
     }
+
     //포트폴리오 조회; portfolioInformation
     @GetMapping
     public ResponseEntity<?> portfolioInformation(@RequestParam Long memberId){
@@ -55,8 +56,8 @@ public class PortfolioApi {
         ViewPortfolioInformationResponse result = portfolioInformationViewUseCase.getPortfolio(memberId);
 
         return ResponseFactory.success("포트폴리오 조회 성공", PortFolioInformationApiResponse.from(result));
-
     }
+
     //포트폴리오 기업 추가; portfolioAdd
     @PostMapping
     public ResponseEntity<?> portfolioAdd(@RequestParam Long memberId,
@@ -66,6 +67,7 @@ public class PortfolioApi {
 
         return ResponseFactory.success("포트폴리오 추가 성공");
     }
+
     //포트폴리오 기업 삭제; portfolioRemove
     @DeleteMapping("/{corporation_id}")
     public ResponseEntity<?> portfolioRemove(@RequestParam Long memberId,
@@ -75,6 +77,7 @@ public class PortfolioApi {
 
         return ResponseFactory.success("포트폴리오 삭제 성공");
     }
+
     //포트폴리어 기업 수정(수량 및 평단가); portfolioModify
     @PatchMapping
     public ResponseEntity<?> portfolioModify(@RequestParam Long memberId,
