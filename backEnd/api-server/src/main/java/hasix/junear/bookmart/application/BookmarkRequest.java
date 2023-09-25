@@ -5,12 +5,12 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class BookmarkInfo {
+public class BookmarkRequest {
     Long memberId;
     Long corporationId;
 
     @Builder
-    public BookmarkInfo(Long memberId, Long corporationId) {
+    public BookmarkRequest(Long memberId, Long corporationId) {
         this.memberId = memberId;
         this.corporationId = corporationId;
     }

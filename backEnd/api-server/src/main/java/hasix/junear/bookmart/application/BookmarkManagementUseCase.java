@@ -13,17 +13,17 @@ public class BookmarkManagementUseCase {
     private final BookmarkRepository bookmarkRepository;
     private final CorporationValidator corporationValidator;
 
-    public void addBookmark(BookmarkInfo bookmarkInfo) {
+    public void addBookmark(BookmarkRequest bookmarkRequest) {
         // 기업 검증
-        if (corporationValidator.validateCorporation(bookmarkInfo.getCorporationId())) {
-            bookmarkRepository.save(bookmarkInfo.toBookmark());
+        if (corporationValidator.validateCorporation(bookmarkRequest.getCorporationId())) {
+            bookmarkRepository.save(bookmarkRequest.toBookmark());
         } else {
             throw new CustomException(BookmarkException.NOT_FOUND_CORPORATION);
         }
     }
 
-    public void removeBookmark(BookmarkInfo bookmarkInfo) {
-        Long removedCount = bookmarkRepository.deleteByMemberIdAndCorporationId(bookmarkInfo);
+    public void removeBookmark(BookmarkRequest bookmarkRequest) {
+        Long removedCount = bookmarkRepository.deleteByMemberIdAndCorporationId(bookmarkRequest);
 
         if (!isDeleted(removedCount)) {
             throw new CustomException(BookmarkException.PERMISSION_DENIED);

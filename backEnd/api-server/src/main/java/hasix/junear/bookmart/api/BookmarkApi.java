@@ -1,6 +1,6 @@
 package hasix.junear.bookmart.api;
 
-import hasix.junear.bookmart.application.BookmarkInfo;
+import hasix.junear.bookmart.application.BookmarkRequest;
 import hasix.junear.bookmart.application.BookmarkManagementUseCase;
 import hasix.junear.common.response.ResponseFactory;
 import hasix.junear.springconfig.config.auth.AuthMember;
@@ -19,7 +19,7 @@ public class BookmarkApi {
     @PostMapping("/{corporation_id}")
     public ResponseEntity<?> addBookmark(@PathVariable("corporation_id") Long corporationId, @AuthenticatedMember AuthMember authMember) {
 
-        bookmarkManagementUseCase.addBookmark(new BookmarkInfo(authMember.getId(), corporationId));
+        bookmarkManagementUseCase.addBookmark(new BookmarkRequest(authMember.getId(), corporationId));
 
         return ResponseFactory.success("북마크 등록 성공");
     }
@@ -27,7 +27,7 @@ public class BookmarkApi {
     @DeleteMapping("/{corporation_id}")
     public ResponseEntity<?> removeBookmark(@PathVariable("corporation_id") Long corporationId, @AuthenticatedMember AuthMember authMember) {
 
-        bookmarkManagementUseCase.removeBookmark(new BookmarkInfo(authMember.getId(), corporationId));
+        bookmarkManagementUseCase.removeBookmark(new BookmarkRequest(authMember.getId(), corporationId));
 
         return ResponseFactory.success("북마크 삭제 성공");
     }
