@@ -5,3 +5,20 @@ body {
   font-family: 'Noto Sans KR', sans-serif;
   background-color: #222831;
 }
+
+::-webkit-scrollbar {
+  /* 스크롤바 전체 영역 */
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  /*  스크롤  */
+  background-color: grey;
+  border-radius: 30px;
+}
+::-webkit-scrollbar-button:start:decrement,
+::-webkit-scrollbar-button:end:increment {
+  /*  스크롤의 화살표가 포함된 영역   */
+  display: block;
+  height: 3px;
+}

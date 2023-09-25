@@ -10,7 +10,7 @@ function News() {
         <p className="text-white font-bold text-[28px] text-left">산업별 뉴스</p>
       </div>
       <div className="col-start-1 col-end-13 mt-[10px] h-[70px] bg-zinc-700 rounded-[15px] ">
-        <div className="top-[20px]">
+        <div className="pt-[9px] flex items-center justify-center">
           <NewsTab />
         </div>
       </div>
