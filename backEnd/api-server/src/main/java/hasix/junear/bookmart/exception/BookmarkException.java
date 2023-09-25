@@ -5,7 +5,8 @@ import hasix.junear.common.exception.ErrorCode;
 public enum BookmarkException implements ErrorCode {
     NOT_FOUND_BOOKMARK("북마크를 찾을 수 없습니다", "BMK_001", 404),
     NOT_FOUND_CORPORATION("북마크로 등록할 기업을 찾을 수 없습니다", "BMK_002", 404),
-    PERMISSION_DENIED("북마크 관리 권한이 없습니다", "BMK_003", 403);
+    PERMISSION_DENIED("북마크 관리 권한이 없습니다", "BMK_003", 403),
+    ALREADY_EXIST_BOOKMARK("이미 북마크한 기업입니다", "BMK_004", 409);
 
     private final String message;
     private final String errorCode;

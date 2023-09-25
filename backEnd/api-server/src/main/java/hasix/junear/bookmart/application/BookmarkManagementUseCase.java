@@ -14,12 +14,16 @@ public class BookmarkManagementUseCase {
     private final CorporationValidator corporationValidator;
 
     public void addBookmark(BookmarkRequest bookmarkRequest) {
-        // 기업 검증
-        if (corporationValidator.validateCorporation(bookmarkRequest.getCorporationId())) {
-            bookmarkRepository.save(bookmarkRequest.toBookmark());
-        } else {
+
+        if (!corporationValidator.validateCorporation(bookmarkRequest.getCorporationId())) {
             throw new CustomException(BookmarkException.NOT_FOUND_CORPORATION);
         }
+
+        if (isBookmarkExist(bookmarkRequest)) {
+            throw new CustomException(BookmarkException.ALREADY_EXIST_BOOKMARK);
+        }
+
+        bookmarkRepository.save(bookmarkRequest.toBookmark());
     }
 
     public void removeBookmark(BookmarkRequest bookmarkRequest) {
@@ -32,5 +36,9 @@ public class BookmarkManagementUseCase {
 
     private boolean isDeleted(Long removeCount) {
         return removeCount > 0;
+    }
+
+    private boolean isBookmarkExist(BookmarkRequest bookmarkRequest) {
+        return bookmarkRepository.findBookmarkByMemberIdAndCorporationId(bookmarkRequest).isPresent();
     }
 }
