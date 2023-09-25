@@ -2,6 +2,7 @@ package hasix.junear.portfolio.api;
 
 import hasix.junear.common.response.ResponseFactory;
 import hasix.junear.portfolio.api.dto.PortFolioAddApiRequest;
+import hasix.junear.portfolio.api.dto.PortFolioInformationApiResponse;
 import hasix.junear.portfolio.api.dto.PortFolioModifyApiRequest;
 import hasix.junear.portfolio.application.EachPortfolioAddUseCase;
 import hasix.junear.portfolio.application.EachPortfolioModifyUseCase;
@@ -12,11 +13,13 @@ import hasix.junear.portfolio.application.dto.AddEachPortfolioRequest;
 import hasix.junear.portfolio.application.dto.CreatePortfolioRequest;
 import hasix.junear.portfolio.application.dto.ModifyEachPortfolioRequest;
 import hasix.junear.portfolio.application.dto.RemoveEachPortfolioRequest;
+import hasix.junear.portfolio.application.dto.ViewPortfolioInformationResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -46,6 +49,14 @@ public class PortfolioApi {
         return ResponseFactory.success("포트폴리오 초기 생성 성공");
     }
     //포트폴리오 조회; portfolioInformation
+    @GetMapping
+    public ResponseEntity<?> portfolioInformation(@RequestParam Long memberId){
+
+        ViewPortfolioInformationResponse result = portfolioInformationViewUseCase.getPortfolio(memberId);
+
+        return ResponseFactory.success("포트폴리오 조회 성공", PortFolioInformationApiResponse.from(result));
+
+    }
     //포트폴리오 기업 추가; portfolioAdd
     @PostMapping
     public ResponseEntity<?> portfolioAdd(@RequestParam Long memberId,
