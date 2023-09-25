@@ -2,6 +2,7 @@ package hasix.junear.springconfig.security;
 
 import hasix.junear.common.exception.CommonErrorCode;
 import hasix.junear.common.exception.CustomException;
+import hasix.junear.member.exception.AuthenticationErrorCode;
 import hasix.junear.member.infra.jwt.JwtProvider;
 import io.jsonwebtoken.Claims;
 import java.io.IOException;
@@ -42,7 +43,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         if (isRefreshApi(request)) {
             if(!StringUtils.hasText(accessToken)){
-                throw new CustomException(CommonErrorCode.UN_AUTHORIZATION);
+                throw new CustomException(AuthenticationErrorCode.INVALID_JWT);
             }
 
             Claims claims = jwtProvider.getClaimFromExpiredAccessToken(accessToken);

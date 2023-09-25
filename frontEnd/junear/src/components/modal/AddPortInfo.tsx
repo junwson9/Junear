@@ -1,7 +1,15 @@
 import { useState } from 'react';
-function AddPortInfo({ onClose }: { onClose: () => void }) {
+
+function AddPortInfo({
+  onClose,
+  onAdd,
+}: {
+  onClose: () => void;
+  onAdd: (data: { quantity: string; averagePrice: string }) => void;
+}) {
   const [quantity, setQuantity] = useState<string>('');
   const [averagePrice, setAveragePrice] = useState<string>('');
+
   const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuantity(e.target.value);
   };
@@ -11,14 +19,16 @@ function AddPortInfo({ onClose }: { onClose: () => void }) {
   };
 
   const handleAddClick = () => {
-    // 입력된 수량과 평단가
-    console.log('수량:', quantity);
-    console.log('평단가:', averagePrice);
+    // 입력된 수량과 평단가를 한 객체로 전달
+    const data = { quantity, averagePrice };
+    onAdd(data);
 
     // 입력값 초기화
     setQuantity('');
     setAveragePrice('');
+    onClose();
   };
+
   return (
     <div className="w-[250px] h-[250px] relative">
       <div className="w-[250px] h-[250px] left-0 top-0 absolute bg-zinc-700 rounded-[20px] shadow" />
@@ -61,4 +71,5 @@ function AddPortInfo({ onClose }: { onClose: () => void }) {
     </div>
   );
 }
+
 export default AddPortInfo;

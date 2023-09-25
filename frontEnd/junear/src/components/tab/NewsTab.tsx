@@ -5,13 +5,37 @@ import Box from '@mui/material/Box';
 
 export default function NewsTab() {
   const [value, setValue] = React.useState(0);
+  const category_str = [
+    '전기,전자',
+    '건설업',
+    '운수장비',
+    '의료정밀',
+    '섬유,의복',
+    '통신업',
+    '제조업',
+    '의약품',
+    '서비스업',
+    '화학',
+    '비금속광물',
+    '금융업',
+    '음식료품',
+    '종이,목재',
+    '기계',
+    '철강및금속',
+    '운수창고',
+    '유통업',
+    '전기가스업',
+  ];
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
+    // newValue 값을 검증하여 0부터 18 사이의 값으로 제한합니다.
+    if (newValue >= 0 && newValue < category_str.length) {
+      setValue(newValue);
+    }
   };
 
   return (
-    <Box sx={{ maxWidth: { xs: 1200, sm: 1000 }, color: 'white', fontFamily: 'Noto Sans KR' }}>
+    <Box sx={{ color: 'white', fontFamily: 'Noto Sans KR' }}>
       <Tabs
         value={value}
         onChange={handleChange}
@@ -25,116 +49,19 @@ export default function NewsTab() {
           },
         }}
       >
-        <Tab
-          label="Item One"
-          sx={{
-            color: 'white', // 흰색 글자색
-            fontFamily: 'Noto Sans KR', // 글꼴
-            '&.Mui-selected': {
-              color: '#00ADB5', // 선택된 탭의 글자색 초록색
-            },
-          }}
-        />
-        <Tab
-          label="Item Two"
-          sx={{
-            color: 'white', // 흰색 글자색
-            fontFamily: 'Noto Sans KR', // 글꼴
-            '&.Mui-selected': {
-              color: '#00ADB5', // 선택된 탭의 글자색 초록색
-            },
-          }}
-        />
-        <Tab
-          label="Item Three"
-          sx={{
-            color: 'white', // 흰색 글자색
-            fontFamily: 'Noto Sans KR', // 글꼴
-            '&.Mui-selected': {
-              color: '#00ADB5', // 선택된 탭의 글자색 초록색
-            },
-          }}
-        />
-        <Tab
-          label="Item Four"
-          sx={{
-            color: 'white', // 흰색 글자색
-            fontFamily: 'Noto Sans KR', // 글꼴
-            '&.Mui-selected': {
-              color: '#00ADB5', // 선택된 탭의 글자색 초록색
-            },
-          }}
-        />
-        <Tab
-          label="Item Five"
-          sx={{
-            color: 'white', // 흰색 글자색
-            fontFamily: 'Noto Sans KR', // 글꼴
-            '&.Mui-selected': {
-              color: '#00ADB5', // 선택된 탭의 글자색 초록색
-            },
-          }}
-        />
-        <Tab
-          label="Item Six"
-          sx={{
-            color: 'white', // 흰색 글자색
-            fontFamily: 'Noto Sans KR', // 글꼴
-            '&.Mui-selected': {
-              color: '#00ADB5', // 선택된 탭의 글자색 초록색
-            },
-          }}
-        />
-        <Tab
-          label="Item Seven"
-          sx={{
-            color: 'white', // 흰색 글자색
-            fontFamily: 'Noto Sans KR', // 글꼴
-            '&.Mui-selected': {
-              color: '#00ADB5', // 선택된 탭의 글자색 초록색
-            },
-          }}
-        />
-        <Tab
-          label="Item Seven"
-          sx={{
-            color: 'white', // 흰색 글자색
-            fontFamily: 'Noto Sans KR', // 글꼴
-            '&.Mui-selected': {
-              color: '#00ADB5', // 선택된 탭의 글자색 초록색
-            },
-          }}
-        />
-        <Tab
-          label="Item Seven"
-          sx={{
-            color: 'white', // 흰색 글자색
-            fontFamily: 'Noto Sans KR', // 글꼴
-            '&.Mui-selected': {
-              color: '#00ADB5', // 선택된 탭의 글자색 초록색
-            },
-          }}
-        />
-        <Tab
-          label="Item Seven"
-          sx={{
-            color: 'white', // 흰색 글자색
-            fontFamily: 'Noto Sans KR', // 글꼴
-            '&.Mui-selected': {
-              color: '#00ADB5', // 선택된 탭의 글자색 초록색
-            },
-          }}
-        />
-        <Tab
-          label="Item Seven"
-          sx={{
-            color: 'white', // 흰색 글자색
-            fontFamily: 'Noto Sans KR', // 글꼴
-            '&.Mui-selected': {
-              color: '#00ADB5', // 선택된 탭의 글자색 초록색
-            },
-          }}
-        />
+        {category_str.map((label, index) => (
+          <Tab
+            key={index}
+            label={label}
+            sx={{
+              color: 'white',
+              fontFamily: 'Noto Sans KR',
+              '&.Mui-selected': {
+                color: '#00ADB5',
+              },
+            }}
+          />
+        ))}
       </Tabs>
     </Box>
   );
