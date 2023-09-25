@@ -16,18 +16,16 @@ function App() {
       <NavBar />
       <div className="grid grid-cols-12 gap-[25px] mx-[200px]">
         <Routes>
-          <Route path="/mypage" element={<MyPage />} />
           <Route path="/" element={<HomePage />} />
+          <Route path="/mypage" element={<MyPage />} />
           <Route path="/portfolio" element={<CreatePort />} />
           <Route path="/my-portfolio" element={<MyPort />} />
           <Route path="/news" element={<News />} />
           <Route path="/corperation-search" element={<CorpSearch />} />
           <Route path="/corperation/:corp" element={<CorpDetail />} />
+          <Route path="/login" element={<LoginPage />} />
         </Routes>
       </div>
-      <Routes>
-        <Route path="/login" element={<LoginPage />} />
-      </Routes>
     </div>
   );
 }

@@ -61,7 +61,7 @@ function ResponsiveAppBar() {
               <Logo />
               <Typography
                 noWrap
-                component="a"
+                component="div"
                 sx={{
                   ml: 2,
                   mr: '120px',
