@@ -31,7 +31,7 @@ public class PortfolioRepositoryImpl implements PortfolioRepository {
     @Override
     public Optional<Portfolio> findByMemberIdAndCorporationId(Long memberId,
             Long corporationId) {
-        return jpaPortfolioRepository.duplicateVerifiedByMemberIdAndCorporationId(memberId, corporationId);
+        return jpaPortfolioRepository.findByMemberIdAndCorporationId(memberId, corporationId);
     }
 
     @Override
