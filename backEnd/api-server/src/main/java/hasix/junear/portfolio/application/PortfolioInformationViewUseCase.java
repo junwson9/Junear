@@ -3,6 +3,7 @@ package hasix.junear.portfolio.application;
 import hasix.junear.portfolio.application.dto.ViewPortfolioInformationResponse;
 import hasix.junear.portfolio.domain.AssetsBundle;
 import hasix.junear.portfolio.domain.CorporationDetailsProvider;
+import hasix.junear.portfolio.domain.MemberBundle;
 import hasix.junear.portfolio.domain.Portfolio;
 import hasix.junear.portfolio.domain.PortfolioBundle;
 import hasix.junear.portfolio.domain.PortfolioRepository;
@@ -24,6 +25,7 @@ public class PortfolioInformationViewUseCase {
         //포트폴리오 리스트 호출 by memberId
         List<Portfolio> portfolioList = portfolioRepository.findAllByMemberId(memberId);
         //기업 정보 리스트 호출 by 포폴 리스트
+        //portfolioBundle
         List<PortfolioBundle> portfolioBundleList = portfolioList.stream()
                                                                  .map(
                                                                          portfolio -> PortfolioBundle.from(
@@ -32,12 +34,12 @@ public class PortfolioInformationViewUseCase {
                                                                                  portfolio)
                                                                  )
                                                                  .toList();
-//        assetsBundle
+        //assetsBundle
         AssetsBundle assetsBundle = AssetsBundle.from(portfolioBundleList);
-//        portfolioBundle
 
-//        memberBundle
+        //memberBundle
+        MemberBundle memberBundle = MemberBundle.from(portfolioBundleList);
 
-        return null;
+        return ViewPortfolioInformationResponse.from(assetsBundle, portfolioBundleList, memberBundle);
     }
 }
