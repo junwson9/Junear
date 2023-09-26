@@ -19,7 +19,6 @@ const CardSide = styled.div<{ isFlipped?: boolean }>`
   position: absolute;
   width: 100%;
   height: 100%;
-  background-color: white;
   border-radius: 20px;
   backface-visibility: hidden;
 
@@ -43,9 +42,13 @@ export default function Card({ front, back }: CardProps) {
         ease: [0.45, 0.05, 0.55, 0.95],
       }}
     >
-      <CardSide isFlipped={false}>{front}</CardSide>
+      <CardSide className="bg-zinc-700 text-white" isFlipped={false}>
+        {front}
+      </CardSide>
 
-      <CardSide isFlipped={true}>{back}</CardSide>
+      <CardSide className="bg-zinc-700 text-white" isFlipped={true}>
+        {back}
+      </CardSide>
     </Flipper>
   );
 }

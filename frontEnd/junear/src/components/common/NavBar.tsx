@@ -56,12 +56,12 @@ function ResponsiveAppBar() {
     <AppBar position="fixed" sx={{ backgroundColor: '#222831' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Link to="/home">
+          <Link to="/">
             <Container sx={{ alignItems: 'center', display: { xs: 'none', md: 'flex' } }}>
               <Logo />
               <Typography
                 noWrap
-                component="a"
+                component="div"
                 sx={{
                   ml: 2,
                   mr: '120px',
@@ -111,7 +111,7 @@ function ResponsiveAppBar() {
               }}
             >
               {pages.map((page) => (
-                <Link to={page.link}>
+                <Link key={page.label} to={page.link}>
                   <MenuItem key={page.label} onClick={handleCloseNavMenu}>
                     <Typography noWrap textAlign="center">
                       {page.label}
@@ -124,7 +124,7 @@ function ResponsiveAppBar() {
           <Typography
             noWrap
             component="a"
-            href="/home"
+            href="/"
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
@@ -141,7 +141,7 @@ function ResponsiveAppBar() {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
-              <Link to={page.link}>
+              <Link key={page.label} to={page.link}>
                 <Button
                   key={page.label}
                   onClick={handleCloseNavMenu}
@@ -176,7 +176,7 @@ function ResponsiveAppBar() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <Link to={setting.link}>
+                <Link key={setting.label} to={setting.link}>
                   <MenuItem
                     key={setting.label}
                     onClick={setting.label === '로그아웃' ? handleLogout : handleCloseUserMenu}
