@@ -1,16 +1,52 @@
 import SearchPlaceHolderSmall from './../../components/input/SearchPlaceHolderSmall';
 import BookMark from 'components/common/Bookmark';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ReactComponent as A_Plus } from '../../assets/image/A+rank.svg';
 import Chart from 'components/corp/Chart';
+import axios from 'axios';
 
 function CorpDetail() {
   const [isBookmarked, setIsBookmarked] = useState(false);
-
+  const API_URL = process.env.REACT_APP_API_URL;
+  const [name, setName] = useState('');
+  const [corporation_code, setCorporation_code] = useState('');
+  const [industry_type, setIndustry_type] = useState('');
+  const [corpration_id, setCorpration_id] = useState('');
+  const [stability_rank, setStability_rank] = useState('');
+  const [profitability_rank, setProfitability_rank] = useState('');
+  const [growth_rank, setGrowth_rank] = useState('');
+  const [activity_rank, setActivity_rank] = useState('');
+  const [total_rank, setTotal_rank] = useState('');
+  console.log(activity_rank);
   const handleBookmarkClick = () => {
     setIsBookmarked(!isBookmarked);
   };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const corp = 2;
 
+        const response = await axios.get(`${API_URL}/corporation/${corp}`);
+        // console.log(response.data.data);
+        const res = response.data.data;
+        console.log(res);
+        setName(res.name);
+
+        setCorporation_code(res.corporation_code);
+        setIndustry_type(res.industry_type);
+        setCorpration_id(res.corpration_id);
+        setStability_rank(res.stability_rank);
+        setProfitability_rank(res.activity_rank);
+        setActivity_rank(res.activity_rank);
+        setGrowth_rank(res.growth_rank);
+        setTotal_rank(res.total_rank);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
   return (
     <>
       <div className="col-start-1 col-end-7 mt-[70px]">
@@ -20,7 +56,7 @@ function CorpDetail() {
         <div className="grid-rows-4 bg-zinc-700 rounded-[20px] mb-[25px] h-[480px]">
           <div className="flex">
             <div className="mr-auto mt-6 ml-8">
-              <div className="text-[20px] text-white ">삼성전자</div>
+              <div className="text-[20px] text-white ">{name}</div>
               <div className="text-[12px] text-neutral-400">088980 | 제조</div>
             </div>
             <div className="ml-auto mt-8 mr-8">
