@@ -14,4 +14,11 @@ public class EachAssets {
         this.corporationName = corporationName;
         this.corporationAsset = corporationAsset;
     }
+
+    public static EachAssets from(String name, Long stockCount, Long stockClose) {
+        return EachAssets.builder()
+                         .corporationName(name)
+                         .corporationAsset(stockCount * stockClose)
+                         .build();
+    }
 }
