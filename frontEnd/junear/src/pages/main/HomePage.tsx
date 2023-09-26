@@ -42,17 +42,31 @@ function HomePage() {
         <p className="text-white font-bold text-[28px] text-left nowrap">오늘의 억만장자 명언</p>
       </div>
       {millionaireData.map((item, index) => (
-        <div key={index} className={`col-start-${1 + (index % 4)} col-end-${5 + (index % 4)} h-[350px] mt-[30px]`}>
+        <div
+          key={index}
+          className={`col-start-${1 + index * 4} col-end-${5 + index * 4} h-[350px]  w-[300px] mt-[30px]`}
+        >
           <Card
             front={
-              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-                <img src={item.image_url} alt={item.name} />
-                <p>{item.name}</p>
+              <div
+                className=" group relative hover:shadow-lg"
+                style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}
+              >
+                <img src={item.image_url} alt={item.name} className="h-[350px] w-[300px] rounded-[20px]" />
+                <div className="absolute top-[150px] left-0 w-full h-full flex justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out ">
+                  {item.name}
+                </div>
               </div>
             }
             back={
-              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-                Back
+              <div
+                className="px-4"
+                style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}
+              >
+                <div>
+                  <p>{item.phrase}</p>
+                  <p className="mt-[30px]">-{item.name}-</p>
+                </div>
               </div>
             }
           />
