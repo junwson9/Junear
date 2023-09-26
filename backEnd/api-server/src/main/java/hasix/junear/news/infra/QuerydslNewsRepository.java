@@ -56,7 +56,7 @@ public class QuerydslNewsRepository {
                                 news.title,
                                 news.originUrl,
                                 news.imageUrl,
-                                news.title,
+                                news.times,
                                 news.media
                         )
                 )

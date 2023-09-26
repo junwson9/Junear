@@ -4,12 +4,16 @@ import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 @Component
 public class NewsDateFormatter {
 
     public String format(LocalDateTime dateTime) {
-        LocalDateTime now = LocalDateTime.now();
+        ZoneId seoulZone = ZoneId.of("Asia/Seoul");
+        ZonedDateTime seoulTime = ZonedDateTime.now(seoulZone);
+        LocalDateTime now = seoulTime.toLocalDateTime();
         Duration duration = Duration.between(dateTime, now);
 
         if (duration.toMinutes() < 60) {
