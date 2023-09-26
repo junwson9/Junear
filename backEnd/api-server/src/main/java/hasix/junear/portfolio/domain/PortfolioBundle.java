@@ -16,29 +16,32 @@ public class PortfolioBundle {
     private String industryType;
     private String corporationCode;
     private String name;
-    private String totalRank;
+    private Double totalRankNumber;
+    private String totalRankString;
     private Long stockClose;
     //비노출 정보_기업
-    private Long stabilityRank;
-    private Long growthRank;
-    private Long profitabilityRank;
-    private Long activityRank;
+    private Double stabilityRank;
+    private Double growthRank;
+    private Double profitabilityRank;
+    private Double activityRank;
     //노출 정보_포트폴리오
     private Long stockCount;
     private Long averagePrice;
 
     @Builder
     public PortfolioBundle(Long corporationId, Long industryId, String industryType,
-            String corporationCode, String name, String totalRank, Long stockClose,
-            Long stabilityRank,
-            Long growthRank, Long profitabilityRank, Long activityRank, Long stockCount,
+            String corporationCode, String name, Double totalRankNumber, String totalRankString,
+            Long stockClose,
+            Double stabilityRank,
+            Double growthRank, Double profitabilityRank, Double activityRank, Long stockCount,
             Long averagePrice) {
         this.corporationId = corporationId;
         this.industryId = industryId;
         this.industryType = industryType;
         this.corporationCode = corporationCode;
         this.name = name;
-        this.totalRank = totalRank;
+        this.totalRankNumber = totalRankNumber;
+        this.totalRankString = totalRankString;
         this.stockClose = stockClose;
         this.stabilityRank = stabilityRank;
         this.growthRank = growthRank;
@@ -55,7 +58,6 @@ public class PortfolioBundle {
         ViewCorporationDetailsResponse corporationDetails = viewCorporationDetailsResponseById.orElseThrow(
                 () -> new CorporationException(
                         CorporationErrorCode.NOT_FOUND_CORPORATION));
-        double totalRankNumber = corporationDetails.getTotalRank();
 
         return PortfolioBundle.builder()
                               .corporationId(corporationDetails.getCorporationId())
@@ -63,7 +65,9 @@ public class PortfolioBundle {
                               .industryType(corporationDetails.getIndustryType())
                               .corporationCode(corporationDetails.getCorporationCode())
                               .name(corporationDetails.getName())
-                              .totalRank(classifyGradeByRange(corporationDetails.getTotalRank()))
+                              .totalRankNumber(corporationDetails.getTotalRank())
+                              .totalRankString(
+                                      classifyGradeByRange(corporationDetails.getTotalRank()))
                               .stockClose(corporationDetails.getStockClose())
                               .stabilityRank(corporationDetails.getStabilityRank())
                               .growthRank(corporationDetails.getGrowthRank())
