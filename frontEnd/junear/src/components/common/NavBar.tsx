@@ -13,6 +13,8 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { ReactComponent as Logo } from 'assets/image/nav-logo.svg';
 import { Link, useLocation } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
+import { ProfileImageState } from 'recoil/atom';
 
 const pages = [
   { label: '기업검색', link: '/corperation-search' },
@@ -26,6 +28,8 @@ const settings = [
 ];
 
 function ResponsiveAppBar() {
+  const ACCESS_TOKEN = localStorage.getItem('access_token');
+  const profileImg = useRecoilValue(ProfileImageState);
   const location = useLocation();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
@@ -154,11 +158,20 @@ function ResponsiveAppBar() {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
+            {ACCESS_TOKEN ? ( // ACCESS_TOKEN이 있는 경우
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt="Remy Sharp" src={profileImg} />
+                </IconButton>
+              </Tooltip>
+            ) : (
+              // ACCESS_TOKEN이 없는 경우
+              <Link to="/login">
+                <Button onClick={handleCloseUserMenu} sx={{ mx: 1, my: 2, color: 'white', display: 'block' }}>
+                  로그인/회원가입
+                </Button>
+              </Link>
+            )}
             <Menu
               sx={{ mt: '45px' }}
               id="menu-appbar"
