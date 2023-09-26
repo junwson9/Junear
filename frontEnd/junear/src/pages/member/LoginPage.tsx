@@ -22,7 +22,7 @@ function LoginPage() {
         console.log('data', response.data.data);
         localStorage.setItem('access_token', access_token);
         localStorage.setItem('refresh_token', refresh_token);
-        navigate('/home');
+        navigate('/');
       })
       .catch((error: any) => {
         console.error('로그인 또는 회원가입에 실패했습니다.', error);
@@ -45,7 +45,7 @@ function LoginPage() {
         const { access_token, refresh_token } = response.data.data;
         localStorage.setItem('access_token', access_token);
         localStorage.setItem('refresh_token', refresh_token);
-        navigate('/home');
+        navigate('/');
       })
       .catch((error: any) => {
         console.error('로그인 또는 회원가입에 실패했습니다.', error);

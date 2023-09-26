@@ -1,11 +1,13 @@
 import Profile from 'components/member/Profile';
+import { useRecoilState } from 'recoil';
 import Category from 'components/member/Category';
 import axiosInstance from './../../state/AxiosInterceptor';
-import React, { useEffect, useState } from 'react';
+import { ProfileImageState } from '../../recoil/atom';
+import { useEffect, useState } from 'react';
 
 function MyPage() {
   const [name, setName] = useState<string>('');
-  const [profileImg, setProfileImg] = useState<string>('');
+  const [profileImg, setProfileImg] = useRecoilState(ProfileImageState);
 
   useEffect(() => {
     const fetchData = async () => {
