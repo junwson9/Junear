@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -32,13 +34,13 @@ public class IndustryNewsApiResponse {
         this.media = media;
     }
 
-    public static IndustryNewsApiResponse from(IndustryNewsResponse response) {
+    public static IndustryNewsApiResponse from(IndustryNewsResponse response, String times) {
         return IndustryNewsApiResponse.builder()
                 .industry(response.getIndustry())
                 .title(response.getTitle())
                 .originUrl(response.getOriginUrl())
                 .imageUrl(response.getImageUrl())
-                .times(response.getTimes())
+                .times(times)
                 .media(response.getMedia())
                 .build();
     }
