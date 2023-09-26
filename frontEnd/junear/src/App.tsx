@@ -1,6 +1,6 @@
 import './App.css';
 import NavBar from 'components/common/NavBar';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom'; // useLocation 추가
 import LoginPage from 'pages/member/LoginPage';
 import MyPage from 'pages/member/MyPage';
 import HomePage from 'pages/main/HomePage';
@@ -11,13 +11,18 @@ import CorpSearch from 'pages/corp/CorpSearch';
 import CorpDetail from 'pages/corp/CorpDetail';
 
 function App() {
+  const location = useLocation(); // 현재 경로를 가져오기 위해 useLocation 사용
+
+  // 특정 경로에서만 NavBar를 표시하도록 조건 설정
+  const showNavBar = location.pathname !== '/login';
+
   return (
     <div className="App">
-      <NavBar />
+      {showNavBar && <NavBar />}
       <div className="grid grid-cols-12 gap-[25px] mx-[200px]">
         <Routes>
+          <Route path="/" element={<HomePage />} />
           <Route path="/mypage" element={<MyPage />} />
-          <Route path="/home" element={<HomePage />} />
           <Route path="/portfolio" element={<CreatePort />} />
           <Route path="/my-portfolio" element={<MyPort />} />
           <Route path="/news" element={<News />} />
