@@ -14,7 +14,11 @@ public class NewsDateFormatter {
         ZoneId seoulZone = ZoneId.of("Asia/Seoul");
         ZonedDateTime seoulTime = ZonedDateTime.now(seoulZone);
         LocalDateTime now = seoulTime.toLocalDateTime();
+        System.out.println("now = " + now);
+        System.out.println("dateTime = " + dateTime);
+        System.out.println("=====================================");
         Duration duration = Duration.between(dateTime, now);
+        System.out.println("duration.toMinutes() = " + duration.toMinutes());
 
         if (duration.toMinutes() < 60) {
             long minutes = duration.toMinutes();
