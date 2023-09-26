@@ -1,6 +1,6 @@
-package hasix.junear.bookmart.application;
+package hasix.junear.bookmark.application.dto;
 
-import hasix.junear.bookmart.domain.Bookmark;
+import hasix.junear.bookmark.domain.Bookmark;
 import lombok.Builder;
 import lombok.Getter;
 
