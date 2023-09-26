@@ -1,8 +1,11 @@
 import NewsTab from 'components/tab/NewsTab';
 import NewsOne from 'components/news/NewsOne';
 import './CustomScrollbar.css'; // 커스텀 스크롤바 스타일을 정의한 CSS 파일
+import * as React from 'react';
 
 function News() {
+  const [dataList, setDataList] = React.useState<any[]>([]);
+  // console.log(dataList);
   return (
     <>
       <div className="col-span-3 mt-[50px]"></div>
@@ -11,16 +14,13 @@ function News() {
       </div>
       <div className="col-start-1 col-end-13 mt-[10px] h-[70px] bg-zinc-700 rounded-[15px] overflow-hidden">
         <div className="pt-[9px] items-center justify-center">
-          <NewsTab />
+          <NewsTab dataList={dataList} onDataListChange={setDataList} />
         </div>
       </div>
       <div className="col-start-1 col-end-13 mt-[10px] mb-[20px] h-[557px] bg-zinc-700 rounded-[20px] overflow-auto">
-        <NewsOne />
-        <NewsOne />
-        <NewsOne />
-        <NewsOne />
-        <NewsOne />
-        <NewsOne />
+        {dataList.map((data, index) => (
+          <NewsOne key={index} data={data} />
+        ))}
       </div>
     </>
   );
