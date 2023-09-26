@@ -29,16 +29,16 @@ public class Corporation{
     private String name;
 
     @Column(name = "stability_rank")
-    private Long stabilityRank;
+    private Double stabilityRank;
 
     @Column(name = "growth_rank")
-    private Long growthRank;
+    private Double growthRank;
 
     @Column(name = "profitability_rank")
-    private Long profitabilityRank;
+    private Double profitabilityRank;
 
     @Column(name = "activity_rank")
-    private Long activityRank;
+    private Double activityRank;
 
     @Column(name = "total_rank")
     private Double totalRank;
