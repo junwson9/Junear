@@ -3,6 +3,7 @@ package hasix.junear.news.domain;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.time.LocalDateTime;
 
 @Entity
 public class News {
@@ -21,7 +22,7 @@ public class News {
     @Column(name = "image_url")
     private String imageUrl;
 
-    private String times;
+    private LocalDateTime times;
 
     private String media;
 

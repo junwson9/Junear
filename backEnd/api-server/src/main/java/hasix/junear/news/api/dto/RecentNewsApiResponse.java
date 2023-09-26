@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -31,13 +33,13 @@ public class RecentNewsApiResponse {
         this.media = media;
     }
 
-    public static RecentNewsApiResponse from(RecentNewsResponse response) {
+    public static RecentNewsApiResponse from(RecentNewsResponse response, String times) {
         return RecentNewsApiResponse.builder()
                 .industry(response.getIndustry())
                 .title(response.getTitle())
                 .originUrl(response.getOriginUrl())
                 .imageUrl(response.getImageUrl())
-                .times(response.getTimes())
+                .times(times)
                 .media(response.getMedia())
                 .build();
     }

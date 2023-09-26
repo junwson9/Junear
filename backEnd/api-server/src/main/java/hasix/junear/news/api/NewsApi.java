@@ -4,6 +4,7 @@ import hasix.junear.common.response.ResponseFactory;
 import hasix.junear.news.api.dto.IndustryNewsApiResponse;
 import hasix.junear.news.api.dto.RecentNewsApiResponse;
 import hasix.junear.news.application.IndustryNewsSearchUseCase;
+import hasix.junear.news.application.NewsDateFormatter;
 import hasix.junear.news.application.RecentNewsSearchUseCase;
 import hasix.junear.news.application.dto.IndustryNewsResponse;
 import hasix.junear.news.application.dto.RecentNewsResponse;
@@ -21,6 +22,7 @@ public class NewsApi {
 
     private final RecentNewsSearchUseCase recentNewsSearchUseCase;
     private final IndustryNewsSearchUseCase industryNewsSearchUseCase;
+    private final NewsDateFormatter newsDateFormatter;
 
     @GetMapping("/recent")
     public ResponseEntity<?> getRecentNews() {
@@ -28,7 +30,7 @@ public class NewsApi {
         List<RecentNewsResponse> recentNewList = recentNewsSearchUseCase.getRecentNews();
 
         List<RecentNewsApiResponse> responseList = recentNewList.stream()
-                .map(RecentNewsApiResponse::from)
+                .map(recentNewsResponse -> RecentNewsApiResponse.from(recentNewsResponse, newsDateFormatter.format(recentNewsResponse.getTimes())))
                 .collect(Collectors.toList());
 
         return ResponseFactory.success("최신 뉴스 조회 성공", responseList);
@@ -40,7 +42,7 @@ public class NewsApi {
         List<IndustryNewsResponse> industryNewsList = industryNewsSearchUseCase.getIndustryNews(industryId);
 
         List<IndustryNewsApiResponse> responseList = industryNewsList.stream()
-                .map(IndustryNewsApiResponse::from)
+                .map(industryNewsResponse -> IndustryNewsApiResponse.from(industryNewsResponse, newsDateFormatter.format(industryNewsResponse.getTimes())))
                 .collect(Collectors.toList());
 
         return ResponseFactory.success("산업 뉴스 조회 성공", responseList);
