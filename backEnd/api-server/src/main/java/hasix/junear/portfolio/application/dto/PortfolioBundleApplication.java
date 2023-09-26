@@ -1,14 +1,16 @@
-package hasix.junear.portfolio.domain;
+package hasix.junear.portfolio.application.dto;
 
 import hasix.junear.corporation.application.dto.ViewCorporationDetailsResponse;
 import hasix.junear.corporation.exception.CorporationErrorCode;
 import hasix.junear.corporation.exception.CorporationException;
+import hasix.junear.portfolio.api.dto.PortfolioBundle;
+import hasix.junear.portfolio.domain.Portfolio;
 import java.util.Optional;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class PortfolioBundle {
+public class PortfolioBundleApplication {
 
     //노출 정보_기업
     private Long corporationId;
@@ -29,7 +31,7 @@ public class PortfolioBundle {
     private Long averagePrice;
 
     @Builder
-    public PortfolioBundle(Long corporationId, Long industryId, String industryType,
+    public PortfolioBundleApplication(Long corporationId, Long industryId, String industryType,
             String corporationCode, String name, Double totalRankNumber, String totalRankString,
             Long stockClose,
             Double stabilityRank,
@@ -51,7 +53,7 @@ public class PortfolioBundle {
         this.averagePrice = averagePrice;
     }
 
-    public static PortfolioBundle from(
+    public static PortfolioBundleApplication from(
             Optional<ViewCorporationDetailsResponse> viewCorporationDetailsResponseById,
             Portfolio portfolio) {
 
@@ -59,23 +61,23 @@ public class PortfolioBundle {
                 () -> new CorporationException(
                         CorporationErrorCode.NOT_FOUND_CORPORATION));
 
-        return PortfolioBundle.builder()
-                              .corporationId(corporationDetails.getCorporationId())
-                              .industryId(corporationDetails.getIndustryId())
-                              .industryType(corporationDetails.getIndustryType())
-                              .corporationCode(corporationDetails.getCorporationCode())
-                              .name(corporationDetails.getName())
-                              .totalRankNumber(corporationDetails.getTotalRank())
-                              .totalRankString(
+        return PortfolioBundleApplication.builder()
+                                         .corporationId(corporationDetails.getCorporationId())
+                                         .industryId(corporationDetails.getIndustryId())
+                                         .industryType(corporationDetails.getIndustryType())
+                                         .corporationCode(corporationDetails.getCorporationCode())
+                                         .name(corporationDetails.getName())
+                                         .totalRankNumber(corporationDetails.getTotalRank())
+                                         .totalRankString(
                                       classifyGradeByRange(corporationDetails.getTotalRank()))
-                              .stockClose(corporationDetails.getStockClose())
-                              .stabilityRank(corporationDetails.getStabilityRank())
-                              .growthRank(corporationDetails.getGrowthRank())
-                              .profitabilityRank(corporationDetails.getProfitabilityRank())
-                              .activityRank(corporationDetails.getActivityRank())
-                              .stockCount(portfolio.getStockCount())
-                              .averagePrice(portfolio.getAveragePrice())
-                              .build();
+                                         .stockClose(corporationDetails.getStockClose())
+                                         .stabilityRank(corporationDetails.getStabilityRank())
+                                         .growthRank(corporationDetails.getGrowthRank())
+                                         .profitabilityRank(corporationDetails.getProfitabilityRank())
+                                         .activityRank(corporationDetails.getActivityRank())
+                                         .stockCount(portfolio.getStockCount())
+                                         .averagePrice(portfolio.getAveragePrice())
+                                         .build();
     }
 
     private static String classifyGradeByRange(Double totalRankNumber) {
@@ -96,6 +98,26 @@ public class PortfolioBundle {
         } else {
             return "not value";
         }
+    }
+
+    public static PortfolioBundle toPortfolioBundle(PortfolioBundleApplication portfolioBundleApplication) {
+
+        return PortfolioBundle.builder()
+                .corporationId(portfolioBundleApplication.getCorporationId())
+                .industryId(portfolioBundleApplication.getIndustryId())
+                .industryType(portfolioBundleApplication.getIndustryType())
+                .corporationCode(portfolioBundleApplication.getCorporationCode())
+                .name(portfolioBundleApplication.getName())
+                .totalRankNumber(portfolioBundleApplication.getTotalRankNumber())
+                .totalRankString(portfolioBundleApplication.getTotalRankString())
+                .stockClose(portfolioBundleApplication.getStockClose())
+                .stabilityRank(portfolioBundleApplication.getStabilityRank())
+                .growthRank(portfolioBundleApplication.getGrowthRank())
+                .profitabilityRank(portfolioBundleApplication.getProfitabilityRank())
+                .activityRank(portfolioBundleApplication.getActivityRank())
+                .stockCount(portfolioBundleApplication.getStockCount())
+                .averagePrice(portfolioBundleApplication.getAveragePrice())
+                .build();
     }
 }
 

@@ -1,5 +1,7 @@
-package hasix.junear.portfolio.domain;
+package hasix.junear.portfolio.api.dto;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,6 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@JsonNaming(SnakeCaseStrategy.class)
 public class EachRank {
 
     private Long s;

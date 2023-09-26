@@ -1,6 +1,7 @@
 package hasix.junear.portfolio.application.dto;
 
 import hasix.junear.portfolio.api.dto.PortFolioAddApiRequest;
+import hasix.junear.portfolio.api.dto.PortFolioCreateApiRequest;
 import hasix.junear.portfolio.domain.Portfolio;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,19 +26,21 @@ public class CreatePortfolioRequest {
     }
 
     public static List<CreatePortfolioRequest> from(Long memberId,
-            List<PortFolioAddApiRequest> requestList) {
+            PortFolioCreateApiRequest requestList) {
 
-        return requestList.stream()
+        return requestList.getRequestList().stream()
                           .map(request -> CreatePortfolioRequest.builder()
                                                                 .memberId(memberId)
-                                                                .corporationId(request.getCorporationId())
+                                                                .corporationId(
+                                                                        request.getCorporationId())
                                                                 .stockCount(request.getStockCount())
-                                                                .averagePrice(request.getAveragePrice())
+                                                                .averagePrice(
+                                                                        request.getAveragePrice())
                                                                 .build())
-                        .collect(Collectors.toList());
+                          .collect(Collectors.toList());
     }
 
-    public static Portfolio toPortfolio (CreatePortfolioRequest request){
+    public static Portfolio toPortfolio(CreatePortfolioRequest request) {
 
         return Portfolio.builder()
                         .memberId(request.getMemberId())

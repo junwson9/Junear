@@ -1,11 +1,14 @@
-package hasix.junear.portfolio.domain;
+package hasix.junear.portfolio.api.dto;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import java.util.List;
 import java.util.function.ToDoubleFunction;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
+@JsonNaming(SnakeCaseStrategy.class)
 public class MemberBundle {
 
     //등급

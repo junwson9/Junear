@@ -1,11 +1,11 @@
 package hasix.junear.portfolio.application;
 
 import hasix.junear.portfolio.application.dto.ViewPortfolioInformationResponse;
-import hasix.junear.portfolio.domain.AssetsBundle;
+import hasix.junear.portfolio.application.dto.AssetsBundleApplication;
 import hasix.junear.portfolio.domain.CorporationDetailsProvider;
-import hasix.junear.portfolio.domain.MemberBundle;
+import hasix.junear.portfolio.application.dto.MemberBundleApplication;
 import hasix.junear.portfolio.domain.Portfolio;
-import hasix.junear.portfolio.domain.PortfolioBundle;
+import hasix.junear.portfolio.application.dto.PortfolioBundleApplication;
 import hasix.junear.portfolio.domain.PortfolioRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -26,20 +26,24 @@ public class PortfolioInformationViewUseCase {
         List<Portfolio> portfolioList = portfolioRepository.findAllByMemberId(memberId);
         //기업 정보 리스트 호출 by 포폴 리스트
         //portfolioBundle
-        List<PortfolioBundle> portfolioBundleList = portfolioList.stream()
-                                                                 .map(
-                                                                         portfolio -> PortfolioBundle.from(
+        List<PortfolioBundleApplication> portfolioBundleApplicationList = portfolioList.stream()
+                                                                                       .map(
+                                                                         portfolio -> PortfolioBundleApplication.from(
                                                                                  corporationDetailsProvider.findViewCorporationDetailsResponseById(
                                                                                          portfolio.getCorporationId()),
                                                                                  portfolio)
                                                                  )
-                                                                 .toList();
+                                                                                       .toList();
         //assetsBundle
-        AssetsBundle assetsBundle = AssetsBundle.from(portfolioBundleList);
+        AssetsBundleApplication assetsBundleApplication = AssetsBundleApplication.from(
+                portfolioBundleApplicationList);
 
         //memberBundle
-        MemberBundle memberBundle = MemberBundle.from(portfolioBundleList);
+        MemberBundleApplication memberBundleApplication = MemberBundleApplication.from(
+                portfolioBundleApplicationList);
 
-        return ViewPortfolioInformationResponse.from(assetsBundle, portfolioBundleList, memberBundle);
+        return ViewPortfolioInformationResponse.from(assetsBundleApplication,
+                portfolioBundleApplicationList,
+                memberBundleApplication);
     }
 }
