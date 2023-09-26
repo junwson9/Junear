@@ -21,6 +21,7 @@ public class RecentNewsSearchUseCase {
     private final NewsRepository newsRepository;
 
     public List<RecentNewsResponse> getRecentNews() {
+
         return newsRepository.findRecentNews();
     }
 }
