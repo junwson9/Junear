@@ -12,17 +12,17 @@ public class CorporationDetailsApiResponse {
     private String industry_type;
     private String corporation_code;
     private String name;
-    private Long stability_rank;
-    private Long growth_rank;
-    private Long profitability_rank;
-    private Long activity_rank;
+    private Double stability_rank;
+    private Double growth_rank;
+    private Double profitability_rank;
+    private Double activity_rank;
     private Double total_rank;
     private Long stock_close;
 
     @Builder
     public CorporationDetailsApiResponse(Long corporation_id, Long industry_id, String industry_type, String corporation_code,
-            String name, Long stability_rank, Long growth_rank, Long profitability_rank,
-            Long activity_rank,
+            String name, Double stability_rank, Double growth_rank, Double profitability_rank,
+            Double activity_rank,
             Double total_rank, Long stock_close) {
         this.corporation_id = corporation_id;
         this.industry_id = industry_id;

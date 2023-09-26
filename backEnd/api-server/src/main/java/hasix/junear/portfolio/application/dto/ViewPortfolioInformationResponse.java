@@ -21,4 +21,13 @@ public class ViewPortfolioInformationResponse {
         this.portfolioBundle = portfolioBundle;
         this.memberBundle = memberBundle;
     }
+
+    public static ViewPortfolioInformationResponse from(AssetsBundle assetsBundle,
+            List<PortfolioBundle> portfolioBundleList, MemberBundle memberBundle) {
+        return ViewPortfolioInformationResponse.builder()
+                                               .assetsBundle(assetsBundle)
+                                               .portfolioBundle(portfolioBundleList)
+                                               .memberBundle(memberBundle)
+                                               .build();
+    }
 }
