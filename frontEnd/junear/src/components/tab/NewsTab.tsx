@@ -4,9 +4,17 @@ import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import { useEffect } from 'react';
 import axiosInstance from 'state/AxiosInterceptor';
+import axios from 'axios';
 
-export default function NewsTab() {
-  const [value, setValue] = React.useState(1);
+interface NewsTabProps {
+  dataList: any[]; // 데이터 리스트의 타입에 맞게 수정하세요
+  onDataListChange: React.Dispatch<React.SetStateAction<any[]>>;
+}
+
+export default function NewsTab({ dataList, onDataListChange }: NewsTabProps) {
+  const [value, setValue] = React.useState(0);
+  const API_URL = process.env.REACT_APP_API_URL;
+  // console.log(data);
   const category_str = [
     '전기,전자',
     '건설업',
@@ -31,8 +39,12 @@ export default function NewsTab() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axiosInstance.get('/news?industry_id=?');
-        console.log(response.data.data);
+        const query = `?industry_id=${value + 1}`;
+        const response = await axios.get(`${API_URL}/news/${query}`);
+        // console.log(response);
+        // console.log(response.data.data);
+        const dataList = response.data.data;
+        onDataListChange(dataList); // 데이터 업데이트를 상위 컴포넌트로 전달
       } catch (error) {
         console.error('Error fetching data:', error);
       }
