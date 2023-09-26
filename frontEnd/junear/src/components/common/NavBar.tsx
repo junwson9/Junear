@@ -13,6 +13,8 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { ReactComponent as Logo } from 'assets/image/nav-logo.svg';
 import { Link, useLocation } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
+import { ProfileImageState } from 'recoil/atom';
 
 const pages = [
   { label: '기업검색', link: '/corperation-search' },
@@ -26,6 +28,8 @@ const settings = [
 ];
 
 function ResponsiveAppBar() {
+  const ACCESS_TOKEN = localStorage.getItem('access_token');
+  const profileImg = useRecoilValue(ProfileImageState);
   const location = useLocation();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
@@ -56,12 +60,12 @@ function ResponsiveAppBar() {
     <AppBar position="fixed" sx={{ backgroundColor: '#222831' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Link to="/home">
+          <Link to="/">
             <Container sx={{ alignItems: 'center', display: { xs: 'none', md: 'flex' } }}>
               <Logo />
               <Typography
                 noWrap
-                component="a"
+                component="div"
                 sx={{
                   ml: 2,
                   mr: '120px',
@@ -111,7 +115,7 @@ function ResponsiveAppBar() {
               }}
             >
               {pages.map((page) => (
-                <Link to={page.link}>
+                <Link key={page.label} to={page.link}>
                   <MenuItem key={page.label} onClick={handleCloseNavMenu}>
                     <Typography noWrap textAlign="center">
                       {page.label}
@@ -124,7 +128,7 @@ function ResponsiveAppBar() {
           <Typography
             noWrap
             component="a"
-            href="/home"
+            href="/"
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
@@ -141,7 +145,7 @@ function ResponsiveAppBar() {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
-              <Link to={page.link}>
+              <Link key={page.label} to={page.link}>
                 <Button
                   key={page.label}
                   onClick={handleCloseNavMenu}
@@ -154,11 +158,20 @@ function ResponsiveAppBar() {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
+            {ACCESS_TOKEN ? ( // ACCESS_TOKEN이 있는 경우
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt="Remy Sharp" src={profileImg} />
+                </IconButton>
+              </Tooltip>
+            ) : (
+              // ACCESS_TOKEN이 없는 경우
+              <Link to="/login">
+                <Button onClick={handleCloseUserMenu} sx={{ mx: 1, my: 2, color: 'white', display: 'block' }}>
+                  로그인/회원가입
+                </Button>
+              </Link>
+            )}
             <Menu
               sx={{ mt: '45px' }}
               id="menu-appbar"
@@ -176,7 +189,7 @@ function ResponsiveAppBar() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <Link to={setting.link}>
+                <Link key={setting.label} to={setting.link}>
                   <MenuItem
                     key={setting.label}
                     onClick={setting.label === '로그아웃' ? handleLogout : handleCloseUserMenu}
