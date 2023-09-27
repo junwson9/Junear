@@ -49,6 +49,10 @@ public class SecurityConfig {
             .authorizeRequests()
             .antMatchers(HttpMethod.GET, "/api/member/info", "/api/member/logout", "/api/member/reissue")
             .authenticated()
+            .antMatchers(HttpMethod.POST, "/api/portfolio/init", "/api/portfolio").authenticated()
+            .antMatchers(HttpMethod.DELETE, "/api/portfolio").authenticated()
+            .antMatchers(HttpMethod.PATCH, "/api/portfolio").authenticated()
+            .antMatchers(HttpMethod.GET, "/api/portfolio").authenticated()
             .antMatchers("/**")
             .permitAll();
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
