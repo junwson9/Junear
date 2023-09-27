@@ -18,6 +18,7 @@ import hasix.junear.portfolio.application.dto.ViewPortfolioInformationResponse;
 import hasix.junear.springconfig.config.auth.AuthMember;
 import hasix.junear.springconfig.config.auth.AuthenticatedMember;
 import javax.validation.Valid;
+import javax.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -71,21 +72,21 @@ public class PortfolioApi {
     }
 
     //포트폴리오 기업 삭제; portfolioRemove
-    @DeleteMapping("/{corporation_id}")
-    public ResponseEntity<?> portfolioRemove(@AuthenticatedMember AuthMember member,
-            @PathVariable("corporation_id") Long corporationId) {
+    @DeleteMapping("/{portfolio_id}")
+    public ResponseEntity<?> portfolioRemove(@PathVariable("portfolio_id") @Positive(message = "양의 정수의 ID만 입력해야 합니다.") Long portfolioId) {
 
-        eachPortfolioRemoveUseCase.deletePortfolio(RemoveEachPortfolioRequest.from(member.getId(), corporationId));
+        eachPortfolioRemoveUseCase.deletePortfolio(RemoveEachPortfolioRequest.from(portfolioId));
 
         return ResponseFactory.success("포트폴리오 삭제 성공");
     }
 
     //포트폴리어 기업 수정(수량 및 평단가); portfolioModify
-    @PatchMapping
+    @PatchMapping("/{portfolio_id}")
     public ResponseEntity<?> portfolioModify(@AuthenticatedMember AuthMember member,
+            @PathVariable("portfolio_id") @Positive(message = "양의 정수의 ID만 입력해야 합니다.") Long portfolioId,
             @Valid @RequestBody PortFolioModifyApiRequest portFolioModifyApiRequest) {
 
-        eachPortfolioModifyUseCase.updatePortfolio(ModifyEachPortfolioRequest.from(member.getId(), portFolioModifyApiRequest));
+        eachPortfolioModifyUseCase.updatePortfolio(ModifyEachPortfolioRequest.from(member.getId(), portfolioId, portFolioModifyApiRequest));
 
         return ResponseFactory.success("포트폴리오 수정 성공");
     }
