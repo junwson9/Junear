@@ -4,8 +4,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import java.util.List;
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import lombok.Builder;
+import javax.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -15,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class PortFolioCreateApiRequest {
 
     @Valid
-    @NotNull
+    @NotEmpty
     private List<PortFolioAddApiRequest> requestList;
 
 }

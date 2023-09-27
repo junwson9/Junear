@@ -18,11 +18,11 @@ public class PortFolioModifyApiRequest {
     @Positive(message = "양수의 숫자만 입력하세요.")
     private Long corporationId;
 
-    @NotEmpty(message = "수량을 반드시 입력해야 합니다.")
+    @NotNull(message = "수량을 반드시 입력해야 합니다.")
     @Positive(message = "양수의 숫자만 입력하세요.")
     private Long stockCount;
 
-    @NotEmpty(message = "평단가를 반드시 입력해야 합니다.")
+    @NotNull(message = "평단가를 반드시 입력해야 합니다.")
     @Positive(message = "양수의 숫자만 입력하세요.")
     private Long averagePrice;
 
