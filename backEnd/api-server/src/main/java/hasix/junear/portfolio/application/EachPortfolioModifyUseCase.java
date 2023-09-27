@@ -23,11 +23,6 @@ public class EachPortfolioModifyUseCase {
                 request.getMemberId(), request.getCorporationId()).orElseThrow(() -> new PortfolioException(
                 PortfolioErrorCode.NOT_FOUND_PORTFOLIO));
 
-        Optional.ofNullable(request.getStockCount())
-                .ifPresent(findPortfolio::setStockCount);
-        Optional.ofNullable(request.getAveragePrice())
-                .ifPresent(findPortfolio::setAveragePrice);
-
         portfolioRepository.save(findPortfolio);
     }
 }
