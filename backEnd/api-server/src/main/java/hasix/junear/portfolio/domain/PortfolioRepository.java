@@ -9,11 +9,9 @@ public interface PortfolioRepository {
 
     Portfolio save (Portfolio portfolio);
 
-    List<Portfolio> saveAll (List<Portfolio> portfolioList);
-
     Optional<Portfolio> findByMemberIdAndCorporationId(Long memberId, Long corporationId);
 
-    void deleteByMemberIdAndCorporationId (Long memberId, Long corporationId);
+    void deleteById (Long portfolioId);
 
     List<Portfolio> findAllByMemberId(Long memberId);
 }
