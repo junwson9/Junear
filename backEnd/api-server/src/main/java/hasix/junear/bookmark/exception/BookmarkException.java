@@ -1,4 +1,4 @@
-package hasix.junear.bookmart.exception;
+package hasix.junear.bookmark.exception;
 
 import hasix.junear.common.exception.ErrorCode;
 
