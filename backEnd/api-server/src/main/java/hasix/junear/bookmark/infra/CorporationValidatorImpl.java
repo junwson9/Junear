@@ -1,6 +1,6 @@
-package hasix.junear.bookmart.infra;
+package hasix.junear.bookmark.infra;
 
-import hasix.junear.bookmart.application.CorporationValidator;
+import hasix.junear.bookmark.application.CorporationValidator;
 import hasix.junear.corporation.domain.Corporation;
 import hasix.junear.corporation.infra.mysql.JpaCorporationRepository;
 import lombok.RequiredArgsConstructor;

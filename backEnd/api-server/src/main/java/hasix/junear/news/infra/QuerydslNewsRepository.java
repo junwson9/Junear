@@ -56,13 +56,14 @@ public class QuerydslNewsRepository {
                                 news.title,
                                 news.originUrl,
                                 news.imageUrl,
-                                news.title,
+                                news.times,
                                 news.media
                         )
                 )
                 .from(news)
                 .join(industry).on(news.industryId.eq(industry.id))
                 .where(news.industryId.eq(industryId))
+                .limit(10)
                 .fetch();
 
         return result;
