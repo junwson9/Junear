@@ -16,20 +16,20 @@ public class BookmarkSearchApiResponse {
 
     private Long corporationId;
     private String corporationName;
-    private String industry_type;
+    private String industryType;
 
     @Builder
-    public BookmarkSearchApiResponse(Long corporationId, String corporationName, String industry_type) {
+    public BookmarkSearchApiResponse(Long corporationId, String corporationName, String industryType) {
         this.corporationId = corporationId;
         this.corporationName = corporationName;
-        this.industry_type = industry_type;
+        this.industryType = industryType;
     }
 
     public static BookmarkSearchApiResponse from(BookmarkInfo bookmarkInfo) {
         return BookmarkSearchApiResponse.builder()
                 .corporationId(bookmarkInfo.getCorporationId())
                 .corporationName(bookmarkInfo.getCorporationName())
-                .industry_type(bookmarkInfo.getIndustry())
+                .industryType(bookmarkInfo.getIndustry())
                 .build();
     }
 }
