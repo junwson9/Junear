@@ -10,6 +10,7 @@ from datetime import datetime, timedelta
 from pydantic import BaseModel
 from apscheduler.schedulers.background import BackgroundScheduler
 import re
+import time
 
 router = APIRouter()
 
@@ -43,7 +44,7 @@ def scrape_and_store_news(db: Session, news_item: NewsCreate):
         search_query = i
 
         url = f"https://search.naver.com/search.naver?where=news&sm=tab_jum&query={search_query}&sort=RELEVANT&ds={start_date}&de={end_date}"
-        headers = {"User-Agent": "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36"}
+        headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36"}
 
         response = requests.get(url, headers=headers)
         soup = BeautifulSoup(response.text, 'lxml')
@@ -164,6 +165,7 @@ def scrape_and_store_news(db: Session, news_item: NewsCreate):
             df_tot = pd.concat([df_tot,df], ignore_index=True)
             # print(len(df))
             # print(df)
+            
 
         else:
             print("웹 페이지에 접근할 수 없습니다. HTTP 상태 코드:", response.status_code)
@@ -213,7 +215,7 @@ def scrape_and_store_news_scheduler():
     start_date = (datetime.now() - timedelta(days=3)).strftime("%Y%m%d")
     df_tot = pd.DataFrame()
 
-    for i in keywords:
+    for i in keywords[:10]:
         search_query = i
 
         url = f"https://search.naver.com/search.naver?where=news&sm=tab_jum&query={search_query}&sort=RELEVANT&ds={start_date}&de={end_date}"
@@ -336,8 +338,9 @@ def scrape_and_store_news_scheduler():
             df_tot = pd.concat([df_tot,df], ignore_index=True)
             # print(len(df))
             # print(df)
-
+            time.sleep(0.3)
         else:
+            print(url)
             print("웹 페이지에 접근할 수 없습니다. HTTP 상태 코드:", response.status_code)
 
     # print(df_tot)
@@ -354,13 +357,12 @@ def scrape_and_store_news_scheduler():
     # db.refresh(db_news)
     return
 
-# Add a job to the scheduler that runs every hour
-# scheduler.add_job(scrape_and_store_news_scheduler, 'interval', hours = 1)
 
-scheduler.add_job(scrape_and_store_news_scheduler, 'interval', hours = 1)
+
+# scheduler.add_job(scrape_and_store_news_scheduler, 'interval', minutes = 5)
 
 # Start the scheduler
-scheduler.start()
+
 
 @router.post("/news/", response_model=NewsCreate)
 def create_news(news_item: NewsCreate, db: Session = Depends(get_db)):
