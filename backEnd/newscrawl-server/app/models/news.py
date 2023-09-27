@@ -1,23 +1,23 @@
-from pydantic import BaseModel
 from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime
-from db import Base
+Base = declarative_base()
 
 class News(Base):
-    __tablename__ = "news"
+    __tablename__ = 'news'
 
     id = Column(Integer, primary_key=True, index=True)
-    news_title = Column(String, index=True)
-    news_url = Column(String, unique=True, index=True)
-    news_image_url = Column(String)
-    news_type = Column(String, index=True)
-    news_times = Column(DateTime)
-    news_media = Column(String)
+    title = Column(String(length=100), index=True)
+    origin_url = Column(String(length=200))
+    image_url = Column(String(length=200))
+    industry_id = Column(Integer)
+    times = Column(DateTime)
+    media = Column(String(length=50))
 
-class NewsCreate(BaseModel):
-    news_title: str
-    news_url: str
-    news_image_url: str = None
-    news_type: str
-    news_times: datetime
-    news_media: str
+    def __init__(self, title, origin_url, image_url, industry_id, times, media):
+        self.title = title
+        self.origin_url = origin_url
+        self.image_url = image_url
+        self.industry_id = industry_id
+        self.times = times
+        self.media = media
