@@ -3,6 +3,7 @@ import { ReactComponent as Filter } from '../../assets/image/filter.svg';
 import { ReactComponent as Plus } from '../../assets/image/plus.svg';
 import { ReactComponent as Srank } from '../../assets/image/Srank.svg';
 import axiosInstance from 'state/AxiosInterceptor';
+import AbstractChart from 'components/portfolio/AbstractChart';
 interface Portfolio {
   assets_bundle: {
     total_assets: number;
@@ -54,7 +55,7 @@ function MyPort() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axiosInstance.get<ApiResponse>('/portfolio?memberId=1');
+        const response = await axiosInstance.get<ApiResponse>('/portfolio?memberId=4');
         setPortData(response.data.data);
         console.log(portData);
       } catch (error) {
@@ -83,7 +84,7 @@ function MyPort() {
               <div className="flex pl-[25px] pt-[5px] text-rose-500">₩ 23,423,454 (2345%)</div>
             </div>
             <div className="h-[25px]"></div>
-            <div className="h-[300px] bg-zinc-700 rounded-[20px]">
+            <div className="relative h-[300px] bg-zinc-700 rounded-[20px]">
               <div className="flex pt-[25px] pl-[25px] gap-[5px]">
                 <button
                   className={`w-[76px] h-[27px] pl-[27px] pr-[26px] rounded-lg justify-center items-center inline-flex whitespace-nowrap text-white ${
@@ -101,6 +102,9 @@ function MyPort() {
                 >
                   금액
                 </button>
+              </div>
+              <div className="absolute left-[-15px] mt-[25px] ">
+                <AbstractChart />
               </div>
               {/* 여기에 차트가 들어가야함 등급일땐 등급관한거 금액일땐 금액관한거 랜더링 */}
             </div>
