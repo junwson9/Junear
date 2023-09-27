@@ -1,4 +1,4 @@
-package hasix.junear.bookmart.domain;
+package hasix.junear.bookmark.domain;
 
 import lombok.Builder;
 

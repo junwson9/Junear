@@ -1,7 +1,6 @@
-package hasix.junear.bookmart.infra;
+package hasix.junear.bookmark.infra;
 
-import hasix.junear.bookmart.application.BookmarkRequest;
-import hasix.junear.bookmart.domain.Bookmark;
+import hasix.junear.bookmark.domain.Bookmark;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

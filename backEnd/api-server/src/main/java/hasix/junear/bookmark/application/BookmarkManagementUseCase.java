@@ -1,7 +1,8 @@
-package hasix.junear.bookmart.application;
+package hasix.junear.bookmark.application;
 
-import hasix.junear.bookmart.domain.BookmarkRepository;
-import hasix.junear.bookmart.exception.BookmarkException;
+import hasix.junear.bookmark.application.dto.BookmarkRequest;
+import hasix.junear.bookmark.domain.BookmarkRepository;
+import hasix.junear.bookmark.exception.BookmarkException;
 import hasix.junear.common.exception.CustomException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
