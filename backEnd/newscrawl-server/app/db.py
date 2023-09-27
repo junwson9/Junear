@@ -4,13 +4,19 @@ from sqlalchemy.ext.declarative import declarative_base
 from dotenv import load_dotenv
 import os
 from fastapi import HTTPException
+import logging
+import logging.config
+
+logging.config.fileConfig('log.ini')
+
+logger = logging.getLogger(__name__)
 
 load_dotenv()
 
 DB_USER = os.getenv("db_user")
 DB_PASSWORD = os.getenv("db_password")
 DB_HOST = os.getenv("db_host")
-DB_PORT = os.getenv("db_port")
+DB_PORT = int(os.getenv("db_port"))
 DB_NAME = os.getenv("db_name")
 
 # Database connection string
@@ -25,7 +31,7 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 def init_db():
     try:
         Base.metadata.create_all(bind=engine)
-        print("Database tables initialized.")
+        logger.info("Database tables initialized.")
     except Exception as e:
         raise HTTPException(status_code=500, detail="Database initialization error")
 
