@@ -10,7 +10,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class PortfolioBundleApplication {
+public class PortfolioBundleApplication { //TODO 책임 분리, 네이밍 변경 => portfolioInformation 혹은 information의 분리
 
     //노출 정보_기업
     private Long corporationId;
@@ -19,7 +19,7 @@ public class PortfolioBundleApplication {
     private String corporationCode;
     private String name;
     private Double totalRankNumber;
-    private String totalRankString;
+    private String totalRankString;//TODO Enum (범위값)
     private Long stockClose;
     //비노출 정보_기업
     private Double stabilityRank;
@@ -69,11 +69,13 @@ public class PortfolioBundleApplication {
                                          .name(corporationDetails.getName())
                                          .totalRankNumber(corporationDetails.getTotalRank())
                                          .totalRankString(
-                                      classifyGradeByRange(corporationDetails.getTotalRank()))
+                                                 classifyGradeByRange(
+                                                         corporationDetails.getTotalRank()))
                                          .stockClose(corporationDetails.getStockClose())
                                          .stabilityRank(corporationDetails.getStabilityRank())
                                          .growthRank(corporationDetails.getGrowthRank())
-                                         .profitabilityRank(corporationDetails.getProfitabilityRank())
+                                         .profitabilityRank(
+                                                 corporationDetails.getProfitabilityRank())
                                          .activityRank(corporationDetails.getActivityRank())
                                          .stockCount(portfolio.getStockCount())
                                          .averagePrice(portfolio.getAveragePrice())
@@ -100,24 +102,25 @@ public class PortfolioBundleApplication {
         }
     }
 
-    public static PortfolioBundle toPortfolioBundle(PortfolioBundleApplication portfolioBundleApplication) {
+    public static PortfolioBundle toPortfolioBundle(
+            PortfolioBundleApplication portfolioBundleApplication) {
 
         return PortfolioBundle.builder()
-                .corporationId(portfolioBundleApplication.getCorporationId())
-                .industryId(portfolioBundleApplication.getIndustryId())
-                .industryType(portfolioBundleApplication.getIndustryType())
-                .corporationCode(portfolioBundleApplication.getCorporationCode())
-                .name(portfolioBundleApplication.getName())
-                .totalRankNumber(portfolioBundleApplication.getTotalRankNumber())
-                .totalRankString(portfolioBundleApplication.getTotalRankString())
-                .stockClose(portfolioBundleApplication.getStockClose())
-                .stabilityRank(portfolioBundleApplication.getStabilityRank())
-                .growthRank(portfolioBundleApplication.getGrowthRank())
-                .profitabilityRank(portfolioBundleApplication.getProfitabilityRank())
-                .activityRank(portfolioBundleApplication.getActivityRank())
-                .stockCount(portfolioBundleApplication.getStockCount())
-                .averagePrice(portfolioBundleApplication.getAveragePrice())
-                .build();
+                              .corporationId(portfolioBundleApplication.getCorporationId())
+                              .industryId(portfolioBundleApplication.getIndustryId())
+                              .industryType(portfolioBundleApplication.getIndustryType())
+                              .corporationCode(portfolioBundleApplication.getCorporationCode())
+                              .name(portfolioBundleApplication.getName())
+                              .totalRankNumber(portfolioBundleApplication.getTotalRankNumber())
+                              .totalRankString(portfolioBundleApplication.getTotalRankString())
+                              .stockClose(portfolioBundleApplication.getStockClose())
+                              .stabilityRank(portfolioBundleApplication.getStabilityRank())
+                              .growthRank(portfolioBundleApplication.getGrowthRank())
+                              .profitabilityRank(portfolioBundleApplication.getProfitabilityRank())
+                              .activityRank(portfolioBundleApplication.getActivityRank())
+                              .stockCount(portfolioBundleApplication.getStockCount())
+                              .averagePrice(portfolioBundleApplication.getAveragePrice())
+                              .build();
     }
 }
 

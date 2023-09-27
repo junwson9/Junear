@@ -1,6 +1,6 @@
 package hasix.junear.portfolio.application.dto;
 
-import hasix.junear.portfolio.api.dto.AssetsBundle;
+import hasix.junear.portfolio.api.dto.AssetsBundleApiResponse;
 import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,7 +19,9 @@ public class AssetsBundleApplication {
         this.profitAndLoss = profitAndLoss;
     }
 
-    public static AssetsBundleApplication from(List<PortfolioBundleApplication> portfolioBundleApplicationList) {
+    //TODO 분리될 부분
+    public static AssetsBundleApplication from(
+            List<PortfolioBundleApplication> portfolioBundleApplicationList) {
 
         Long calculatedTotalAssets = assetsCalculator(portfolioBundleApplicationList);
         Long calculatedTotalInvestment = investmentCalculator(portfolioBundleApplicationList);
@@ -33,21 +35,23 @@ public class AssetsBundleApplication {
                                       .build();
     }
 
-    private static Long assetsCalculator(List<PortfolioBundleApplication> portfolioBundleApplicationList) {
+    private static Long assetsCalculator(
+            List<PortfolioBundleApplication> portfolioBundleApplicationList) {
 
         return portfolioBundleApplicationList.stream()
                                              .mapToLong(
-                                          portfolio -> portfolio.getStockCount()
-                                                  * portfolio.getStockClose())
+                                                     portfolio -> portfolio.getStockCount()
+                                                             * portfolio.getStockClose())
                                              .sum();
     }
 
-    private static Long investmentCalculator(List<PortfolioBundleApplication> portfolioBundleApplicationList) {
+    private static Long investmentCalculator(
+            List<PortfolioBundleApplication> portfolioBundleApplicationList) {
 
         return portfolioBundleApplicationList.stream()
                                              .mapToLong(
-                                          portfolio -> portfolio.getStockCount()
-                                                  * portfolio.getAveragePrice())
+                                                     portfolio -> portfolio.getStockCount()
+                                                             * portfolio.getAveragePrice())
                                              .sum();
     }
 
@@ -57,11 +61,12 @@ public class AssetsBundleApplication {
         return calculatedTotalAssets - calculatedTotalInvestment;
     }
 
-    public static AssetsBundle toAssetsBundle(AssetsBundleApplication assetsBundleApplication) {
-        return AssetsBundle.builder()
-                .totalAssets(assetsBundleApplication.totalAssets)
-                .totalInvestment(assetsBundleApplication.totalInvestment)
-                .profitAndLoss(assetsBundleApplication.profitAndLoss)
-                .build();
+    public static AssetsBundleApiResponse toAssetsBundle(
+            AssetsBundleApplication assetsBundleApplication) {
+        return AssetsBundleApiResponse.builder()
+                                      .totalAssets(assetsBundleApplication.totalAssets)
+                                      .totalInvestment(assetsBundleApplication.totalInvestment)
+                                      .profitAndLoss(assetsBundleApplication.profitAndLoss)
+                                      .build();
     }
 }

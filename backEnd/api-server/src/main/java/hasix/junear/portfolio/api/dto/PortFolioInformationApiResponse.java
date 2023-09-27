@@ -14,12 +14,12 @@ import lombok.Getter;
 @JsonNaming(SnakeCaseStrategy.class)
 public class PortFolioInformationApiResponse {
 
-    private AssetsBundle assetsBundle;
+    private AssetsBundleApiResponse assetsBundle;
     private List<PortfolioBundle> portfolioBundle;
     private MemberBundle memberBundle;
 
     @Builder
-    public PortFolioInformationApiResponse(AssetsBundle assetsBundle,
+    public PortFolioInformationApiResponse(AssetsBundleApiResponse assetsBundle,
             List<PortfolioBundle> portfolioBundle, MemberBundle memberBundle) {
         this.assetsBundle = assetsBundle;
         this.portfolioBundle = portfolioBundle;
