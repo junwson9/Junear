@@ -162,7 +162,7 @@ public class MemberBundleApplication {
                 .totalPortfolioRank(memberBundleApplication.getTotalPortfolioRank())
                 .eachRank(EachRankApplication.toEachRank(memberBundleApplication.getEachRankApplication()))
                 .totalAssets(memberBundleApplication.getTotalAssets())
-                .eachAssets()
+                .eachAssets(EachAssetsApplication.toEachAssetsList(memberBundleApplication.getEachAssetApplications()))
                 .portfolioStability(memberBundleApplication.getPortfolioStability())
                 .portfolioGrowth(memberBundleApplication.getPortfolioGrowth())
                 .portfolioProfitability(memberBundleApplication.getPortfolioProfitability())

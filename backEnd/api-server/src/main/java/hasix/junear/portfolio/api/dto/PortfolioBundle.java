@@ -55,51 +55,5 @@ public class PortfolioBundle {
         this.averagePrice = averagePrice;
     }
 
-    public static PortfolioBundle from(
-            Optional<ViewCorporationDetailsResponse> viewCorporationDetailsResponseById,
-            Portfolio portfolio) {
-
-        ViewCorporationDetailsResponse corporationDetails = viewCorporationDetailsResponseById.orElseThrow(
-                () -> new CorporationException(
-                        CorporationErrorCode.NOT_FOUND_CORPORATION));
-
-        return PortfolioBundle.builder()
-                              .corporationId(corporationDetails.getCorporationId())
-                              .industryId(corporationDetails.getIndustryId())
-                              .industryType(corporationDetails.getIndustryType())
-                              .corporationCode(corporationDetails.getCorporationCode())
-                              .name(corporationDetails.getName())
-                              .totalRankNumber(corporationDetails.getTotalRank())
-                              .totalRankString(
-                                      classifyGradeByRange(corporationDetails.getTotalRank()))
-                              .stockClose(corporationDetails.getStockClose())
-                              .stabilityRank(corporationDetails.getStabilityRank())
-                              .growthRank(corporationDetails.getGrowthRank())
-                              .profitabilityRank(corporationDetails.getProfitabilityRank())
-                              .activityRank(corporationDetails.getActivityRank())
-                              .stockCount(portfolio.getStockCount())
-                              .averagePrice(portfolio.getAveragePrice())
-                              .build();
-    }
-
-    private static String classifyGradeByRange(Double totalRankNumber) {
-        if (6 < totalRankNumber && totalRankNumber <= 7) {
-            return "s";
-        } else if (5 < totalRankNumber && totalRankNumber <= 6) {
-            return "aPlus";
-        } else if (4 < totalRankNumber && totalRankNumber <= 5) {
-            return "a";
-        } else if (3 < totalRankNumber && totalRankNumber <= 4) {
-            return "bPlus";
-        } else if (2 < totalRankNumber && totalRankNumber <= 3) {
-            return "b";
-        } else if (1 < totalRankNumber && totalRankNumber <= 2) {
-            return "cPlus";
-        } else if (0 < totalRankNumber && totalRankNumber <= 1) {
-            return "c";
-        } else {
-            return "not value";
-        }
-    }
 }
 

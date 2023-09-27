@@ -42,6 +42,7 @@ public class EachRankApplication {
                        .b(eachRankApplication.getB())
                        .cPlus(eachRankApplication.getCPlus())
                        .c(eachRankApplication.getC())
+                       .totalCount(eachRankApplication.getTotalCount())
                        .build();
     }
 }

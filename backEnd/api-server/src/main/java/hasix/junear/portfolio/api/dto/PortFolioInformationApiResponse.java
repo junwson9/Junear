@@ -31,7 +31,7 @@ public class PortFolioInformationApiResponse {
         return PortFolioInformationApiResponse.builder()
                                               .assetsBundle(AssetsBundleApplication.toAssetsBundle(result.getAssetsBundleApplication()))
                                               .portfolioBundle(result.getPortfolioBundleApplication().stream()
-                                                      .map(portfolioBundleApplication -> PortfolioBundleApplication.toPortfolioBundle(portfolioBundleApplication))
+                                                      .map(PortfolioBundleApplication::toPortfolioBundle)
                                                       .toList())
                                               .memberBundle(MemberBundleApplication.toMemberBundle(result.getMemberBundleApplication()))
                                               .build();
