@@ -14,3 +14,5 @@ class Cor(Base):
     activity_rank = Column(Integer, index=True)
     total_rank = Column(DECIMAL(precision=5, scale=2))
     stock_close = Column(Integer, index=True)
+
+    
