@@ -37,7 +37,7 @@ public class QuerydslBookmarkRepository {
                 .where(bookmark.memberId.eq(memberId));
 
         if (ids != null) {
-            query.where(bookmark.corporationId.in(ids));
+            query.where(industry.id.in(ids));
         }
 
         List<BookmarkInfo> result = query.fetch();
