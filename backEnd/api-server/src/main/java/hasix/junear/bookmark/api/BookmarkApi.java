@@ -42,11 +42,9 @@ public class BookmarkApi {
     }
 
     @GetMapping
-//    public ResponseEntity<?> getBookmark(@RequestParam(value = "industry_id", required = false) List<Long> industryIds, @AuthenticatedMember AuthMember authMember) {
-    public ResponseEntity<?> getBookmark(@RequestParam(value = "industry_id", required = false) List<Long> industryIds) {
+    public ResponseEntity<?> getBookmark(@RequestParam(value = "industry_id", required = false) List<Long> industryIdList, @AuthenticatedMember AuthMember authMember) {
 
-//        List<BookmarkInfo> bookmarkInfoList = bookmarkSearchUseCase.searchBookmark(BookmarkSearchRequest.to(authMember.getId(), industryIdList));
-        List<BookmarkInfo> bookmarkInfoList = bookmarkSearchUseCase.searchBookmark(BookmarkSearchRequest.to(1L, industryIds));
+        List<BookmarkInfo> bookmarkInfoList = bookmarkSearchUseCase.searchBookmark(BookmarkSearchRequest.to(authMember.getId(), industryIdList));
 
         List<BookmarkSearchApiResponse> bookmarkSearchApiResponseList = bookmarkInfoList.stream()
                 .map(BookmarkSearchApiResponse::from)
