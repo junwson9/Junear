@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/portfolio" )
+@RequestMapping("/api/portfolio")
 @RequiredArgsConstructor
 public class PortfolioApi {
 
@@ -44,16 +44,17 @@ public class PortfolioApi {
     //포트폴리오 초기 생성; portfolioCreate
     @PostMapping("/init")
     public ResponseEntity<?> portfolioCreate(@AuthenticatedMember AuthMember member,
-           @Valid @RequestBody PortFolioCreateApiRequest request) {
+            @Valid @RequestBody PortFolioCreateApiRequest request) {
 
-        portfolioCreateUseCase.createPortfolio(CreatePortfolioRequest.from(member.getId(), request));
+        portfolioCreateUseCase.createPortfolio(
+                CreatePortfolioRequest.from(member.getId(), request));
 
         return ResponseFactory.success("포트폴리오 초기 생성 성공", request);
     }
 
     //포트폴리오 조회; portfolioInformation
     @GetMapping
-    public ResponseEntity<?> portfolioInformation(@AuthenticatedMember AuthMember member){
+    public ResponseEntity<?> portfolioInformation(@AuthenticatedMember AuthMember member) {
 
         ViewPortfolioInformationResponse result = portfolioInformationViewUseCase.getPortfolio(
                 member.getId());
@@ -73,7 +74,8 @@ public class PortfolioApi {
 
     //포트폴리오 기업 삭제; portfolioRemove
     @DeleteMapping("/{portfolio_id}")
-    public ResponseEntity<?> portfolioRemove(@PathVariable("portfolio_id") @Positive(message = "양의 정수의 ID만 입력해야 합니다.") Long portfolioId) {
+    public ResponseEntity<?> portfolioRemove(
+            @PathVariable("portfolio_id") @Positive(message = "양의 정수의 ID만 입력해야 합니다.") Long portfolioId) {
 
         eachPortfolioRemoveUseCase.deletePortfolio(RemoveEachPortfolioRequest.from(portfolioId));
 
@@ -86,7 +88,9 @@ public class PortfolioApi {
             @PathVariable("portfolio_id") @Positive(message = "양의 정수의 ID만 입력해야 합니다.") Long portfolioId,
             @Valid @RequestBody PortFolioModifyApiRequest portFolioModifyApiRequest) {
 
-        eachPortfolioModifyUseCase.updatePortfolio(ModifyEachPortfolioRequest.from(member.getId(), portfolioId, portFolioModifyApiRequest));
+        eachPortfolioModifyUseCase.updatePortfolio(
+                ModifyEachPortfolioRequest.from(member.getId(), portfolioId,
+                        portFolioModifyApiRequest));
 
         return ResponseFactory.success("포트폴리오 수정 성공");
     }
