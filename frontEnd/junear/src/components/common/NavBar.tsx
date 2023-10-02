@@ -17,7 +17,7 @@ import { useRecoilValue } from 'recoil';
 import { ProfileImageState } from 'recoil/atom';
 
 const pages = [
-  { label: '기업검색', link: '/corperation-search' },
+  { label: '기업검색', link: '/corporation-search' },
   { label: '뉴스보기', link: '/news' },
   { label: '포트폴리오 생성', link: '/portfolio' },
   { label: '내 포트폴리오', link: '/my-portfolio' },

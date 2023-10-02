@@ -26,8 +26,8 @@ function App() {
           <Route path="/portfolio" element={<CreatePort />} />
           <Route path="/my-portfolio" element={<MyPort />} />
           <Route path="/news" element={<News />} />
-          <Route path="/corperation-search" element={<CorpSearch />} />
-          <Route path="/corperation/:corp" element={<CorpDetail />} />
+          <Route path="/corporation-search" element={<CorpSearch />} />
+          <Route path="/corporation/:corp" element={<CorpDetail />} />
         </Routes>
       </div>
       <Routes>
