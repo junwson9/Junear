@@ -6,20 +6,17 @@ import lombok.Getter;
 @Getter
 public class RemoveEachPortfolioRequest {
 
-    private Long memberId;
-    private Long corporationId;
+    private Long portfolioId;
 
     @Builder
-    public RemoveEachPortfolioRequest(Long memberId, Long corporationId) {
-        this.memberId = memberId;
-        this.corporationId = corporationId;
+    public RemoveEachPortfolioRequest(Long portfolioId) {
+        this.portfolioId = portfolioId;
     }
 
-    public static RemoveEachPortfolioRequest from(Long memberId, Long corporationId) {
+    public static RemoveEachPortfolioRequest from(Long portfolioId) {
 
         return RemoveEachPortfolioRequest.builder()
-                                         .memberId(memberId)
-                                         .corporationId(corporationId)
+                                         .portfolioId(portfolioId)
                                          .build();
     }
 }

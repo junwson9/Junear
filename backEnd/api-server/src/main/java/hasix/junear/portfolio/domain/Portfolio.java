@@ -21,18 +21,18 @@ public class Portfolio {
     @Column(name = "portfolio_id")
     private Long id;
 
-    @Column(name = "member_id")
+    @Column(name = "member_id", nullable = false)
     private Long memberId;
 
-    @Column(name = "company_id")
+    @Column(name = "company_id", nullable = false)
     private Long corporationId;
 
     @Setter
-    @Column(name = "stock_count")
+    @Column(name = "stock_count", nullable = false)
     private Long stockCount;
 
     @Setter
-    @Column(name = "average_price")
+    @Column(name = "average_price", nullable = false)
     private Long averagePrice;
 
     @Builder
