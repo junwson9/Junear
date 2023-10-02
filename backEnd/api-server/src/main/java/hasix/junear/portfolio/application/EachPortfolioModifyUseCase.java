@@ -19,15 +19,28 @@ public class EachPortfolioModifyUseCase {
 
     public void updatePortfolio(ModifyEachPortfolioRequest request) {
 
-        Portfolio findPortfolio = portfolioRepository.findByMemberIdAndCorporationId(
-                request.getMemberId(), request.getCorporationId()).orElseThrow(() -> new PortfolioException(
-                PortfolioErrorCode.NOT_FOUND_PORTFOLIO));
+        verifyRequest(request);
 
-        Optional.ofNullable(request.getStockCount())
-                .ifPresent(findPortfolio::setStockCount);
-        Optional.ofNullable(request.getAveragePrice())
-                .ifPresent(findPortfolio::setAveragePrice);
+        portfolioRepository.save(modifyStockCountOrAveragePrice(request));
 
-        portfolioRepository.save(findPortfolio);
+    }
+
+    private void verifyRequest(ModifyEachPortfolioRequest request) {
+
+        portfolioRepository.findById(request.getPortfolioId())
+                           .orElseThrow(() -> new PortfolioException(
+                                   PortfolioErrorCode.NOT_FOUND_PORTFOLIO));
+
+    }
+
+    private Portfolio modifyStockCountOrAveragePrice(ModifyEachPortfolioRequest request) {
+
+        return Portfolio.builder()
+                        .id(request.getPortfolioId())
+                        .memberId(request.getMemberId())
+                        .corporationId(request.getCorporationId())
+                        .stockCount(request.getStockCount())
+                        .averagePrice(request.getAveragePrice())
+                        .build();
     }
 }

@@ -2,10 +2,10 @@ package hasix.junear.portfolio.api.dto;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import hasix.junear.portfolio.application.dto.AssetsBundleApplication;
+import hasix.junear.portfolio.application.dto.MemberBundleApplication;
+import hasix.junear.portfolio.application.dto.PortfolioBundleApplication;
 import hasix.junear.portfolio.application.dto.ViewPortfolioInformationResponse;
-import hasix.junear.portfolio.domain.AssetsBundle;
-import hasix.junear.portfolio.domain.PortfolioBundle;
-import hasix.junear.portfolio.domain.MemberBundle;
 import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,12 +14,12 @@ import lombok.Getter;
 @JsonNaming(SnakeCaseStrategy.class)
 public class PortFolioInformationApiResponse {
 
-    private AssetsBundle assetsBundle;
+    private AssetsBundleApiResponse assetsBundle;
     private List<PortfolioBundle> portfolioBundle;
     private MemberBundle memberBundle;
 
     @Builder
-    public PortFolioInformationApiResponse(AssetsBundle assetsBundle,
+    public PortFolioInformationApiResponse(AssetsBundleApiResponse assetsBundle,
             List<PortfolioBundle> portfolioBundle, MemberBundle memberBundle) {
         this.assetsBundle = assetsBundle;
         this.portfolioBundle = portfolioBundle;
@@ -29,9 +29,11 @@ public class PortFolioInformationApiResponse {
     public static PortFolioInformationApiResponse from(ViewPortfolioInformationResponse result) {
 
         return PortFolioInformationApiResponse.builder()
-                                              .assetsBundle(result.getAssetsBundle())
-                                              .portfolioBundle(result.getPortfolioBundle())
-                                              .memberBundle(result.getMemberBundle())
+                                              .assetsBundle(AssetsBundleApplication.toAssetsBundle(result.getAssetsBundleApplication()))
+                                              .portfolioBundle(result.getPortfolioBundleApplication().stream()
+                                                      .map(PortfolioBundleApplication::toPortfolioBundle)
+                                                      .toList())
+                                              .memberBundle(MemberBundleApplication.toMemberBundle(result.getMemberBundleApplication()))
                                               .build();
     }
 }

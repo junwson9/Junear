@@ -24,19 +24,14 @@ public class PortfolioRepositoryImpl implements PortfolioRepository {
     }
 
     @Override
-    public List<Portfolio> saveAll(List<Portfolio> portfolioList) {
-        return jpaPortfolioRepository.saveAll(portfolioList);
-    }
-
-    @Override
     public Optional<Portfolio> findByMemberIdAndCorporationId(Long memberId,
             Long corporationId) {
         return jpaPortfolioRepository.findByMemberIdAndCorporationId(memberId, corporationId);
     }
 
     @Override
-    public void deleteByMemberIdAndCorporationId(Long memberId, Long corporationId) {
-        jpaPortfolioRepository.deleteByMemberIdAndCorporationId(memberId, corporationId);
+    public void deleteById(Long portfolioId) {
+        jpaPortfolioRepository.deleteById(portfolioId);
     }
 
     @Override

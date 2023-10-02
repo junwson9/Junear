@@ -1,8 +1,5 @@
 package hasix.junear.portfolio.application.dto;
 
-import hasix.junear.portfolio.domain.AssetsBundle;
-import hasix.junear.portfolio.domain.PortfolioBundle;
-import hasix.junear.portfolio.domain.MemberBundle;
 import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,24 +7,24 @@ import lombok.Getter;
 @Getter
 public class ViewPortfolioInformationResponse {
 
-    private AssetsBundle assetsBundle;
-    private List<PortfolioBundle> portfolioBundle;
-    private MemberBundle memberBundle;
+    private AssetsBundleApplication assetsBundleApplication;
+    private List<PortfolioBundleApplication> portfolioBundleApplication;
+    private MemberBundleApplication memberBundleApplication;
 
     @Builder
-    public ViewPortfolioInformationResponse(AssetsBundle assetsBundle,
-            List<PortfolioBundle> portfolioBundle, MemberBundle memberBundle) {
-        this.assetsBundle = assetsBundle;
-        this.portfolioBundle = portfolioBundle;
-        this.memberBundle = memberBundle;
+    public ViewPortfolioInformationResponse(AssetsBundleApplication assetsBundleApplication,
+            List<PortfolioBundleApplication> portfolioBundleApplication, MemberBundleApplication memberBundleApplication) {
+        this.assetsBundleApplication = assetsBundleApplication;
+        this.portfolioBundleApplication = portfolioBundleApplication;
+        this.memberBundleApplication = memberBundleApplication;
     }
 
-    public static ViewPortfolioInformationResponse from(AssetsBundle assetsBundle,
-            List<PortfolioBundle> portfolioBundleList, MemberBundle memberBundle) {
+    public static ViewPortfolioInformationResponse from(AssetsBundleApplication assetsBundleApplication,
+            List<PortfolioBundleApplication> portfolioBundleApplicationList, MemberBundleApplication memberBundleApplication) {
         return ViewPortfolioInformationResponse.builder()
-                                               .assetsBundle(assetsBundle)
-                                               .portfolioBundle(portfolioBundleList)
-                                               .memberBundle(memberBundle)
+                                               .assetsBundleApplication(assetsBundleApplication)
+                                               .portfolioBundleApplication(portfolioBundleApplicationList)
+                                               .memberBundleApplication(memberBundleApplication)
                                                .build();
     }
 }

@@ -8,24 +8,28 @@ import lombok.Getter;
 public class ModifyEachPortfolioRequest {
 
     private Long memberId;
+    private Long portfolioId;
     private Long corporationId;
     private Long stockCount;
     private Long averagePrice;
 
     @Builder
-    public ModifyEachPortfolioRequest(Long memberId, Long corporationId, Long stockCount,
+    public ModifyEachPortfolioRequest(Long memberId, Long portfolioId, Long corporationId,
+            Long stockCount,
             Long averagePrice) {
         this.memberId = memberId;
+        this.portfolioId = portfolioId;
         this.corporationId = corporationId;
         this.stockCount = stockCount;
         this.averagePrice = averagePrice;
     }
 
-    public static ModifyEachPortfolioRequest from(Long memberId,
+    public static ModifyEachPortfolioRequest from(Long memberId, Long portfolioId,
             PortFolioModifyApiRequest request) {
 
         return ModifyEachPortfolioRequest.builder()
                                          .memberId(memberId)
+                                         .portfolioId(portfolioId)
                                          .corporationId(request.getCorporationId())
                                          .stockCount(request.getStockCount())
                                          .averagePrice(request.getAveragePrice())
