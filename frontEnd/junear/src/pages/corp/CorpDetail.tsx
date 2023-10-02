@@ -1,12 +1,11 @@
 import SearchPlaceHolderSmall from './../../components/input/SearchPlaceHolderSmall';
 import BookMark from 'components/common/Bookmark';
 import { useState, useEffect } from 'react';
-import { ReactComponent as A_Plus } from '../../assets/image/A+rank.svg';
 import Chart from 'components/corp/Chart';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import NewsOne from 'components/news/NewsOne';
-import APlus from 'components/corp/Rank';
+import Rank from 'components/corp/Rank';
 
 interface CorpData {
   corporation_id: number;
@@ -21,7 +20,7 @@ interface CorpData {
   stock_close: number;
   total_rank: number;
 }
-function CorpDetail({ corpData }: { corpData: CorpData }) {
+function CorpDetail() {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const API_URL = process.env.REACT_APP_API_URL;
   const { corp } = useParams();
@@ -78,12 +77,15 @@ function CorpDetail({ corpData }: { corpData: CorpData }) {
             </div>
           </div>
           <div className="flex items-center justify-center mb-[50px]">
-            <A_Plus width="180" height="180" />
+            <Rank rank={corpData.total_rank} />
           </div>
           <div className="mb-[40px] ">
             <div className="gap-[15px] flex items-center justify-center">
               {/* stability_rank 값으로 A_PLUS 컴포넌트 렌더링 */}
-              <APlus rank={corpData.stability_rank} />
+              <Rank rank={corpData.stability_rank} />
+              <Rank rank={corpData.growth_rank} />
+              <Rank rank={corpData.profitability_rank} />
+              <Rank rank={corpData.activity_rank} />
               {/* profitability_rank, growth_rank, activity_rank에 대해서도 동일하게 처리 */}
               {/* <APlus rank={corpData.profitability_rank} /> */}
               {/* <APlus rank={corpData.growth_rank} /> */}

@@ -41,7 +41,7 @@ function SearchPlaceHolder({ onSearchResultsChange }: SearchPlaceHolderProps) {
 
   return (
     <>
-      <div className="w-[376px] h-[60px] bg-zinc-700 rounded-[10px] border-b border-neutral-400 items-center">
+      <div className="w-[376px] bg-zinc-700 rounded-[10px] border-b border-neutral-400 items-center">
         <div className="flex mt-1 items-center">
           <input
             type="text"
