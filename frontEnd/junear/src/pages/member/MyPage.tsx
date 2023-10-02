@@ -34,12 +34,12 @@ function MyPage() {
       <div className="col-start-5 col-end-13 ml-[20px] mt-[20px]">
         <p className="text-white font-bold text-[28px] text-left">내 관심기업</p>
       </div>
-      <div className="col-start-1 col-end-5 mt-[10px] mb-[20px] h-[557px] bg-zinc-700 rounded-[20px]">
+      <div className="col-start-1 col-end-5 mt-[5px] mb-[20px] h-[557px] bg-zinc-700 rounded-[20px]">
         <div className="flex justify-center items-center">
           <Category />
         </div>
       </div>
-      <div className="col-start-5 col-end-13 mt-[10px] mb-[20px] h-[557px] bg-zinc-700 rounded-[20px] "></div>
+      <div className="col-start-5 col-end-13 mt-[5px] mb-[20px] h-[557px] bg-zinc-700 rounded-[20px] "></div>
     </>
   );
 }
