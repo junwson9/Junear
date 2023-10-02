@@ -9,7 +9,7 @@ interface News {
   industry: string;
   title: string;
   origin_url: string;
-  image_url: string;
+  image_url?: string;
   times: string;
   media: string;
 }
@@ -46,7 +46,7 @@ const CardSlider = () => {
         {newsData.map((news, index) => (
           <News
             key={index}
-            image_url={news.image_url}
+            image_url={news.image_url || 'https://i.ibb.co/kMPnrPY/JUNEAR-3-3.png'}
             industry={news.industry}
             title={news.title}
             origin_url={news.origin_url}
