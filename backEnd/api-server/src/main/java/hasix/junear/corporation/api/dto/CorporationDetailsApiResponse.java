@@ -21,12 +21,14 @@ public class CorporationDetailsApiResponse {
     private Double activityRank;
     private Double totalRank;
     private Long stockClose;
+    private Boolean isBookmarked;
 
     @Builder
-    public CorporationDetailsApiResponse(Long corporationId, Long industryId, String industryType, String corporationCode,
+    public CorporationDetailsApiResponse(Long corporationId, Long industryId, String industryType,
+            String corporationCode,
             String name, Double stabilityRank, Double growthRank, Double profitabilityRank,
             Double activityRank,
-            Double totalRank, Long stockClose) {
+            Double totalRank, Long stockClose, Boolean isBookmarked) {
         this.corporationId = corporationId;
         this.industryId = industryId;
         this.industryType = industryType;
@@ -38,9 +40,10 @@ public class CorporationDetailsApiResponse {
         this.activityRank = activityRank;
         this.totalRank = totalRank;
         this.stockClose = stockClose;
+        this.isBookmarked = isBookmarked;
     }
 
-    public static CorporationDetailsApiResponse from(ViewCorporationDetailsResponse result){
+    public static CorporationDetailsApiResponse from(ViewCorporationDetailsResponse result) {
         return CorporationDetailsApiResponse.builder()
                                             .corporationId(result.getCorporationId())
                                             .industryId(result.getIndustryId())
@@ -53,6 +56,7 @@ public class CorporationDetailsApiResponse {
                                             .activityRank(result.getActivityRank())
                                             .totalRank(result.getTotalRank())
                                             .stockClose(result.getStockClose())
+                                            .isBookmarked(false)
                                             .build();
     }
 }
