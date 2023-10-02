@@ -12,6 +12,7 @@ interface ApiResponse {
   data: Millionaire[];
 }
 function HomePage() {
+  const ACCESS_TOKEN = localStorage.getItem('access_token');
   const [millionaireData, setMillionaireData] = useState<Millionaire[]>([]);
   useEffect(() => {
     const fetchData = async () => {
@@ -31,9 +32,20 @@ function HomePage() {
       <div className="col-span-3 mt-[125px]">
         <p className="text-white font-bold text-[28px] text-left">내 포트폴리오</p>
       </div>
-      <div className="col-start-1 col-end-5 mt-[30px]  h-[332px] bg-zinc-700 rounded-[20px]"></div>
+      {ACCESS_TOKEN ? ( // ACCESS_TOKEN이 있는 경우
+        <>
+          <div className="col-start-1 col-end-5 mt-[30px]  h-[332px] bg-zinc-700 rounded-[20px]"></div>
+          <div className="col-start-5 col-end-13 mt-[30px]  h-[332px] bg-zinc-700 rounded-[20px]"></div>
+        </>
+      ) : (
+        <>
+          <div className="col-start-1 col-end-5 mt-[30px]  h-[332px] bg-zinc-700 rounded-[20px]">
+            로그인을 쳐하십시오
+          </div>
+          <div className="col-start-5 col-end-13 mt-[30px]  h-[332px] bg-zinc-700 rounded-[20px]"></div>
+        </>
+      )}
 
-      <div className="col-start-5 col-end-13 mt-[30px]  h-[332px] bg-zinc-700 rounded-[20px]"></div>
       <div className="col-span-3 mt-[30px]">
         <p className="text-white font-bold text-[28px] text-left">최신 뉴스</p>
       </div>
