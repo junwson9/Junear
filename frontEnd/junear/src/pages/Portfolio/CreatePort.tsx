@@ -1,17 +1,17 @@
 import AddPortInfo from 'components/modal/AddPortInfo';
 import { useState } from 'react';
-import SearchPlaceHolder from 'components/input/SearchPlaceHolder';
+import CreatePortSearch from 'components/input/CreatePortSearch';
 import axiosInstance from 'state/AxiosInterceptor';
-import { log } from 'console';
-
+import { useNavigate } from 'react-router-dom';
+import { ReactComponent as Delete } from '../../assets/image/delete.svg';
 function CreatePort() {
+  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchResults, setSearchResults] = useState<any[]>([]);
   // 각 검색 결과 항목에 대한 모달 데이터를 배열로 관리합니다.
   const [modalData, setModalData] = useState<any[]>([]);
   const [selectedResultIndex, setSelectedResultIndex] = useState<number | null>(null);
   const [selectedResultName, setSelectedResultName] = useState<string | null>(null);
-
   const openModal = (index: number) => {
     setIsModalOpen(true);
     // 모달을 열 때 선택한 검색 결과 항목의 인덱스와 이름을 설정합니다.
@@ -45,18 +45,26 @@ function CreatePort() {
       });
     }
   };
-
+  const handleDeleteClick = (indexToDelete: number) => {
+    setModalData((prevModalData) => {
+      // 선택한 인덱스를 제외한 새로운 배열을 생성합니다.
+      const updatedModalData = prevModalData.filter((_, index) => index !== indexToDelete);
+      return updatedModalData;
+    });
+  };
   const createPort = async () => {
     try {
       const requestData = {
-        data: modalData.map((item) => ({
+        request_list: modalData.map((item) => ({
           corporation_id: item.name.corporation_id,
-          stock_count: item.quantity,
-          average_price: item.averagePrice,
+          stock_count: Number(item.quantity),
+          average_price: Number(item.averagePrice),
+          ...item,
         })),
       };
       const response = await axiosInstance.post('/portfolio/init', requestData);
       console.log(response);
+      navigate('/my-portfolio');
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -70,7 +78,7 @@ function CreatePort() {
         className="col-start-1 col-end-6 h-[420px] bg-zinc-700 rounded-[20px]"
         style={{ overflow: 'auto', maxHeight: '420px' }}
       >
-        <SearchPlaceHolder onSearchResultsChange={handleSearchResultsChange} />
+        <CreatePortSearch onSearchResultsChange={handleSearchResultsChange} />
         {searchResults.map((result, index) => (
           <div
             className="m-2 text-[16px] pt-[20px] pb-[20px] text-white cursor-pointer
@@ -84,10 +92,27 @@ function CreatePort() {
       </div>
       <div className="col-start-8 col-end-13 h-[420px] bg-zinc-700 rounded-[20px]">
         {modalData.map((data, index) => (
-          <div className="pt-[25px] pb-[25px] border-b-2" key={index}>
-            {data.name.name}
-            <div>{data.quantity}</div>
-            <div>{data.averagePrice}</div>
+          <div className="relative m-2 text-[16px] pt-[20px] pb-[20px] text-white" key={index}>
+            <div className="flex">
+              <div className="text-left">
+                {data.name.name}
+                <div style={{ color: '#B0B2B5' }}>{data.name.industry_type}</div>
+              </div>
+              <div className="flex text-left pl-[115px]">
+                <div className="absolute left-[200px]">
+                  <div>수량</div>
+                  <div>평단가</div>
+                </div>
+                <div className="absolute left-[270px]">
+                  <div>{data.quantity}</div>
+                  <div>{data.averagePrice}</div>
+                </div>
+              </div>
+              <Delete
+                className="absolute right-[20px] top-[27px] cursor-pointer"
+                onClick={() => handleDeleteClick(index)}
+              />
+            </div>
           </div>
         ))}
       </div>
