@@ -8,7 +8,6 @@ import NewsOne from 'components/news/NewsOne';
 import Rank from 'components/corp/Rank';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from 'state/AxiosInterceptor';
-import { access } from 'fs';
 
 interface CorpData {
   corporation_id: number;
@@ -22,6 +21,7 @@ interface CorpData {
   stability_rank: number;
   stock_close: number;
   total_rank: number;
+  isBookmarked: boolean;
 }
 function CorpDetail() {
   const [isBookmarked, setIsBookmarked] = useState(false);
@@ -31,26 +31,31 @@ function CorpDetail() {
   const [newsData, setNewsData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isLogined, setIsLogined] = useState(false);
-  const handleBookmarkClick = () => {
-    setIsBookmarked(!isBookmarked);
+
+  const handleBookmarkClick = async () => {
+    try {
+      if (isBookmarked) {
+        await axiosInstance.delete(`${API_URL}/bookmark/${corp}`);
+      } else {
+        await axiosInstance.post(`${API_URL}/bookmark/${corp}`);
+      }
+      setIsBookmarked(!isBookmarked);
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
-  // console.log(isBookmarked);
-  // console.log(corpData);
+
   const [searchResults, setSearchResults] = useState<any[]>([]);
   const Navigate = useNavigate();
   const handleSearchResultsChange = (results: any[]) => {
     setSearchResults(results);
   };
-  // console.log(searchResults);
 
   const navigateToDetailPage = (corp_id: number) => {
-    // 클릭한 기업 페이지로 이동
     Navigate(`/corporation/${corp_id}`);
   };
 
   useEffect(() => {
-    console.log(111111);
-
     const fetchData = async () => {
       try {
         const access_token = localStorage.getItem('access_token');
@@ -59,6 +64,9 @@ function CorpDetail() {
           const corp_data: CorpData = response.data.data; // CorpData 타입으로 설정
           setCorpData(corp_data);
           setIsLogined(true);
+          const book = corp_data.isBookmarked;
+          console.log(book);
+          setIsBookmarked(book);
           console.log(corp_data);
           if (corp_data) {
             const query = `?industry_id=${corp_data.industry_id}`;
