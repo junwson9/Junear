@@ -1,12 +1,16 @@
 import React from 'react';
 import ReactApexChart from 'react-apexcharts';
 
-const AbstractChart: React.FC = () => {
-  const series = [4, 55, 41, 17, 15, 34, 53, 53, 53, 11];
-
+interface AbstractChartProps {
+  series: number[];
+  labels: string[];
+}
+const AbstractChart: React.FC<AbstractChartProps> = ({ series, labels }) => {
   const options: any = {
     chart: {
       type: 'donut',
+      width: '400px',
+      height: '200px',
     },
     responsive: [
       {
@@ -25,6 +29,7 @@ const AbstractChart: React.FC = () => {
           },
           legend: {
             position: 'bottom',
+            horizontalAlign: 'left',
           },
         },
       },
@@ -39,6 +44,7 @@ const AbstractChart: React.FC = () => {
       },
       offsetY: -15,
       offsetX: -25,
+      horizontalAlign: 'left',
     },
     plotOptions: {
       pie: {
@@ -63,11 +69,12 @@ const AbstractChart: React.FC = () => {
       enabled: false,
     },
     colors: ['#142459', '#176ba0', '#19aade', '#1ac9e6', '#6dfdd2', '#1de4bd'],
+    labels: labels,
   };
 
   return (
     <div id="chart">
-      <ReactApexChart options={options} series={series} type="donut" width={'350px'} />
+      <ReactApexChart options={options} series={series} type="donut" />
     </div>
   );
 };
