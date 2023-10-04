@@ -1,26 +1,34 @@
 import * as React from 'react';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Box from '@mui/material/Box';
+import axiosInstance from './../../state/AxiosInterceptor';
+import { useEffect } from 'react';
 
-export default function CategoryButton() {
+interface CategoryButtonProps {
+  selectedIndex: number[];
+}
+
+export default function CategoryButton({ selectedIndex }: CategoryButtonProps) {
   const [loading, setLoading] = React.useState(false);
-  function handleClick() {
-    setLoading(true); // 버튼 클릭 시 로딩 상태를 true로 설정합니다.
-    setTimeout(() => {
-      // 1초 후에 로딩 상태를 false로 변경합니다.
-      setLoading(false);
-    }, 1000); // 1초(1000밀리초) 후에 변경합니다.
-  }
+  // console.log(selectedIndex);
 
+  const handleClick = async () => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 500);
+    try {
+      const bookmarks = { industry: selectedIndex };
+      const queryStringParams = `industry=${bookmarks.industry.join(',')}`;
+      const response = await axiosInstance.get(`/bookmark?${queryStringParams}`);
+      // const response = await axiosInstance.get(`/bookmark`);
+      console.log(response);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
   return (
     <div>
-      {/* <FormControlLabel
-        sx={{
-          display: 'block',
-        }}
-        control={<Switch checked={loading} onChange={() => setLoading(!loading)} name="loading" color="primary" />}
-        label="Loading"
-      /> */}
       <Box
         sx={{
           '& > button': {

@@ -30,6 +30,7 @@ function CorpDetail() {
   const handleBookmarkClick = () => {
     setIsBookmarked(!isBookmarked);
   };
+  console.log(isBookmarked);
   console.log(corpData);
   useEffect(() => {
     const fetchData = async () => {
@@ -81,19 +82,10 @@ function CorpDetail() {
           </div>
           <div className="mb-[40px] ">
             <div className="gap-[15px] flex items-center justify-center">
-              {/* stability_rank 값으로 A_PLUS 컴포넌트 렌더링 */}
               <Rank rank={corpData.stability_rank} />
               <Rank rank={corpData.growth_rank} />
               <Rank rank={corpData.profitability_rank} />
               <Rank rank={corpData.activity_rank} />
-              {/* profitability_rank, growth_rank, activity_rank에 대해서도 동일하게 처리 */}
-              {/* <APlus rank={corpData.profitability_rank} /> */}
-              {/* <APlus rank={corpData.growth_rank} /> */}
-              {/* <APlus rank={corpData.activity_rank} /> */}
-              {/* <A_Plus width="120" height="120" />
-              <A_Plus width="120" height="120" />
-              <A_Plus width="120" height="120" />
-              <A_Plus width="120" height="120" /> */}
             </div>
             <div className="flex ">
               <div className="text-[16px] text-white mt-2 mx-auto">안정성</div>

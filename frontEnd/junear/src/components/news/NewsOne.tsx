@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { ReactComponent as Logo } from 'assets/image/nav-logo.svg';
 
 interface NewsProps {
@@ -12,7 +11,7 @@ interface NewsProps {
 }
 
 export default function NewsOne({ data }: NewsProps) {
-  console.log(data);
+  // console.log(data);
   const handleClick = () => {
     if (data.origin_url) {
       window.open(data.origin_url, '_blank', 'noopener,noreferrer');
