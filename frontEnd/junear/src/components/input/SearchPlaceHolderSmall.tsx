@@ -9,7 +9,7 @@ function SearchPlaceHolderSmall() {
           placeholder="회사명을 입력해 주세요"
           className="text-neutral-400 text-base text-left pl-4 outline-none bg-transparent w-full"
         />
-        <div className="p-4 justify-center">
+        <div className="p-4 justify-end">
           <SearchIcon />
         </div>
       </div>

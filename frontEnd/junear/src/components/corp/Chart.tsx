@@ -1,21 +1,19 @@
 import { AdvancedRealTimeChart } from 'react-ts-tradingview-widgets';
 import { useEffect, useState } from 'react';
+
 interface ChartProps {
-  corporationCode: string; // corporationCode prop 정의
+  corporationCode: string;
 }
 
 function Chart({ corporationCode }: ChartProps) {
   const [symbol, setSymbol] = useState<string | undefined>(undefined);
-
-  // corporationCode가 변경될 때마다 symbol을 업데이트
+  console.log(1111);
   useEffect(() => {
-    // corporationCode를 사용하여 symbol을 구성
-    // 예: '005930'을 corporationCode에 대체
-    const constructedSymbol = corporationCode; // 수정 필요
+    const constructedSymbol = corporationCode;
 
-    // symbol 상태 변수를 업데이트
     setSymbol(constructedSymbol);
-  }, [corporationCode]);
+  }, [corporationCode]); // corporationCode가 변경될 때에만 실행
+
   return (
     <AdvancedRealTimeChart
       theme="dark"

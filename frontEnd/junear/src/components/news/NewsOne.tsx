@@ -22,7 +22,7 @@ export default function NewsOne({ data }: NewsProps) {
       {data.image_url ? (
         <img className="flex w-[120px] h-[120px] left-[25px] rounded-[10px]" src={data.image_url} />
       ) : (
-        <Logo className="flex w-[120px] h-[120px] left-[25px] rounded-[10px]" /> // null인 경우 SVG 이미지로 대체
+        <Logo className="flex w-[120px] h-[120px] left-[25px] rounded-[10px]" />
       )}
       <div className="mx-4 my-auto">
         <div className="flex top-[29px] text-white text-lg text-left">{data.title}</div>
