@@ -13,6 +13,7 @@ import lombok.Getter;
 public class PortfolioBundleApplication { //TODO 책임 분리, 네이밍 변경 => portfolioInformation 혹은 information의 분리
 
     //노출 정보_기업
+    private Long portfolioId;
     private Long corporationId;
     private Long industryId;
     private String industryType;
@@ -31,12 +32,13 @@ public class PortfolioBundleApplication { //TODO 책임 분리, 네이밍 변경
     private Long averagePrice;
 
     @Builder
-    public PortfolioBundleApplication(Long corporationId, Long industryId, String industryType,
+    public PortfolioBundleApplication(Long portfolioId, Long corporationId, Long industryId, String industryType,
             String corporationCode, String name, Double totalRankNumber, String totalRankString,
             Long stockClose,
             Double stabilityRank,
             Double growthRank, Double profitabilityRank, Double activityRank, Long stockCount,
             Long averagePrice) {
+        this.portfolioId = portfolioId;
         this.corporationId = corporationId;
         this.industryId = industryId;
         this.industryType = industryType;
@@ -62,6 +64,7 @@ public class PortfolioBundleApplication { //TODO 책임 분리, 네이밍 변경
                         CorporationErrorCode.NOT_FOUND_CORPORATION));
 
         return PortfolioBundleApplication.builder()
+                                         .portfolioId(portfolio.getId())
                                          .corporationId(corporationDetails.getCorporationId())
                                          .industryId(corporationDetails.getIndustryId())
                                          .industryType(corporationDetails.getIndustryType())
@@ -106,6 +109,7 @@ public class PortfolioBundleApplication { //TODO 책임 분리, 네이밍 변경
             PortfolioBundleApplication portfolioBundleApplication) {
 
         return PortfolioBundle.builder()
+                              .portfolioId(portfolioBundleApplication.getPortfolioId())
                               .corporationId(portfolioBundleApplication.getCorporationId())
                               .industryId(portfolioBundleApplication.getIndustryId())
                               .industryType(portfolioBundleApplication.getIndustryType())
