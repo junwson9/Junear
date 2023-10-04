@@ -9,32 +9,10 @@ const AbstractChart: React.FC<AbstractChartProps> = ({ series, labels }) => {
   const options: any = {
     chart: {
       type: 'donut',
-      width: '400px',
-      height: '200px',
     },
-    responsive: [
-      {
-        breakpoint: 480,
-        options: {
-          chart: {
-            width: 500,
-          },
-          plotOptions: {
-            // plotOptions 추가
-            pie: {
-              dataLabels: {
-                enabled: false,
-              },
-            },
-          },
-          legend: {
-            position: 'bottom',
-            horizontalAlign: 'left',
-          },
-        },
-      },
-    ],
+
     legend: {
+      position: 'right',
       labels: {
         colors: '#fff', // 글자색을 흰색으로 설정
       },
