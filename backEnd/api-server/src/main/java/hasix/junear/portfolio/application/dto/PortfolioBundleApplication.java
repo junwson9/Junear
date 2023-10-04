@@ -109,6 +109,7 @@ public class PortfolioBundleApplication { //TODO 책임 분리, 네이밍 변경
             PortfolioBundleApplication portfolioBundleApplication) {
 
         return PortfolioBundle.builder()
+                              .portfolioId(portfolioBundleApplication.getPortfolioId())
                               .corporationId(portfolioBundleApplication.getCorporationId())
                               .industryId(portfolioBundleApplication.getIndustryId())
                               .industryType(portfolioBundleApplication.getIndustryType())

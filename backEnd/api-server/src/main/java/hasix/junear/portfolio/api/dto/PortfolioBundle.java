@@ -15,6 +15,7 @@ import lombok.Getter;
 public class PortfolioBundle {
 
     //노출 정보_기업
+    private Long portfolioId;
     private Long corporationId;
     private Long industryId;
     private String industryType;
@@ -33,12 +34,13 @@ public class PortfolioBundle {
     private Long averagePrice;
 
     @Builder
-    public PortfolioBundle(Long corporationId, Long industryId, String industryType,
+    public PortfolioBundle(Long portfolioId, Long corporationId, Long industryId, String industryType,
             String corporationCode, String name, Double totalRankNumber, String totalRankString,
             Long stockClose,
             Double stabilityRank,
             Double growthRank, Double profitabilityRank, Double activityRank, Long stockCount,
             Long averagePrice) {
+        this.portfolioId = portfolioId;
         this.corporationId = corporationId;
         this.industryId = industryId;
         this.industryType = industryType;
