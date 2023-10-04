@@ -1,4 +1,3 @@
-import { hover } from '@testing-library/user-event/dist/hover';
 import SearchPlaceHolder from 'components/input/SearchPlaceHolder';
 
 import { useState } from 'react';
