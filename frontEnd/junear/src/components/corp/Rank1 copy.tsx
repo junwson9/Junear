@@ -1,5 +1,3 @@
-// A_PLUS.tsx
-
 import React from 'react';
 import { ReactComponent as S } from '../../assets/image/Srank.svg';
 import { ReactComponent as A_Plus } from '../../assets/image/A+rank.svg';
@@ -13,29 +11,41 @@ interface RankProps {
   rank: number;
 }
 
-function Rank({ rank }: RankProps) {
+const Rank: React.FC<RankProps> = ({ rank }) => {
   console.log('RANK  ' + rank);
-  if (rank >= 0 && rank < 1) {
+
+  if (rank < 1) {
     return <C />;
-  } else if (rank >= 1 && rank < 2) {
+  }
+
+  if (rank < 2) {
     console.log('CPlus');
     return <C_Plus />;
-  } else if (rank >= 2 && rank < 3) {
+  }
+
+  if (rank < 3) {
     console.log('B');
     return <B />;
-  } else if (rank >= 3 && rank < 4) {
+  }
+
+  if (rank < 4) {
     console.log('BPlus');
     return <B_Plus />;
-  } else if (rank >= 4 && rank < 5) {
+  }
+
+  if (rank < 5) {
     console.log('A');
     return <A />;
-  } else if (rank >= 5 && rank < 6) {
+  }
+
+  if (rank < 6) {
     console.log('APLUS');
     return <A_Plus />;
-  } else {
-    console.log('S');
-    return <S />;
   }
-}
+
+  // 기본적으로 S 아이콘을 반환합니다.
+  console.log('S');
+  return <S />;
+};
 
 export default Rank;
