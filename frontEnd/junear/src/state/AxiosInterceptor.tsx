@@ -1,4 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -6,62 +7,83 @@ const axiosInstance: AxiosInstance = axios.create({
   baseURL: `${API_URL}`,
   withCredentials: true,
 });
-async function Reissue() {
+
+const reIssuedToken = async () => {
   try {
-    // 리프레시 토큰을 로컬 스토리지에서 가져옵니다.
-    const refreshToken = localStorage.getItem('refresh_token');
+    const refresh_token = localStorage.getItem('refresh_token'); // refresh_token 가져오기
 
-    if (!refreshToken) {
-      // 리프레시 토큰이 없는 경우, 사용자를 로그아웃 처리하거나 다른 조치를 취합니다.
-      // 예를 들어, 로그인 페이지로 리디렉션하거나 사용자에게 다시 로그인하라는 메시지를 표시할 수 있습니다.
-      // 또는 로그인 페이지로 이동하는 등의 사용자 지정 로직을 구현합니다.
-      return;
+    if (!refresh_token) {
+      // refresh_token이 없을 경우 처리
+      console.log('refresh_token이 없습니다.');
+      const navigate = useNavigate();
+      navigate('/login');
+      return null;
     }
 
-    // 리프레시 토큰을 사용하여 새로운 엑세스 토큰을 요청합니다.
-    const response = await axiosInstance.post('/refresh-token-endpoint', {
-      refreshToken: refreshToken,
+    const response = await axiosInstance.post('/member/reissue', {
+      refresh_token: refresh_token, // refresh_token을 요청의 본문에 추가
     });
+    console.log(response);
+    localStorage.setItem('access_token', response.data.data.access_token);
+    return localStorage.getItem('access_token'); // 재발급받은 access_token 반환
+  } catch (e) {
+    console.log('reissue실패');
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
+    const navigate = useNavigate();
 
-    // 새로운 엑세스 토큰을 받았을 경우, 이를 로컬 스토리지에 저장합니다.
-    if (response.data.access_token) {
-      localStorage.setItem('access_token', response.data.access_token);
-    }
-  } catch (error) {
-    // 리프레시 토큰을 사용한 엑세스 토큰 재발급 요청이 실패한 경우
-    // 여기서 에러 처리 로직을 구현할 수 있습니다.
-    console.error('Error refreshing access token:', error);
-
-    // 예를 들어, 사용자를 로그아웃 처리하거나 다른 조치를 취합니다.
-    // 또는 로그인 페이지로 이동하는 등의 사용자 지정 로직을 구현합니다.
+    navigate('/login');
   }
-}
+};
+
+axiosInstance.interceptors.response.use(
+  // 정상 응답 처리
+  (response) => {
+    console.log(response);
+    return response;
+  },
+  // 에러 처리
+  async (error) => {
+    const { config, response } = error;
+    console.log(error.message);
+    // 토큰 자동 재발급 필요 외 다른 에러
+    console.log('에러발생 ============================');
+
+    if (config.url !== '/member/reissue' && response && response.status === 401) {
+      console.log('재발급요청하기 ============================');
+      const access_token = await reIssuedToken();
+
+      config.headers.Authorization = `Bearer ${access_token}`; // 헤더에 넣어서
+
+      return axiosInstance(config); // 다시 요청
+    }
+
+    // if (config.url === `/member/reissue` || response?.status !== 401) {
+    //   console.log(111);
+    //   return Promise.reject(error);
+    // }
+    // // config.sent = true;
+    // const access_token = await reIssuedToken(); // 토큰 재발급 받아서
+    // // console.log(2222);
+    // if (access_token) {
+    //   config.headers.Authorization = `Bearer ${access_token}`; // 헤더에 넣어서
+    // }
+    return Promise.reject(error);
+  },
+);
+
 // Request Interceptor
 axiosInstance.interceptors.request.use(
   (config) => {
     const access_token = localStorage.getItem('access_token');
-    // console.log(access_token);
-
+    console.log(access_token);
+    console.log(config);
     if (access_token) {
       config.headers.Authorization = `Bearer ${access_token}`;
     }
     return config;
   },
   (error) => {
-    const originalRequest = error.config;
-    console.log(error);
-    // 서버에서 401 에러(토큰 만료)를 받은 경우
-    if (error.response && error.response.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
-
-      // 엑세스 토큰 재발급을 시도합니다.
-      // await Reissue();
-
-      // 새로운 엑세스 토큰을 받았으면 이전 요청을 다시 시도합니다.
-      originalRequest.headers['Authorization'] = 'Bearer ' + localStorage.getItem('access_token');
-
-      return axiosInstance(originalRequest);
-    }
     return Promise.reject(error);
   },
 );

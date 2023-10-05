@@ -25,10 +25,11 @@ function MyPage() {
     const fetchData = async () => {
       try {
         const response = await axiosInstance.get('/member/info');
-        // console.log(response);
+        console.log(response);
         setName(response.data.data.name);
         setProfileImg(response.data.data.profile_image);
       } catch (error) {
+        console.log('호출한곳 ---------------');
         console.error('Error fetching data:', error);
       }
     };
