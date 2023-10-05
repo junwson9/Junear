@@ -20,6 +20,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedOrigins("http://localhost:3000","https://www.junear.cloud")
                 .allowedMethods("OPTIONS", "GET", "POST", "PUT", "DELETE", "PATCH")
+                .allowedHeaders("*")
                 .allowCredentials(true);
     }
 

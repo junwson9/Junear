@@ -19,16 +19,17 @@ public class LoggingFilter extends OncePerRequestFilter {
             FilterChain filterChain) throws ServletException, IOException {
         ReusableRequestWrapper requestWrapper = new ReusableRequestWrapper(request);
         AccessLogDto logging = logging(requestWrapper);
-        log.info(objectMapper.writeValueAsString(logging));
+        log.info("[REQUEST LOG]=" + objectMapper.writeValueAsString(logging));
         filterChain.doFilter(requestWrapper, response);
     }
 
     private AccessLogDto logging(ReusableRequestWrapper request) throws IOException {
         return AccessLogDto.builder()
-                           .requestMethod(request.getMethod())
-                           .requestUrl(request.getRequestURI())
-                           .requestIp(RequestLogUtil.getIp(request))
-                           .requestBody(RequestLogUtil.getBody(request))
+                           .method(request.getMethod())
+                           .url(request.getRequestURI())
+                           .ip(RequestLogUtil.getIp(request))
+                           .body(RequestLogUtil.getBody(request))
+                           .origin(request.getHeader("origin"))
                            .build();
     }
 }
