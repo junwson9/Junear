@@ -25,6 +25,7 @@ function HomePage() {
       try {
         const response = await axiosInstance.get<ApiResponse>('/billionaire/today');
         setMillionaireData(response.data.data);
+        setisLoading(true);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -37,7 +38,6 @@ function HomePage() {
       try {
         const response = await axiosInstance.get('/portfolio');
         setMainPortData(response.data.data.member_bundle);
-        setisLoading(true);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
