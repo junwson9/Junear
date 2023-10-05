@@ -8,7 +8,7 @@ type BookMarkProps = {
 };
 
 function BookMark({ isBookmarked, onClick }: BookMarkProps) {
-  // isBookmarked 값에 따라 아이콘을 표시하거나 숨깁니다.
+  console.log(isBookmarked);
   return isBookmarked ? <BookMarkIconClick onClick={onClick} /> : <BookMarkIcon onClick={onClick} />;
 }
 

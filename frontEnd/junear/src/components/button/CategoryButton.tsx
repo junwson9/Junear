@@ -6,9 +6,10 @@ import { useEffect } from 'react';
 
 interface CategoryButtonProps {
   selectedIndex: number[];
+  onCategoryData: (data: any) => void;
 }
 
-export default function CategoryButton({ selectedIndex }: CategoryButtonProps) {
+export default function CategoryButton({ selectedIndex, onCategoryData }: CategoryButtonProps) {
   const [loading, setLoading] = React.useState(false);
   // console.log(selectedIndex);
 
@@ -18,11 +19,22 @@ export default function CategoryButton({ selectedIndex }: CategoryButtonProps) {
       setLoading(false);
     }, 500);
     try {
-      const bookmarks = { industry: selectedIndex };
-      const queryStringParams = `industry=${bookmarks.industry.join(',')}`;
-      const response = await axiosInstance.get(`/bookmark?${queryStringParams}`);
-      // const response = await axiosInstance.get(`/bookmark`);
-      console.log(response);
+      let responseData = null;
+      if (!selectedIndex.includes(0)) {
+        const bookmarks = { industry: selectedIndex };
+        const queryStringParams = `industryIds=${bookmarks.industry.join(',')}`;
+        const response = await axiosInstance.get(`/bookmark?${queryStringParams}`);
+        responseData = response.data.data;
+      } else {
+        const response = await axiosInstance.get(`/bookmark`);
+        responseData = response.data.data;
+      }
+
+      // 데이터를 상위 컴포넌트로 전달
+      onCategoryData(responseData);
+
+      console.log(responseData);
+      console.log(111);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
