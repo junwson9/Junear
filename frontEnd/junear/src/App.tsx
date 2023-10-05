@@ -9,6 +9,7 @@ import MyPort from 'pages/Portfolio/MyPort';
 import News from 'pages/news/new';
 import CorpSearch from 'pages/corp/CorpSearch';
 import CorpDetail from 'pages/corp/CorpDetail';
+import AddPort from 'pages/Portfolio/AddPort';
 
 function App() {
   const location = useLocation(); // 현재 경로를 가져오기 위해 useLocation 사용
@@ -28,6 +29,7 @@ function App() {
           <Route path="/news" element={<News />} />
           <Route path="/corporation-search" element={<CorpSearch />} />
           <Route path="/corporation/:corp" element={<CorpDetail />} />
+          <Route path="/add-portfolio" element={<AddPort />} />
         </Routes>
       </div>
       <Routes>
