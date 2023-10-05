@@ -10,3 +10,7 @@ export const ProfileImageState = atom({
   default: '',
   effects_UNSTABLE: [persistAtom],
 });
+
+export const resetProfileImage = () => {
+  localStorage.removeItem('recoil-persist-profileImage');
+};
