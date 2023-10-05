@@ -19,6 +19,7 @@ function HomePage() {
   const [mainPortData, setMainPortData] = useState<any>(undefined);
   const [name, setName] = useState<string>('');
   const [isLoading, setisLoading] = useState(false);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -35,12 +36,13 @@ function HomePage() {
     const fetchPortData = async () => {
       try {
         const response = await axiosInstance.get('/portfolio');
-        setMainPortData(response.data.data.member_bundle);
+        setMainPortData(response.data.data.portfolio_bundle);
         setisLoading(true);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
+    console.log(mainPortData);
 
     fetchPortData();
   }, []);
@@ -64,14 +66,21 @@ function HomePage() {
           <div className="col-span-3 mt-[125px]">
             <p className="text-white font-bold text-[28px] text-left">내 포트폴리오</p>
           </div>
-          {ACCESS_TOKEN ? ( // ACCESS_TOKEN이 있는 경우
-            <>
-              <div className="col-start-1 col-end-5 mt-[30px]  h-[332px] bg-zinc-700 rounded-[20px]">
-                {name}
-                <DynamicRank componentName={mainPortData.total_portfolio_rank} />
-              </div>
-              <div className="col-start-5 col-end-13 mt-[30px]  h-[332px] bg-zinc-700 rounded-[20px]"></div>
-            </>
+          {ACCESS_TOKEN ? (
+            !mainPortData ? (
+              <>
+                <div className="col-start-1 col-end-5 mt-[30px]  h-[332px] bg-zinc-700 rounded-[20px]">
+                  {name}
+                  <DynamicRank componentName={mainPortData.total_portfolio_rank} />
+                </div>
+                <div className="col-start-5 col-end-13 mt-[30px]  h-[332px] bg-zinc-700 rounded-[20px]"></div>
+              </>
+            ) : (
+              <>
+                <div className="col-start-1 col-end-5 mt-[30px]  h-[332px] bg-zinc-700 rounded-[20px]"></div>
+                <div className="col-start-5 col-end-13 mt-[30px]  h-[332px] bg-zinc-700 rounded-[20px]"></div>
+              </>
+            )
           ) : (
             <>
               <div className="col-start-1 col-end-5 mt-[30px]  h-[332px] bg-zinc-700 rounded-[20px]">

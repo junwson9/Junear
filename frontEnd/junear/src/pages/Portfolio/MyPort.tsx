@@ -21,6 +21,7 @@ function MyPort() {
   const [seriesForAmount, setseriesForAmount] = useState<number[]>([]);
   const [labelsForAmount, setlabelsForAmount] = useState<string[]>([]);
   const [stockInfo, setStockInfo] = useState<any[]>([]);
+
   const updateStockInfo = (newStockInfo: any[]) => {
     setStockInfo(newStockInfo);
   };
@@ -62,85 +63,100 @@ function MyPort() {
   };
   return (
     <>
-      {isLoading && (
-        <>
-          <div className="col-start-1 col-end-7 h-[850px] mt-[100px]">
-            <div className="h-[275px] bg-zinc-700 rounded-[20px]">
-              <div className="flex pl-[25px] pt-[25px] text-zinc-400">총 자산</div>
-              <div className="flex pl-[25px] pt-[5px] text-white text-2xl font-medium">
-                {portData.assets_bundle.total_assets.toLocaleString()}
+      {isLoading &&
+        (!portData ? (
+          <>
+            <div className="col-start-1 col-end-7 h-[850px] mt-[100px]">
+              <div className="h-[275px] bg-zinc-700 rounded-[20px]">
+                <div className="flex pl-[25px] pt-[25px] text-zinc-400">총 자산</div>
+                <div className="flex pl-[25px] pt-[5px] text-white text-2xl font-medium">
+                  {portData.assets_bundle.total_assets.toLocaleString()}
+                </div>
+                <div className="flex pl-[25px] pt-[25px] text-zinc-400">총 투자 금액</div>
+                <div className="flex pl-[25px] pt-[5px] text-white">
+                  ₩ {portData.assets_bundle.total_investment.toLocaleString()}
+                </div>
+                <div className="flex pl-[25px] pt-[25px] text-zinc-400">평가 손익</div>
+                <div className="flex pl-[25px] pt-[5px] text-rose-500">
+                  ₩ {portData.assets_bundle.profit_and_loss.toLocaleString()} (
+                  {portData.assets_bundle.total_investment > portData.assets_bundle.total_assets ? '-' : '+'}
+                  {((portData.assets_bundle.profit_and_loss / portData.assets_bundle.total_investment) * 100).toFixed(
+                    2,
+                  )}
+                  %)
+                </div>
               </div>
-              <div className="flex pl-[25px] pt-[25px] text-zinc-400">총 투자 금액</div>
-              <div className="flex pl-[25px] pt-[5px] text-white">
-                ₩ {portData.assets_bundle.total_investment.toLocaleString()}
+              <div className="h-[25px]"></div>
+              <div className="relative h-[300px] bg-zinc-700  rounded-[20px]">
+                <div className="flex pt-[25px] pl-[25px] gap-[5px]">
+                  <button
+                    className={`w-[76px] h-[27px] pl-[27px] pr-[26px] rounded-lg justify-center items-center inline-flex whitespace-nowrap text-white ${
+                      activeButton === '등급' ? 'bg-teal-500' : 'bg-gray-800'
+                    }`}
+                    onClick={() => handleButtonClick('등급')}
+                  >
+                    등급
+                  </button>
+                  <button
+                    className={`w-[76px] h-[27px] pl-[27px] pr-[26px] rounded-lg justify-center items-center inline-flex whitespace-nowrap text-white ${
+                      activeButton === '금액' ? 'bg-teal-500' : 'bg-gray-800'
+                    }`}
+                    onClick={() => handleButtonClick('금액')}
+                  >
+                    금액
+                  </button>
+                </div>
+                <AbstractChart
+                  series={activeButton === '등급' ? seriesForGrade : seriesForAmount}
+                  labels={activeButton === '등급' ? labelsForGrade : labelsForAmount}
+                />
               </div>
-              <div className="flex pl-[25px] pt-[25px] text-zinc-400">평가 손익</div>
-              <div className="flex pl-[25px] pt-[5px] text-rose-500">
-                ₩ {portData.assets_bundle.profit_and_loss.toLocaleString()} (
-                {portData.assets_bundle.total_investment > portData.assets_bundle.total_assets ? '-' : '+'}
-                {((portData.assets_bundle.profit_and_loss / portData.assets_bundle.total_investment) * 100).toFixed(2)}
-                %)
+              <div className="h-[25px]"></div>
+              <div className="h-[300px] bg-zinc-700 rounded-[20px]">
+                <div className="pt-[25px] text-zinc-400">내 포트폴리오 지표</div>
+                <div className="flex gap-[20px] justify-center mt-[50px]">
+                  <DynamicRank componentName={portData.member_bundle.portfolio_stability} />
+                  <DynamicRank componentName={portData.member_bundle.portfolio_growth} />
+                  <DynamicRank componentName={portData.member_bundle.portfolio_profitability} />
+                  <DynamicRank componentName={portData.member_bundle.portfolio_activity} />
+                </div>
+                <div className="flex gap-[92px] text-white justify-center mt-[10px]">
+                  <span>안정성</span>
+                  <span>성장성</span>
+                  <span>수익성</span>
+                  <span>활동성</span>
+                </div>
               </div>
             </div>
-            <div className="h-[25px]"></div>
-            <div className="relative h-[300px] bg-zinc-700  rounded-[20px]">
-              <div className="flex pt-[25px] pl-[25px] gap-[5px]">
-                <button
-                  className={`w-[76px] h-[27px] pl-[27px] pr-[26px] rounded-lg justify-center items-center inline-flex whitespace-nowrap text-white ${
-                    activeButton === '등급' ? 'bg-teal-500' : 'bg-gray-800'
-                  }`}
-                  onClick={() => handleButtonClick('등급')}
-                >
-                  등급
+            <div className="col-start-7 col-end-13 h-[925px] mt-[100px] bg-zinc-700 rounded-[20px] mb-[50px]">
+              <div className="flex content-center justify-end gap-[15px] pr-[25px] mt-[25px]">
+                <button onClick={addPort}>
+                  <Plus />
                 </button>
-                <button
-                  className={`w-[76px] h-[27px] pl-[27px] pr-[26px] rounded-lg justify-center items-center inline-flex whitespace-nowrap text-white ${
-                    activeButton === '금액' ? 'bg-teal-500' : 'bg-gray-800'
-                  }`}
-                  onClick={() => handleButtonClick('금액')}
-                >
-                  금액
+                <button>
+                  <Filter />
                 </button>
               </div>
-              <AbstractChart
-                series={activeButton === '등급' ? seriesForGrade : seriesForAmount}
-                labels={activeButton === '등급' ? labelsForGrade : labelsForAmount}
-              />
-            </div>
-            <div className="h-[25px]"></div>
-            <div className="h-[300px] bg-zinc-700 rounded-[20px]">
-              <div className="pt-[25px] text-zinc-400">내 포트폴리오 지표</div>
-              <div className="flex gap-[20px] justify-center mt-[50px]">
-                <DynamicRank componentName={portData.member_bundle.portfolio_stability} />
-                <DynamicRank componentName={portData.member_bundle.portfolio_growth} />
-                <DynamicRank componentName={portData.member_bundle.portfolio_profitability} />
-                <DynamicRank componentName={portData.member_bundle.portfolio_activity} />
-              </div>
-              <div className="flex gap-[92px] text-white justify-center mt-[10px]">
-                <span>안정성</span>
-                <span>성장성</span>
-                <span>수익성</span>
-                <span>활동성</span>
+              <div className="mt-[20px]" style={{ overflow: 'auto', maxHeight: '865px' }}>
+                {stockInfo.map((item) => (
+                  <Stock key={item.corporation_id} item={item} updateStockInfo={updateStockInfo} />
+                ))}
               </div>
             </div>
-          </div>
-          <div className="col-start-7 col-end-13 h-[925px] mt-[100px] bg-zinc-700 rounded-[20px] mb-[50px]">
-            <div className="flex content-center justify-end gap-[15px] pr-[25px] mt-[25px]">
-              <button onClick={addPort}>
-                <Plus />
-              </button>
-              <button>
-                <Filter />
+          </>
+        ) : (
+          <>
+            <div className="col-start-5 col-end-9 h-[500px]">
+              <p className="mt-[200px] text-white text-[28px]">보유중인 주식이 없습니다.</p>
+              <button
+                className="mt-[100px] text-white bg-teal-500 rounded-[20px] px-[40px] py-[14px] w-[250px] whitespace-nowrap"
+                onClick={addPort}
+              >
+                포트폴리오 생성하러가기
               </button>
             </div>
-            <div className="mt-[20px]" style={{ overflow: 'auto', maxHeight: '865px' }}>
-              {stockInfo.map((item) => (
-                <Stock key={item.corporation_id} item={item} updateStockInfo={updateStockInfo} />
-              ))}
-            </div>
-          </div>
-        </>
-      )}
+          </>
+        ))}
     </>
   );
 }
