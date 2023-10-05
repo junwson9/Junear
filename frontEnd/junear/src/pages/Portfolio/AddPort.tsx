@@ -4,7 +4,7 @@ import CreatePortSearch from 'components/input/CreatePortSearch';
 import axiosInstance from 'state/AxiosInterceptor';
 import { useNavigate } from 'react-router-dom';
 import { ReactComponent as Delete } from '../../assets/image/delete.svg';
-function CreatePort() {
+function AddPort() {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchResults, setSearchResults] = useState<any[]>([]);
@@ -32,11 +32,14 @@ function CreatePort() {
   const handleModalData = (data: { quantity: string; averagePrice: string }) => {
     if (selectedResultIndex !== null && selectedResultName !== null) {
       setModalData((prevModalData) => {
-        const updatedModalData = [...prevModalData];
+        // 빈 슬롯을 제거한 배열을 생성
+        const updatedModalData = prevModalData.filter(Boolean);
+
         updatedModalData[selectedResultIndex] = {
           name: selectedResultName, // 이름 추가
           ...data,
         };
+
         return updatedModalData;
       });
     }
@@ -50,16 +53,15 @@ function CreatePort() {
   const createPort = async () => {
     try {
       const requestData = {
-        request_list: modalData.map((item) => ({
-          corporation_id: item.name.corporation_id,
-          stock_count: Number(item.quantity),
-          average_price: Number(item.averagePrice),
-        })),
+        corporation_id: modalData[0]?.name.corporation_id,
+        stock_count: Number(modalData[0]?.quantity),
+        average_price: Number(modalData[0]?.averagePrice),
       };
-      const response = await axiosInstance.post('/portfolio/init', requestData);
+      const response = await axiosInstance.post('/portfolio', requestData);
       console.log(response);
       navigate('/my-portfolio');
     } catch (error) {
+      console.log(modalData);
       console.error('Error fetching data:', error);
     }
   };
@@ -85,31 +87,30 @@ function CreatePort() {
         ))}
       </div>
       <div className="col-start-8 col-end-13 h-[420px] bg-zinc-700 rounded-[20px]">
-        {modalData.length > 0 &&
-          modalData.map((data, index) => (
-            <div className="relative m-2 text-[16px] pt-[20px] pb-[20px] text-white" key={index}>
-              <div className="flex">
-                <div className="text-left">
-                  {data?.name.name}
-                  <div style={{ color: '#B0B2B5' }}>{data?.name.industry_type}</div>
-                </div>
-                <div className="flex text-left pl-[115px]">
-                  <div className="absolute left-[200px]">
-                    <div>수량</div>
-                    <div>평단가</div>
-                  </div>
-                  <div className="absolute left-[270px]">
-                    <div>{data?.quantity}</div>
-                    <div>{data?.averagePrice}</div>
-                  </div>
-                </div>
-                <Delete
-                  className="absolute right-[20px] top-[27px] cursor-pointer"
-                  onClick={() => handleDeleteClick(index)}
-                />
+        {modalData.map((data, index) => (
+          <div className="relative m-2 text-[16px] pt-[20px] pb-[20px] text-white" key={index}>
+            <div className="flex">
+              <div className="text-left">
+                {data.name.name}
+                <div style={{ color: '#B0B2B5' }}>{data.name.industry_type}</div>
               </div>
+              <div className="flex text-left pl-[115px]">
+                <div className="absolute left-[200px]">
+                  <div>수량</div>
+                  <div>평단가</div>
+                </div>
+                <div className="absolute left-[270px]">
+                  <div>{data.quantity}</div>
+                  <div>{data.averagePrice}</div>
+                </div>
+              </div>
+              <Delete
+                className="absolute right-[20px] top-[27px] cursor-pointer"
+                onClick={() => handleDeleteClick(index)}
+              />
             </div>
-          ))}
+          </div>
+        ))}
       </div>
       <div className="col-span-12 mt-[5px]"></div>
       <div className="relative col-span-12">
@@ -117,7 +118,7 @@ function CreatePort() {
           className="absolute text-white bg-teal-500 rounded-[20px] p-[14px] w-[250px] whitespace-nowrap left-[430px]"
           onClick={createPort}
         >
-          포트폴리오 생성하기
+          포트폴리오 추가하기
         </button>
       </div>
 
@@ -134,4 +135,4 @@ function CreatePort() {
   );
 }
 
-export default CreatePort;
+export default AddPort;

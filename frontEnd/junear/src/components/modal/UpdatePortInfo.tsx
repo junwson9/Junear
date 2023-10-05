@@ -1,7 +1,15 @@
 import { useState } from 'react';
 import axiosInstance from 'state/AxiosInterceptor';
 
-function UpdatePortInfo({ onClose, item }: { onClose: () => void; item: any }) {
+function UpdatePortInfo({
+  onClose,
+  item,
+  updatePortData,
+}: {
+  onClose: () => void;
+  item: any;
+  updatePortData: () => void;
+}) {
   const [quantity, setQuantity] = useState<string>('');
   const [averagePrice, setAveragePrice] = useState<string>('');
   const access_token = localStorage.getItem('access_token');
@@ -19,13 +27,16 @@ function UpdatePortInfo({ onClose, item }: { onClose: () => void; item: any }) {
     axiosInstance
       .patch(`/portfolio/${item.portfolio_id}`, PatchData)
       .then((response) => {
+        updatePortData();
         console.log(response);
       })
 
       .catch((error) => {
         console.error('업데이트 실패', error);
       });
+    onClose();
   };
+
   const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuantity(e.target.value);
   };
