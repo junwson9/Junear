@@ -8,33 +8,12 @@ interface AbstractChartProps {
 const AbstractChart: React.FC<AbstractChartProps> = ({ series, labels }) => {
   const options: any = {
     chart: {
-      type: 'donut',
-      width: '400px',
-      height: '200px',
+      type: 'bar',
+      height: 350,
     },
-    responsive: [
-      {
-        breakpoint: 480,
-        options: {
-          chart: {
-            width: 500,
-          },
-          plotOptions: {
-            // plotOptions 추가
-            pie: {
-              dataLabels: {
-                enabled: false,
-              },
-            },
-          },
-          legend: {
-            position: 'bottom',
-            horizontalAlign: 'left',
-          },
-        },
-      },
-    ],
+
     legend: {
+      position: 'right',
       labels: {
         colors: '#fff', // 글자색을 흰색으로 설정
       },
@@ -47,7 +26,7 @@ const AbstractChart: React.FC<AbstractChartProps> = ({ series, labels }) => {
       horizontalAlign: 'left',
     },
     plotOptions: {
-      pie: {
+      bar: {
         dataLabels: {
           enabled: false, // 데이터 레이블 숨기기
         },
@@ -74,7 +53,7 @@ const AbstractChart: React.FC<AbstractChartProps> = ({ series, labels }) => {
 
   return (
     <div id="chart">
-      <ReactApexChart options={options} series={series} type="donut" />
+      <ReactApexChart options={options} series={series} type="donut" width={300} />
     </div>
   );
 };

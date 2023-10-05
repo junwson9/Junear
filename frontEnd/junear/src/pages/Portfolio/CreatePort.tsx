@@ -8,13 +8,11 @@ function CreatePort() {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchResults, setSearchResults] = useState<any[]>([]);
-  // 각 검색 결과 항목에 대한 모달 데이터를 배열로 관리합니다.
   const [modalData, setModalData] = useState<any[]>([]);
   const [selectedResultIndex, setSelectedResultIndex] = useState<number | null>(null);
   const [selectedResultName, setSelectedResultName] = useState<string | null>(null);
   const openModal = (index: number) => {
     setIsModalOpen(true);
-    // 모달을 열 때 선택한 검색 결과 항목의 인덱스와 이름을 설정합니다.
     setSelectedResultIndex(index);
     setSelectedResultName(searchResults[index]);
   };
@@ -31,10 +29,8 @@ function CreatePort() {
     }
   };
 
-  // 모달에서 데이터를 추가할 때 선택한 검색 결과 항목의 인덱스를 사용하여 모달 데이터를 업데이트합니다.
   const handleModalData = (data: { quantity: string; averagePrice: string }) => {
     if (selectedResultIndex !== null) {
-      // 모달 데이터를 업데이트할 때 해당 인덱스의 요소를 직접 수정합니다.
       setModalData((prevModalData) => {
         const updatedModalData = [...prevModalData];
         updatedModalData[selectedResultIndex] = {
@@ -47,7 +43,6 @@ function CreatePort() {
   };
   const handleDeleteClick = (indexToDelete: number) => {
     setModalData((prevModalData) => {
-      // 선택한 인덱스를 제외한 새로운 배열을 생성합니다.
       const updatedModalData = prevModalData.filter((_, index) => index !== indexToDelete);
       return updatedModalData;
     });
@@ -132,7 +127,6 @@ function CreatePort() {
           className="fixed top-0 left-0 w-screen h-screen flex items-center justify-center bg-black bg-opacity-50"
           onClick={handleModalBackgroundClick}
         >
-          {/* 모달에 선택한 검색 결과 항목의 모달 데이터와 업데이트 함수를 전달합니다. */}
           <AddPortInfo onClose={closeModal} onAdd={handleModalData} />
         </div>
       )}

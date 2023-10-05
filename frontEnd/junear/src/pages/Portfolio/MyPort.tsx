@@ -4,24 +4,34 @@ import { ReactComponent as Plus } from '../../assets/image/plus.svg';
 import axiosInstance from 'state/AxiosInterceptor';
 import AbstractChart from 'components/portfolio/AbstractChart';
 import DynamicRank from 'components/portfolio/DynamicRank';
+import Stock from 'components/portfolio/Stock';
+import { useNavigate } from 'react-router-dom';
 
 interface ApiResponse {
   message: string;
   data: any;
 }
 function MyPort() {
+  const navigate = useNavigate();
+  const [isLoading, setisLoading] = useState(false);
   const [activeButton, setActiveButton] = useState('등급');
   const [portData, setPortData] = useState<any>(undefined);
   const [seriesForGrade, setseriesForGrade] = useState<any[]>([]);
   const [labelsForGrade, setlabelsForGrade] = useState<any[]>([]);
   const [seriesForAmount, setseriesForAmount] = useState<number[]>([]);
   const [labelsForAmount, setlabelsForAmount] = useState<string[]>([]);
+  const [stockInfo, setStockInfo] = useState<any[]>([]);
+  const updateStockInfo = (newStockInfo: any[]) => {
+    setStockInfo(newStockInfo);
+  };
+  const addPort = () => {
+    navigate('/portfolio');
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axiosInstance.get<ApiResponse>('/portfolio');
         setPortData(response.data.data);
-
         const corporationAssets = response.data.data.member_bundle.each_assets.map(
           (item: any) => item.corporation_asset,
         );
@@ -35,12 +45,15 @@ function MyPort() {
         const corporationRanks = Object.keys(filteredEachRank);
         const gradeLabels = Object.values(filteredEachRank);
         setseriesForGrade(gradeLabels);
+        setStockInfo(response.data.data.portfolio_bundle);
         setlabelsForGrade(corporationRanks);
+        setisLoading(true);
+        console.log(response.data.data.portfolio_bundle);
+        console.log(response.data.data);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
-    console.log(portData);
 
     fetchData();
   }, []);
@@ -49,26 +62,28 @@ function MyPort() {
   };
   return (
     <>
-      {portData && (
+      {isLoading && (
         <>
           <div className="col-start-1 col-end-7 h-[850px] mt-[100px]">
             <div className="h-[275px] bg-zinc-700 rounded-[20px]">
               <div className="flex pl-[25px] pt-[25px] text-zinc-400">총 자산</div>
               <div className="flex pl-[25px] pt-[5px] text-white text-2xl font-medium">
-                {portData.assets_bundle.total_assets}
+                {portData.assets_bundle.total_assets.toLocaleString()}
               </div>
               <div className="flex pl-[25px] pt-[25px] text-zinc-400">총 투자 금액</div>
-              <div className="flex pl-[25px] pt-[5px] text-white">₩ {portData.assets_bundle.total_investment}</div>
+              <div className="flex pl-[25px] pt-[5px] text-white">
+                ₩ {portData.assets_bundle.total_investment.toLocaleString()}
+              </div>
               <div className="flex pl-[25px] pt-[25px] text-zinc-400">평가 손익</div>
               <div className="flex pl-[25px] pt-[5px] text-rose-500">
-                ₩ {portData.assets_bundle.profit_and_loss} (
+                ₩ {portData.assets_bundle.profit_and_loss.toLocaleString()} (
                 {portData.assets_bundle.total_investment > portData.assets_bundle.total_assets ? '-' : '+'}
                 {((portData.assets_bundle.profit_and_loss / portData.assets_bundle.total_investment) * 100).toFixed(2)}
                 %)
               </div>
             </div>
             <div className="h-[25px]"></div>
-            <div className="relative h-[300px] bg-zinc-700 rounded-[20px]">
+            <div className="relative h-[300px] bg-zinc-700  rounded-[20px]">
               <div className="flex pt-[25px] pl-[25px] gap-[5px]">
                 <button
                   className={`w-[76px] h-[27px] pl-[27px] pr-[26px] rounded-lg justify-center items-center inline-flex whitespace-nowrap text-white ${
@@ -87,12 +102,10 @@ function MyPort() {
                   금액
                 </button>
               </div>
-              <div className="absolute left-[-5px] mt-[25px] ">
-                <AbstractChart
-                  series={activeButton === '등급' ? seriesForGrade : seriesForAmount}
-                  labels={activeButton === '등급' ? labelsForGrade : labelsForAmount}
-                />
-              </div>
+              <AbstractChart
+                series={activeButton === '등급' ? seriesForGrade : seriesForAmount}
+                labels={activeButton === '등급' ? labelsForGrade : labelsForAmount}
+              />
             </div>
             <div className="h-[25px]"></div>
             <div className="h-[300px] bg-zinc-700 rounded-[20px]">
@@ -111,14 +124,19 @@ function MyPort() {
               </div>
             </div>
           </div>
-          <div className="col-start-7 col-end-13 h-[925px] mt-[100px] bg-zinc-700 rounded-[20px]">
+          <div className="col-start-7 col-end-13 h-[925px] mt-[100px] bg-zinc-700 rounded-[20px] mb-[50px]">
             <div className="flex content-center justify-end gap-[15px] pr-[25px] mt-[25px]">
-              <button>
+              <button onClick={addPort}>
                 <Plus />
               </button>
               <button>
                 <Filter />
               </button>
+            </div>
+            <div className="mt-[20px]" style={{ overflow: 'auto', maxHeight: '865px' }}>
+              {stockInfo.map((item) => (
+                <Stock key={item.corporation_id} item={item} updateStockInfo={updateStockInfo} />
+              ))}
             </div>
           </div>
         </>
