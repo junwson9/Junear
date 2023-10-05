@@ -37,7 +37,7 @@ public class SecurityConfig {
         http.formLogin()
             .disable();
 
-//        http.cors(AbstractHttpConfigurer::disable);
+        http.cors(AbstractHttpConfigurer::disable);
 
         // 세션 사용 X, 인증 실패시 entriyPoint로 이동된다.
         http.exceptionHandling()
@@ -46,7 +46,8 @@ public class SecurityConfig {
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        http.cors(AbstractHttpConfigurer::disable)
+        http.cors()
+            .and()
             .authorizeRequests()
             .antMatchers(HttpMethod.GET, "/api/member/info", "/api/member/logout", "/api/member/reissue").authenticated()
             .antMatchers(HttpMethod.GET, "/api/auth/corporation/{corportaion_id}").authenticated()
@@ -54,7 +55,7 @@ public class SecurityConfig {
             .antMatchers(HttpMethod.DELETE, "/api/portfolio").authenticated()
             .antMatchers(HttpMethod.PATCH, "/api/portfolio").authenticated()
             .antMatchers(HttpMethod.GET, "/api/portfolio").authenticated()
-//            .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
+            .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
             .antMatchers("/**").permitAll();
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         http.addFilterBefore(jwtExceptionFilter, JwtAuthenticationFilter.class);
