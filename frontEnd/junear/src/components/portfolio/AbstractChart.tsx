@@ -25,8 +25,13 @@ const AbstractChart: React.FC<AbstractChartProps> = ({ series, labels }) => {
       offsetX: -25,
       horizontalAlign: 'left',
     },
+    responsive: [
+      {
+        breakpoint: 480,
+      },
+    ],
     plotOptions: {
-      bar: {
+      pie: {
         dataLabels: {
           enabled: false, // 데이터 레이블 숨기기
         },

@@ -5,7 +5,7 @@ import { ReactComponent as Bplusrank } from '../../assets/image/B+rank.svg';
 import { ReactComponent as Brank } from '../../assets/image/Brank.svg';
 import { ReactComponent as Cplusrank } from '../../assets/image/C+rank.svg';
 import { ReactComponent as Crank } from '../../assets/image/Crank.svg';
-function DynamicRank({ componentName }: { componentName: any }) {
+function DynamicRank({ componentName }: { componentName: string }) {
   const componentMapping: any = {
     s: Srank,
     aPlus: Aplusrank,
