@@ -6,21 +6,24 @@ import lombok.Getter;
 @Getter
 public class AccessLogDto {
 
-    private String requestMethod;
+    private String method;
 
-    private String requestUrl;
+    private String url;
 
-    private String requestIp;
+    private String ip;
 
-    private String requestBody;
+    private String body;
+
+    private String origin;
 
     @Builder
-    public AccessLogDto(String requestMethod, String requestUrl, String requestIp, String requestBody) {
-        this.requestMethod = requestMethod;
-        this.requestUrl = requestUrl;
-        this.requestIp = requestIp;
-        this.requestBody = requestBody;
-    }
 
+    public AccessLogDto(String method, String url, String ip, String body, String origin) {
+        this.method = method;
+        this.url = url;
+        this.ip = ip;
+        this.body = body;
+        this.origin = origin;
+    }
 }
 
