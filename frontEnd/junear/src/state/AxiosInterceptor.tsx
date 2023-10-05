@@ -4,6 +4,7 @@ const API_URL = process.env.REACT_APP_API_URL;
 
 const axiosInstance: AxiosInstance = axios.create({
   baseURL: `${API_URL}`,
+  withCredentials: true,
 });
 
 // Request Interceptor

@@ -14,7 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { ReactComponent as Logo } from 'assets/image/nav-logo.svg';
 import { Link, useLocation } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import { ProfileImageState } from 'recoil/atom';
+import { ProfileImageState, resetProfileImage } from 'recoil/atom';
 
 const pages = [
   { label: '기업검색', link: '/corporation-search' },
@@ -52,6 +52,7 @@ function ResponsiveAppBar() {
   const handleLogout = () => {
     // 로그아웃을 클릭하면 localStorage에서 access_token을 제거합니다.
     localStorage.removeItem('access_token');
+    resetProfileImage();
     // 로그아웃 후 로그인 페이지로 이동합니다.
     handleCloseUserMenu();
   };
@@ -158,14 +159,13 @@ function ResponsiveAppBar() {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            {ACCESS_TOKEN ? ( // ACCESS_TOKEN이 있는 경우
+            {ACCESS_TOKEN ? (
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar alt="Remy Sharp" src={profileImg} />
                 </IconButton>
               </Tooltip>
             ) : (
-              // ACCESS_TOKEN이 없는 경우
               <Link to="/login">
                 <Button onClick={handleCloseUserMenu} sx={{ mx: 1, my: 2, color: 'white', display: 'block' }}>
                   로그인/회원가입
