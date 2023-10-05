@@ -3,6 +3,7 @@ import Card from '../../components/main/Card';
 import axiosInstance from 'state/AxiosInterceptor';
 import CardSlider from 'components/main/Carousel';
 import DynamicRank from 'components/portfolio/DynamicRank';
+import { log } from 'console';
 
 interface Millionaire {
   name: string;
@@ -36,13 +37,13 @@ function HomePage() {
     const fetchPortData = async () => {
       try {
         const response = await axiosInstance.get('/portfolio');
-        setMainPortData(response.data.data.portfolio_bundle);
+        setMainPortData(response.data.data.member_bundle);
         setisLoading(true);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
+      console.log(mainPortData);
     };
-    console.log(mainPortData);
 
     fetchPortData();
   }, []);
@@ -67,11 +68,13 @@ function HomePage() {
             <p className="text-white font-bold text-[28px] text-left">내 포트폴리오</p>
           </div>
           {ACCESS_TOKEN ? (
-            !mainPortData ? (
+            mainPortData.total_portfolio_rank && mainPortData.total_portfolio_rank.length > 0 ? (
               <>
                 <div className="col-start-1 col-end-5 mt-[30px]  h-[332px] bg-zinc-700 rounded-[20px]">
-                  {name}
-                  <DynamicRank componentName={mainPortData.total_portfolio_rank} />
+                  <p className=" text-white text-[20px] mt-[30px]">{name}님의 포트폴리오 등급은</p>
+                  <div className="flex mt-[50px] justify-center">
+                    <DynamicRank componentName={mainPortData.total_portfolio_rank} />
+                  </div>
                 </div>
                 <div className="col-start-5 col-end-13 mt-[30px]  h-[332px] bg-zinc-700 rounded-[20px]"></div>
               </>
