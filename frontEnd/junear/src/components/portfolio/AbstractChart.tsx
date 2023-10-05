@@ -9,7 +9,7 @@ const AbstractChart: React.FC<AbstractChartProps> = ({ series, labels }) => {
   const options: any = {
     chart: {
       type: 'bar',
-      height: 350,
+      width: 300,
     },
 
     legend: {
@@ -53,7 +53,7 @@ const AbstractChart: React.FC<AbstractChartProps> = ({ series, labels }) => {
 
   return (
     <div id="chart">
-      <ReactApexChart options={options} series={series} type="donut" width={300} />
+      <ReactApexChart options={options} series={series} type="donut" width={420} />
     </div>
   );
 };

@@ -80,10 +80,12 @@ function CreatePort() {
       <div className="col-span-12 text-white mt-[125px] text-[28px] text-center">보유중인 주식을 추가해 주십시오.</div>
       <div className="col-span-12 mt-[5px]"></div>
       <div
-        className="col-start-1 col-end-6 h-[420px] bg-zinc-700 rounded-[20px]"
+        className="relative col-start-1 col-end-6 h-[420px] bg-zinc-700 rounded-[20px]"
         style={{ overflow: 'auto', maxHeight: '420px' }}
       >
-        <CreatePortSearch onSearchResultsChange={handleSearchResultsChange} />
+        <div className="sticky top-0 z-10">
+          <CreatePortSearch onSearchResultsChange={handleSearchResultsChange} />
+        </div>
         {searchResults.map((result, index) => (
           <div
             className="m-2 text-[16px] pt-[20px] pb-[20px] text-white cursor-pointer

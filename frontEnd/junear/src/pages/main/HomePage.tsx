@@ -3,7 +3,6 @@ import Card from '../../components/main/Card';
 import axiosInstance from 'state/AxiosInterceptor';
 import CardSlider from 'components/main/Carousel';
 import DynamicRank from 'components/portfolio/DynamicRank';
-import { log } from 'console';
 
 interface Millionaire {
   name: string;

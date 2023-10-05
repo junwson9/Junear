@@ -85,7 +85,7 @@ function MyPort() {
                 </div>
               </div>
               <div className="h-[25px]"></div>
-              <div className="relative h-[300px] bg-zinc-700  rounded-[20px]">
+              <div className="relative h-[400px] bg-zinc-700  rounded-[20px]">
                 <div className="flex pt-[25px] pl-[25px] gap-[5px]">
                   <button
                     className={`w-[76px] h-[27px] pl-[27px] pr-[26px] rounded-lg justify-center items-center inline-flex whitespace-nowrap text-white ${
@@ -104,10 +104,12 @@ function MyPort() {
                     금액
                   </button>
                 </div>
-                <AbstractChart
-                  series={activeButton === '등급' ? seriesForGrade : seriesForAmount}
-                  labels={activeButton === '등급' ? labelsForGrade : labelsForAmount}
-                />
+                <div className="mt-6">
+                  <AbstractChart
+                    series={activeButton === '등급' ? seriesForGrade : seriesForAmount}
+                    labels={activeButton === '등급' ? labelsForGrade : labelsForAmount}
+                  />
+                </div>
               </div>
               <div className="h-[25px]"></div>
               <div className="h-[300px] bg-zinc-700 rounded-[20px]">
@@ -126,13 +128,13 @@ function MyPort() {
                 </div>
               </div>
             </div>
-            <div className="col-start-7 col-end-13 h-[925px] mt-[100px] bg-zinc-700 rounded-[20px] mb-[50px]">
+            <div className="col-start-7 col-end-13 h-[1025px] mt-[100px] bg-zinc-700 rounded-[20px] mb-[50px]">
               <div className="flex content-center justify-end gap-[15px] pr-[25px] mt-[25px]">
                 <button onClick={MoveAddPort}>
                   <Plus />
                 </button>
               </div>
-              <div className="mt-[20px]" style={{ overflow: 'auto', maxHeight: '865px' }}>
+              <div className="mt-[20px]" style={{ overflow: 'auto', maxHeight: '965px' }}>
                 {stockInfo.map((item) => (
                   <Stock key={item.corporation_id} item={item} updatePortData={updatePortData} />
                 ))}

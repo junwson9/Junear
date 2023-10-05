@@ -52,7 +52,7 @@ function Stock({ item, updatePortData }: { item: any; updatePortData: () => void
   const percentage = ((item.stock_close - item.average_price) / item.average_price) * 100;
 
   return (
-    <div className=" h-[178.27px] relative border-2 rounded-[20px] border-gray-600">
+    <div className=" h-[178.27px] relative border-2 rounded-[20px] border-gray-600 mb-[25px]">
       <div className=" h-[178.27px] left-0 top-0 absolute">
         <div className="w-[129px] h-[23px] left-[293px] top-[60px] absolute rounded-[10px]" />
         <div className="w-[236px] h-[79px] left-[229px] top-[56px] absolute">
