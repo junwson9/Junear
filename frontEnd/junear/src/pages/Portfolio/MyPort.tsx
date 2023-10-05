@@ -144,7 +144,7 @@ function MyPort() {
         ) : (
           <>
             <div className="col-start-5 col-end-9 h-[500px]">
-              <p className="mt-[200px] text-white text-[28px]">보유중인 주식이 없습니다.</p>
+              <p className="mt-[200px] text-white text-[28px] whitespace-nowrap">보유중인 포트폴리오가 없습니다.</p>
               <button
                 className="mt-[100px] text-white bg-teal-500 rounded-[20px] px-[40px] py-[14px] w-[250px] whitespace-nowrap"
                 onClick={addPort}

@@ -97,7 +97,7 @@ function HomePage() {
           ) : (
             <>
               <div className="relative col-start-1 col-end-13 mt-[30px]  h-[332px] bg-zinc-700 rounded-[20px]">
-                <p className=" text-white text-[20px] mt-[50px]">보유하신 포트폴리오가 없습니다.</p>
+                <p className=" text-white text-[20px] mt-[50px]">보유중인 포트폴리오가 없습니다.</p>
                 <button
                   className="absolute text-white bg-teal-500 rounded-[20px] p-[14px] w-[250px] whitespace-nowrap left-[440px] top-[150px]"
                   onClick={goPort}
