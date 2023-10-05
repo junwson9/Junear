@@ -9,7 +9,6 @@ function CorpSearch() {
   const handleSearchResultsChange = (results: any[]) => {
     setSearchResults(results);
   };
-  console.log(searchResults);
 
   const navigateToDetailPage = (corp_id: number) => {
     // 클릭한 기업 페이지로 이동
@@ -26,11 +25,11 @@ function CorpSearch() {
       </div>
       <div className="col-start-1 col-end-13 flex justify-center ">
         <div className="w-[376px] h-[422px] bg-zinc-700 rounded-[10px] border-b border-neutral-400 overflow-auto">
-          <div className=" left-[17px] top-[27px] flex-col justify-start items-start gap-7 inline-flex">
+          <div className="left-[17px] top-[27px] flex-col justify-start items-start gap-7 inline-flex">
             <div className="">
               {searchResults.map((result, index) => (
                 <div
-                  className="m-2 text-[16px] text-white cursor-pointer hover:bg-gray-800"
+                  className="m-4 text-[18px] text-white cursor-pointer hover:bg-gray-800"
                   key={index}
                   onClick={() => navigateToDetailPage(result.corporation_id)}
                   style={{}}
