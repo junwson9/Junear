@@ -46,7 +46,7 @@ public class PortfolioApi {
     public ResponseEntity<?> portfolioCreate(@AuthenticatedMember AuthMember member,
             @Valid @RequestBody PortFolioCreateApiRequest request) {
 
-        portfolioCreateUseCase.createPortfolio(
+        portfolioCreateUseCase.createPortfolio(member.getId(),
                 CreatePortfolioRequest.from(member.getId(), request));
 
         return ResponseFactory.success("포트폴리오 초기 생성 성공", request);
@@ -67,7 +67,7 @@ public class PortfolioApi {
     public ResponseEntity<?> portfolioAdd(@AuthenticatedMember AuthMember member,
             @Valid @RequestBody PortFolioAddApiRequest request) {
 
-        eachPortfolioAddUseCase.addPortfolio(AddEachPortfolioRequest.from(member.getId(), request));
+        eachPortfolioAddUseCase.addPortfolio(member.getId(), AddEachPortfolioRequest.from(member.getId(), request));
 
         return ResponseFactory.success("포트폴리오 추가 성공");
     }
