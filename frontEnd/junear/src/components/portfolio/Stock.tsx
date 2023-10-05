@@ -1,6 +1,63 @@
+import { useState, useEffect, useRef } from 'react';
 import DynamicRank from './DynamicRank';
+import { ReactComponent as More } from 'assets/image/more.svg';
+import axiosInstance from 'state/AxiosInterceptor';
+import UpdatePortInfo from 'components/modal/UpdatePortInfo';
 
-function Stock({ item }: { item: any }) {
+function Stock({ item, updateStockInfo }: { item: any; updateStockInfo: (newStockInfo: any[]) => void }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleModalBackgroundClick = (e: React.MouseEvent) => {
+    if (e.target === e.currentTarget) {
+      closeModal();
+    }
+  };
+  const openModal = () => {
+    setIsDropdownOpen(false);
+    setIsModalOpen(true);
+  };
+
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+  useEffect(() => {
+    const handleClickOutside = (event: any) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    window.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      window.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+  const handleDelete = () => {
+    setIsDropdownOpen(false);
+    axiosInstance
+      .delete(`/portfolio/${item.portfolio_id}`)
+      .then((response) => {
+        // 삭제 후 서버에서 업데이트된 주식 정보를 가져옴
+        axiosInstance
+          .get('/portfolio') // 이 부분은 서버 요청에 따라 변경해야 합니다.
+          .then((newResponse) => {
+            const newStockInfo = newResponse.data.data.portfolio_bundle;
+            updateStockInfo(newStockInfo);
+            console.log(response);
+          })
+          .catch((error) => {
+            console.error('주식 정보 가져오기 실패', error);
+          });
+      })
+      .catch((error) => {
+        console.error('삭제 실패', error);
+      });
+  };
   return (
     <div className=" h-[178.27px] relative border-2 rounded-[20px] border-gray-600">
       <div className=" h-[178.27px] left-0 top-0 absolute">
@@ -30,8 +87,34 @@ function Stock({ item }: { item: any }) {
               {item.industry_type}
             </div>
           </div>
+          <button onClick={toggleDropdown}>
+            <More className="absolute top-[-30px] right-[-15px] cursor-pointer" />
+          </button>
+          {isDropdownOpen && (
+            <div
+              ref={dropdownRef}
+              className="absolute mt-2 top-[-30px] right-[-18px] bg-white border border-gray-300 rounded shadow-md z-50"
+            >
+              <ul>
+                <li className="px-4 py-2 hover:bg-blue-100 cursor-pointer" onClick={openModal}>
+                  수정하기
+                </li>
+                <li className="px-4 py-2 hover:bg-blue-100 cursor-pointer" onClick={handleDelete}>
+                  삭제하기
+                </li>
+              </ul>
+            </div>
+          )}
         </div>
       </div>
+      {isModalOpen && (
+        <div
+          className="fixed top-0 left-0 w-screen h-screen flex items-center justify-center bg-black bg-opacity-50 z-50"
+          onClick={handleModalBackgroundClick}
+        >
+          <UpdatePortInfo onClose={closeModal} item={item} />
+        </div>
+      )}
     </div>
   );
 }

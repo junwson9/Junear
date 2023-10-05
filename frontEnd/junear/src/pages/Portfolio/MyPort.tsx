@@ -5,12 +5,14 @@ import axiosInstance from 'state/AxiosInterceptor';
 import AbstractChart from 'components/portfolio/AbstractChart';
 import DynamicRank from 'components/portfolio/DynamicRank';
 import Stock from 'components/portfolio/Stock';
+import { useNavigate } from 'react-router-dom';
 
 interface ApiResponse {
   message: string;
   data: any;
 }
 function MyPort() {
+  const navigate = useNavigate();
   const [isLoading, setisLoading] = useState(false);
   const [activeButton, setActiveButton] = useState('등급');
   const [portData, setPortData] = useState<any>(undefined);
@@ -19,6 +21,12 @@ function MyPort() {
   const [seriesForAmount, setseriesForAmount] = useState<number[]>([]);
   const [labelsForAmount, setlabelsForAmount] = useState<string[]>([]);
   const [stockInfo, setStockInfo] = useState<any[]>([]);
+  const updateStockInfo = (newStockInfo: any[]) => {
+    setStockInfo(newStockInfo);
+  };
+  const addPort = () => {
+    navigate('/portfolio');
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -41,6 +49,7 @@ function MyPort() {
         setlabelsForGrade(corporationRanks);
         setisLoading(true);
         console.log(response.data.data.portfolio_bundle);
+        console.log(response.data.data);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -93,12 +102,10 @@ function MyPort() {
                   금액
                 </button>
               </div>
-              <div className="absolute left-[-5px] mt-[25px]">
-                <AbstractChart
-                  series={activeButton === '등급' ? seriesForGrade : seriesForAmount}
-                  labels={activeButton === '등급' ? labelsForGrade : labelsForAmount}
-                />
-              </div>
+              <AbstractChart
+                series={activeButton === '등급' ? seriesForGrade : seriesForAmount}
+                labels={activeButton === '등급' ? labelsForGrade : labelsForAmount}
+              />
             </div>
             <div className="h-[25px]"></div>
             <div className="h-[300px] bg-zinc-700 rounded-[20px]">
@@ -119,7 +126,7 @@ function MyPort() {
           </div>
           <div className="col-start-7 col-end-13 h-[925px] mt-[100px] bg-zinc-700 rounded-[20px] mb-[50px]">
             <div className="flex content-center justify-end gap-[15px] pr-[25px] mt-[25px]">
-              <button>
+              <button onClick={addPort}>
                 <Plus />
               </button>
               <button>
@@ -128,7 +135,7 @@ function MyPort() {
             </div>
             <div className="mt-[20px]" style={{ overflow: 'auto', maxHeight: '865px' }}>
               {stockInfo.map((item) => (
-                <Stock key={item.corporation_id} item={item} />
+                <Stock key={item.corporation_id} item={item} updateStockInfo={updateStockInfo} />
               ))}
             </div>
           </div>

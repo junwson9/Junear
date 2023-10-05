@@ -8,7 +8,8 @@ interface AbstractChartProps {
 const AbstractChart: React.FC<AbstractChartProps> = ({ series, labels }) => {
   const options: any = {
     chart: {
-      type: 'donut',
+      type: 'bar',
+      height: 350,
     },
 
     legend: {
@@ -25,7 +26,7 @@ const AbstractChart: React.FC<AbstractChartProps> = ({ series, labels }) => {
       horizontalAlign: 'left',
     },
     plotOptions: {
-      pie: {
+      bar: {
         dataLabels: {
           enabled: false, // 데이터 레이블 숨기기
         },
@@ -52,7 +53,7 @@ const AbstractChart: React.FC<AbstractChartProps> = ({ series, labels }) => {
 
   return (
     <div id="chart">
-      <ReactApexChart options={options} series={series} type="donut" />
+      <ReactApexChart options={options} series={series} type="donut" width={300} />
     </div>
   );
 };
