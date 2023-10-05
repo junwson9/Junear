@@ -26,17 +26,20 @@ public class BookmarkApi {
     private final BookmarkSearchUseCase bookmarkSearchUseCase;
 
     @PostMapping("/{corporation_id}")
-    public ResponseEntity<?> addBookmark(@PathVariable("corporation_id") Long corporationId, @AuthenticatedMember AuthMember authMember) {
+//    public ResponseEntity<?> addBookmark(@PathVariable("corporation_id") Long corporationId, @AuthenticatedMember AuthMember authMember) {
+    public ResponseEntity<?> addBookmark(@PathVariable("corporation_id") Long corporationId) {
 
-        bookmarkManagementUseCase.addBookmark(new BookmarkRequest(authMember.getId(), corporationId));
+        bookmarkManagementUseCase.addBookmark(new BookmarkRequest(1L, corporationId));
+//        bookmarkManagementUseCase.addBookmark(new BookmarkRequest(authMember.getId(), corporationId));
 
         return ResponseFactory.success("북마크 등록 성공");
     }
 
     @DeleteMapping("/{corporation_id}")
-    public ResponseEntity<?> removeBookmark(@PathVariable("corporation_id") Long corporationId, @AuthenticatedMember AuthMember authMember) {
+//    public ResponseEntity<?> removeBookmark(@PathVariable("corporation_id") Long corporationId, @AuthenticatedMember AuthMember authMember) {
+    public ResponseEntity<?> removeBookmark(@PathVariable("corporation_id") Long corporationId) {
 
-        bookmarkManagementUseCase.removeBookmark(new BookmarkRequest(authMember.getId(), corporationId));
+        bookmarkManagementUseCase.removeBookmark(new BookmarkRequest(1L, corporationId));
 
         return ResponseFactory.success("북마크 삭제 성공");
     }
