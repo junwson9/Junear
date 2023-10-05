@@ -38,7 +38,7 @@ const CardSlider = () => {
     slidesToScroll: 4,
     arrows: false,
     autoplay: true,
-    autoplaySpeed: 5000,
+    autoplaySpeed: 4000,
   };
   return (
     <div style={{ width: '100%', height: '100%' }}>
