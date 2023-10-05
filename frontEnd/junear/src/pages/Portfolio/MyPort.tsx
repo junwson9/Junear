@@ -21,50 +21,50 @@ function MyPort() {
   const [seriesForAmount, setseriesForAmount] = useState<number[]>([]);
   const [labelsForAmount, setlabelsForAmount] = useState<string[]>([]);
   const [stockInfo, setStockInfo] = useState<any[]>([]);
-
-  const updateStockInfo = (newStockInfo: any[]) => {
-    setStockInfo(newStockInfo);
+  const MoveAddPort = () => {
+    navigate('/add-portfolio');
   };
   const addPort = () => {
     navigate('/portfolio');
   };
+  const fetchData = async () => {
+    try {
+      const response = await axiosInstance.get<ApiResponse>('/portfolio');
+      setPortData(response.data.data);
+      const corporationAssets = response.data.data.member_bundle.each_assets.map((item: any) => item.corporation_asset);
+      const assetsLabels = response.data.data.member_bundle.each_assets.map((item: any) => item.corporation_name);
+      setseriesForAmount(corporationAssets);
+      setlabelsForAmount(assetsLabels);
+      const eachRank = response.data.data.member_bundle.each_rank;
+      const rankEntries = Object.entries(eachRank);
+      const filteredRankEntries = rankEntries.filter(([key, value]) => value !== 0 && key !== 'total_count');
+      const filteredEachRank = Object.fromEntries(filteredRankEntries);
+      const corporationRanks = Object.keys(filteredEachRank);
+      const gradeLabels = Object.values(filteredEachRank);
+      setseriesForGrade(gradeLabels);
+      setStockInfo(response.data.data.portfolio_bundle);
+      setlabelsForGrade(corporationRanks);
+      setisLoading(true);
+      console.log(response.data.data.portfolio_bundle);
+      console.log(response.data.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axiosInstance.get<ApiResponse>('/portfolio');
-        setPortData(response.data.data);
-        const corporationAssets = response.data.data.member_bundle.each_assets.map(
-          (item: any) => item.corporation_asset,
-        );
-        const assetsLabels = response.data.data.member_bundle.each_assets.map((item: any) => item.corporation_name);
-        setseriesForAmount(corporationAssets);
-        setlabelsForAmount(assetsLabels);
-        const eachRank = response.data.data.member_bundle.each_rank;
-        const rankEntries = Object.entries(eachRank);
-        const filteredRankEntries = rankEntries.filter(([key, value]) => value !== 0 && key !== 'total_count');
-        const filteredEachRank = Object.fromEntries(filteredRankEntries);
-        const corporationRanks = Object.keys(filteredEachRank);
-        const gradeLabels = Object.values(filteredEachRank);
-        setseriesForGrade(gradeLabels);
-        setStockInfo(response.data.data.portfolio_bundle);
-        setlabelsForGrade(corporationRanks);
-        setisLoading(true);
-        console.log(response.data.data.portfolio_bundle);
-        console.log(response.data.data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
     fetchData();
   }, []);
   const handleButtonClick = (name: string) => {
     setActiveButton(name);
   };
+  const updatePortData = () => {
+    // 삭제 후, 서버에서 새로운 PortData를 다시 가져와서 상태를 업데이트
+    fetchData();
+  };
   return (
     <>
       {isLoading &&
-        (!portData ? (
+        (portData.portfolio_bundle && portData.portfolio_bundle.length > 0 ? (
           <>
             <div className="col-start-1 col-end-7 h-[850px] mt-[100px]">
               <div className="h-[275px] bg-zinc-700 rounded-[20px]">
@@ -79,7 +79,6 @@ function MyPort() {
                 <div className="flex pl-[25px] pt-[25px] text-zinc-400">평가 손익</div>
                 <div className="flex pl-[25px] pt-[5px] text-rose-500">
                   ₩ {portData.assets_bundle.profit_and_loss.toLocaleString()} (
-                  {portData.assets_bundle.total_investment > portData.assets_bundle.total_assets ? '-' : '+'}
                   {((portData.assets_bundle.profit_and_loss / portData.assets_bundle.total_investment) * 100).toFixed(
                     2,
                   )}
@@ -130,7 +129,7 @@ function MyPort() {
             </div>
             <div className="col-start-7 col-end-13 h-[925px] mt-[100px] bg-zinc-700 rounded-[20px] mb-[50px]">
               <div className="flex content-center justify-end gap-[15px] pr-[25px] mt-[25px]">
-                <button onClick={addPort}>
+                <button onClick={MoveAddPort}>
                   <Plus />
                 </button>
                 <button>
@@ -139,7 +138,7 @@ function MyPort() {
               </div>
               <div className="mt-[20px]" style={{ overflow: 'auto', maxHeight: '865px' }}>
                 {stockInfo.map((item) => (
-                  <Stock key={item.corporation_id} item={item} updateStockInfo={updateStockInfo} />
+                  <Stock key={item.corporation_id} item={item} updatePortData={updatePortData} />
                 ))}
               </div>
             </div>

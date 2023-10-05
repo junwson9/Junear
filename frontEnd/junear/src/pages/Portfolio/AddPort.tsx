@@ -4,7 +4,7 @@ import CreatePortSearch from 'components/input/CreatePortSearch';
 import axiosInstance from 'state/AxiosInterceptor';
 import { useNavigate } from 'react-router-dom';
 import { ReactComponent as Delete } from '../../assets/image/delete.svg';
-function CreatePort() {
+function AddPort() {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchResults, setSearchResults] = useState<any[]>([]);
@@ -49,17 +49,17 @@ function CreatePort() {
   };
   const createPort = async () => {
     try {
-      const requestData = {
-        request_list: modalData.map((item) => ({
-          corporation_id: item.name.corporation_id,
-          stock_count: Number(item.quantity),
-          average_price: Number(item.averagePrice),
-        })),
-      };
-      const response = await axiosInstance.post('/portfolio/init', requestData);
+      const requestData = modalData.map((item) => ({
+        corporation_id: item.name.corporation_id,
+        stock_count: Number(item.quantity),
+        average_price: Number(item.averagePrice),
+      }));
+
+      const response = await axiosInstance.post('/portfolio', requestData);
       console.log(response);
       navigate('/my-portfolio');
     } catch (error) {
+      console.log(modalData);
       console.error('Error fetching data:', error);
     }
   };
@@ -116,7 +116,7 @@ function CreatePort() {
           className="absolute text-white bg-teal-500 rounded-[20px] p-[14px] w-[250px] whitespace-nowrap left-[430px]"
           onClick={createPort}
         >
-          포트폴리오 생성하기
+          포트폴리오 추가하기
         </button>
       </div>
 
@@ -133,4 +133,4 @@ function CreatePort() {
   );
 }
 
-export default CreatePort;
+export default AddPort;

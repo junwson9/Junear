@@ -4,7 +4,7 @@ import { ReactComponent as More } from 'assets/image/more.svg';
 import axiosInstance from 'state/AxiosInterceptor';
 import UpdatePortInfo from 'components/modal/UpdatePortInfo';
 
-function Stock({ item, updateStockInfo }: { item: any; updateStockInfo: (newStockInfo: any[]) => void }) {
+function Stock({ item, updatePortData }: { item: any; updatePortData: () => void }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const closeModal = () => {
@@ -42,17 +42,8 @@ function Stock({ item, updateStockInfo }: { item: any; updateStockInfo: (newStoc
     axiosInstance
       .delete(`/portfolio/${item.portfolio_id}`)
       .then((response) => {
-        // 삭제 후 서버에서 업데이트된 주식 정보를 가져옴
-        axiosInstance
-          .get('/portfolio') // 이 부분은 서버 요청에 따라 변경해야 합니다.
-          .then((newResponse) => {
-            const newStockInfo = newResponse.data.data.portfolio_bundle;
-            updateStockInfo(newStockInfo);
-            console.log(response);
-          })
-          .catch((error) => {
-            console.error('주식 정보 가져오기 실패', error);
-          });
+        updatePortData();
+        console.log(response);
       })
       .catch((error) => {
         console.error('삭제 실패', error);
@@ -70,7 +61,7 @@ function Stock({ item, updateStockInfo }: { item: any; updateStockInfo: (newStoc
             {item.name}
           </div>
 
-          <div className="w-[63px] h-[22px] left-0 top-[55px] absolute rounded-[10px] justify-start items-center gap-[5px] inline-flex">
+          <div className="w-[70px] h-[22px] left-0 top-[55px] absolute rounded-[10px] justify-start items-center gap-[5px] inline-flex">
             <div className="text-center text-zinc-100 text-xs font-normal font-['Noto Sans KR']">수량</div>
             <div className="w-2.5 text-center text-zinc-100 text-xs font-normal font-['Noto Sans KR']">
               {item.stock_count}
@@ -112,7 +103,7 @@ function Stock({ item, updateStockInfo }: { item: any; updateStockInfo: (newStoc
           className="fixed top-0 left-0 w-screen h-screen flex items-center justify-center bg-black bg-opacity-50 z-50"
           onClick={handleModalBackgroundClick}
         >
-          <UpdatePortInfo onClose={closeModal} item={item} />
+          <UpdatePortInfo onClose={closeModal} item={item} updatePortData={updatePortData} />
         </div>
       )}
     </div>
