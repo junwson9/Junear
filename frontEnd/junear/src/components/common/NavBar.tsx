@@ -15,35 +15,13 @@ import { ReactComponent as Logo } from 'assets/image/nav-logo.svg';
 import { Link, useLocation } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { ProfileImageState, resetProfileImage } from 'recoil/atom';
-import axiosInstance from 'state/AxiosInterceptor';
-import { useState } from 'react';
 
 const pages = [
   { label: '기업검색', link: '/corporation-search' },
   { label: '뉴스보기', link: '/news' },
-  // { label: '포트폴리오 생성', link: '/portfolio' },
+  { label: '포트폴리오 생성', link: '/portfolio' },
   { label: '내 포트폴리오', link: '/my-portfolio' },
 ];
-
-const access_token = localStorage.getItem('access_token');
-const fetchPortData = async () => {
-  try {
-    const response = await axiosInstance.get('/portfolio');
-    const data = response.data.data.portfolio_bundle;
-
-    if (data.length === 0) {
-      console.log(1111);
-      pages.splice(2, 0, { label: '포트폴리오 생성', link: '/portfolio' });
-    }
-  } catch (error) {
-    console.error('Error fetching data:', error);
-  }
-};
-
-if (access_token) {
-  fetchPortData();
-}
-
 const settings = [
   { label: '마이페이지', link: '/mypage' },
   { label: '로그아웃', link: '/login' },
