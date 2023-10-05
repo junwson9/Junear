@@ -52,14 +52,18 @@ function AddPort() {
   };
   const createPort = async () => {
     try {
-      const requestData = {
-        corporation_id: modalData[0]?.name.corporation_id,
-        stock_count: Number(modalData[0]?.quantity),
-        average_price: Number(modalData[0]?.averagePrice),
-      };
-      const response = await axiosInstance.post('/portfolio', requestData);
-      console.log(response);
-      navigate('/my-portfolio');
+      if (selectedResultIndex !== null) {
+        const requestData = {
+          corporation_id: modalData[selectedResultIndex]?.name?.corporation_id,
+          stock_count: Number(modalData[selectedResultIndex]?.quantity),
+          average_price: Number(modalData[selectedResultIndex]?.averagePrice),
+        };
+        const response = await axiosInstance.post('/portfolio', requestData);
+        console.log(response);
+        navigate('/my-portfolio');
+      } else {
+        console.error('selectedResultIndex is null');
+      }
     } catch (error) {
       console.log(modalData);
       console.error('Error fetching data:', error);

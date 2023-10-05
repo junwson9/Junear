@@ -31,23 +31,34 @@ function CreatePort() {
 
   const handleModalData = (data: { quantity: string; averagePrice: string }) => {
     if (selectedResultIndex !== null && selectedResultName !== null) {
-      setModalData((prevModalData) => {
-        const updatedModalData = [...prevModalData];
-        updatedModalData[selectedResultIndex] = {
-          name: selectedResultName, // 이름 추가
-          ...data,
-        };
-        return updatedModalData;
-      });
+      const newItem = {
+        name: selectedResultName,
+        quantity: data.quantity,
+        averagePrice: data.averagePrice,
+      };
+
+      // 중복 검사를 수행하여 이미 존재하는 주식인지 확인
+      const isDuplicate = modalData.some((item) => item.name === newItem.name);
+
+      if (isDuplicate) {
+        // 중복인 경우 알림을 표시하고 추가하지 않음
+        alert('이미 존재하는 주식 정보입니다.');
+      } else {
+        // 중복이 아닌 경우 새 항목을 배열의 끝에 추가
+        setModalData((prevModalData) => [...prevModalData, newItem]);
+      }
     }
   };
   const handleDeleteClick = (indexToDelete: number) => {
     setModalData((prevModalData) => {
-      const updatedModalData = prevModalData.filter((_, index) => index !== indexToDelete);
-      return updatedModalData;
+      const updatedModalData = [...prevModalData];
+      updatedModalData[indexToDelete] = undefined; // 해당 인덱스에 undefined 설정
+      return updatedModalData.filter((item) => item !== undefined); // undefined를 제외한 항목만 반환
     });
   };
   const createPort = async () => {
+    console.log(modalData);
+
     try {
       const requestData = {
         request_list: modalData.map((item) => ({
@@ -84,12 +95,15 @@ function CreatePort() {
           </div>
         ))}
       </div>
-      <div className="col-start-8 col-end-13 h-[420px] bg-zinc-700 rounded-[20px]">
+      <div
+        className="col-start-8 col-end-13 h-[420px] bg-zinc-700 rounded-[20px] "
+        style={{ overflow: 'auto', maxHeight: '420px' }}
+      >
         {modalData.length > 0 &&
           modalData.map((data, index) => (
             <div className="relative m-2 text-[16px] pt-[20px] pb-[20px] text-white" key={index}>
               <div className="flex">
-                <div className="text-left">
+                <div className="text-left ml-[20px]">
                   {data?.name.name}
                   <div style={{ color: '#B0B2B5' }}>{data?.name.industry_type}</div>
                 </div>
