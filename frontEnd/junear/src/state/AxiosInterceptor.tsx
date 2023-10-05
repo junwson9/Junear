@@ -39,13 +39,13 @@ const reIssuedToken = async () => {
 axiosInstance.interceptors.response.use(
   // 정상 응답 처리
   (response) => {
-    console.log(response);
+    // console.log(response);
     return response;
   },
   // 에러 처리
   async (error) => {
     const { config, response } = error;
-    console.log(error.message);
+    // console.log(error.message);
     // 토큰 자동 재발급 필요 외 다른 에러
     console.log('에러발생 ============================');
 
@@ -76,8 +76,8 @@ axiosInstance.interceptors.response.use(
 axiosInstance.interceptors.request.use(
   (config) => {
     const access_token = localStorage.getItem('access_token');
-    console.log(access_token);
-    console.log(config);
+    // console.log(access_token);
+    // console.log(config);
     if (access_token) {
       config.headers.Authorization = `Bearer ${access_token}`;
     }
