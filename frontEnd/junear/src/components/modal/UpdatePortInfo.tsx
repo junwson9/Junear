@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import axiosInstance from 'state/AxiosInterceptor';
+
 function UpdatePortInfo({ onClose, item }: { onClose: () => void; item: any }) {
   const [quantity, setQuantity] = useState<string>('');
   const [averagePrice, setAveragePrice] = useState<string>('');
   const access_token = localStorage.getItem('access_token');
   const headers: { [key: string]: string } = {};
-
   if (access_token) {
     headers.Authorization = `Bearer ${access_token}`;
   }
