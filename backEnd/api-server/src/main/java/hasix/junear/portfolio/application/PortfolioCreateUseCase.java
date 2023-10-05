@@ -2,6 +2,7 @@ package hasix.junear.portfolio.application;
 
 import hasix.junear.portfolio.application.dto.AddEachPortfolioRequest;
 import hasix.junear.portfolio.application.dto.CreatePortfolioRequest;
+import hasix.junear.portfolio.domain.Portfolio;
 import hasix.junear.portfolio.domain.PortfolioRepository;
 import hasix.junear.portfolio.exception.PortfolioErrorCode;
 import hasix.junear.portfolio.exception.PortfolioException;
@@ -18,10 +19,17 @@ public class PortfolioCreateUseCase {
 
     private final PortfolioRepository portfolioRepository;
 
-    public void createPortfolio(List<CreatePortfolioRequest> requestList) {
+    public void createPortfolio(Long memberId, List<CreatePortfolioRequest> requestList) {
 
+        verifyPortfolio(memberId);
         requestList.forEach(this::addPortfolio);
 
+    }
+
+    private void verifyPortfolio(Long memberId) {
+
+        List<Portfolio> portfolioList = portfolioRepository.findAllByMemberId(memberId);
+        if(portfolioList != null && !portfolioList.isEmpty()) throw new PortfolioException(PortfolioErrorCode.ALREADY_OWN_PORTFOLIO);
     }
 
     public void addPortfolio(CreatePortfolioRequest request) {
