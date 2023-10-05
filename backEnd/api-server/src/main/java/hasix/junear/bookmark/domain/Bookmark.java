@@ -1,10 +1,13 @@
 package hasix.junear.bookmark.domain;
 
+import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Bookmark {
 
     @Id

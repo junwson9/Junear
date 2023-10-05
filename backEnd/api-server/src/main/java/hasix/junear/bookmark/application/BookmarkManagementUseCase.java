@@ -7,6 +7,8 @@ import hasix.junear.common.exception.CustomException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 @RequiredArgsConstructor
 public class BookmarkManagementUseCase {
@@ -14,6 +16,7 @@ public class BookmarkManagementUseCase {
     private final BookmarkRepository bookmarkRepository;
     private final CorporationValidator corporationValidator;
 
+    @Transactional
     public void addBookmark(BookmarkRequest bookmarkRequest) {
 
         if (!corporationValidator.validateCorporation(bookmarkRequest.getCorporationId())) {
@@ -27,6 +30,7 @@ public class BookmarkManagementUseCase {
         bookmarkRepository.save(bookmarkRequest.toBookmark());
     }
 
+    @Transactional
     public void removeBookmark(BookmarkRequest bookmarkRequest) {
         Long removedCount = bookmarkRepository.deleteByMemberIdAndCorporationId(bookmarkRequest);
 
