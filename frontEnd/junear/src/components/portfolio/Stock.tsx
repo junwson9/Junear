@@ -49,6 +49,17 @@ function Stock({ item, updatePortData }: { item: any; updatePortData: () => void
         console.error('삭제 실패', error);
       });
   };
+  const percentage = ((item.stock_close - item.average_price) / item.average_price) * 100;
+  const getColorClass = () => {
+    if (percentage < 0) {
+      return 'text-blue-500'; // 파란색 클래스
+    } else if (percentage > 0) {
+      return 'text-red-500'; // 빨간색 클래스
+    } else {
+      return 'text-zinc-100'; // 기본 색상 클래스
+    }
+  };
+  const colorClass = getColorClass();
   return (
     <div className=" h-[178.27px] relative border-2 rounded-[20px] border-gray-600">
       <div className=" h-[178.27px] left-0 top-0 absolute">
@@ -57,27 +68,31 @@ function Stock({ item, updatePortData }: { item: any; updatePortData: () => void
           <div className="absolute top-[-30px] right-[300px]">
             <DynamicRank componentName={item.total_rank_string} />
           </div>
-          <div className="left-0 top-0 absolute text-center text-zinc-100 text-base font-normal font-['Noto Sans KR']">
+          <div className="flex  left-0 top-[-20px] absolute text-center text-zinc-100 text-base font-normal font-['Noto Sans KR']">
             {item.name}
+            <div className="text-center text-zinc-400 text-xs font-normal font-['Noto Sans KR'] mt-[6px] ml-[6px]">
+              {item.industry_type}
+            </div>
           </div>
 
-          <div className="w-[70px] h-[22px] left-0 top-[55px] absolute rounded-[10px] justify-start items-center gap-[5px] inline-flex">
+          <div className="w-[70px] h-[22px] left-0 top-[25px] absolute rounded-[10px] justify-start items-center gap-[5px] inline-flex mb-[20px]">
             <div className="text-center text-zinc-100 text-xs font-normal font-['Noto Sans KR']">수량</div>
             <div className="w-2.5 text-center text-zinc-100 text-xs font-normal font-['Noto Sans KR']">
               {item.stock_count}
             </div>
           </div>
-          <div className="w-[167px] h-[26px] left-[69px] top-[53px] absolute rounded-[10px] justify-start items-center gap-[5px] inline-flex">
-            <div className="text-center text-zinc-100 text-xs font-normal font-['Noto Sans KR']">자산가치</div>
+          <div className="w-[167px] h-[26px] left-[69px] top-[25px] absolute rounded-[10px] justify-start items-center gap-[5px] inline-flex">
+            <div className="text-center text-zinc-100 text-xs font-normal font-['Noto Sans KR'] whitespace-nowrap">
+              자산가치
+            </div>
             <div className="text-center text-zinc-100 text-xs font-normal font-['Noto Sans KR']">
               {(item.stock_close * item.stock_count).toLocaleString()}
             </div>
-          </div>
-          <div className="whitespace-nowrap h-[26px] left-[200px] top-[53px] absolute rounded-[10px] justify-start items-center gap-[5px] inline-flex">
-            <div className="text-center text-zinc-100 text-xs font-normal font-['Noto Sans KR']">
-              {item.industry_type}
+            <div className={`text-center text-zinc-100 text-xs font-normal font-['Noto Sans KR'] ${colorClass}`}>
+              ({(((item.stock_close - item.average_price) / item.average_price) * 100).toFixed(2)}%)
             </div>
           </div>
+
           <button onClick={toggleDropdown}>
             <More className="absolute top-[-30px] right-[-15px] cursor-pointer" />
           </button>

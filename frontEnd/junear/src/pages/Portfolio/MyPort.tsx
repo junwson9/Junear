@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { ReactComponent as Filter } from '../../assets/image/filter.svg';
 import { ReactComponent as Plus } from '../../assets/image/plus.svg';
 import axiosInstance from 'state/AxiosInterceptor';
 import AbstractChart from 'components/portfolio/AbstractChart';
@@ -131,9 +130,6 @@ function MyPort() {
               <div className="flex content-center justify-end gap-[15px] pr-[25px] mt-[25px]">
                 <button onClick={MoveAddPort}>
                   <Plus />
-                </button>
-                <button>
-                  <Filter />
                 </button>
               </div>
               <div className="mt-[20px]" style={{ overflow: 'auto', maxHeight: '865px' }}>

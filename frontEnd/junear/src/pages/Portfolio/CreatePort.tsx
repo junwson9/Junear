@@ -30,11 +30,11 @@ function CreatePort() {
   };
 
   const handleModalData = (data: { quantity: string; averagePrice: string }) => {
-    if (selectedResultIndex !== null) {
+    if (selectedResultIndex !== null && selectedResultName !== null) {
       setModalData((prevModalData) => {
         const updatedModalData = [...prevModalData];
         updatedModalData[selectedResultIndex] = {
-          name: selectedResultName || '', // 이름 추가
+          name: selectedResultName, // 이름 추가
           ...data,
         };
         return updatedModalData;
@@ -85,30 +85,31 @@ function CreatePort() {
         ))}
       </div>
       <div className="col-start-8 col-end-13 h-[420px] bg-zinc-700 rounded-[20px]">
-        {modalData.map((data, index) => (
-          <div className="relative m-2 text-[16px] pt-[20px] pb-[20px] text-white" key={index}>
-            <div className="flex">
-              <div className="text-left">
-                {data.name.name}
-                <div style={{ color: '#B0B2B5' }}>{data.name.industry_type}</div>
-              </div>
-              <div className="flex text-left pl-[115px]">
-                <div className="absolute left-[200px]">
-                  <div>수량</div>
-                  <div>평단가</div>
+        {modalData.length > 0 &&
+          modalData.map((data, index) => (
+            <div className="relative m-2 text-[16px] pt-[20px] pb-[20px] text-white" key={index}>
+              <div className="flex">
+                <div className="text-left">
+                  {data?.name.name}
+                  <div style={{ color: '#B0B2B5' }}>{data?.name.industry_type}</div>
                 </div>
-                <div className="absolute left-[270px]">
-                  <div>{data.quantity}</div>
-                  <div>{data.averagePrice}</div>
+                <div className="flex text-left pl-[115px]">
+                  <div className="absolute left-[200px]">
+                    <div>수량</div>
+                    <div>평단가</div>
+                  </div>
+                  <div className="absolute left-[270px]">
+                    <div>{data?.quantity}</div>
+                    <div>{data?.averagePrice}</div>
+                  </div>
                 </div>
+                <Delete
+                  className="absolute right-[20px] top-[27px] cursor-pointer"
+                  onClick={() => handleDeleteClick(index)}
+                />
               </div>
-              <Delete
-                className="absolute right-[20px] top-[27px] cursor-pointer"
-                onClick={() => handleDeleteClick(index)}
-              />
             </div>
-          </div>
-        ))}
+          ))}
       </div>
       <div className="col-span-12 mt-[5px]"></div>
       <div className="relative col-span-12">

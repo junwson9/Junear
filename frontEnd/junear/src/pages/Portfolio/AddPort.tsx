@@ -30,13 +30,16 @@ function AddPort() {
   };
 
   const handleModalData = (data: { quantity: string; averagePrice: string }) => {
-    if (selectedResultIndex !== null) {
+    if (selectedResultIndex !== null && selectedResultName !== null) {
       setModalData((prevModalData) => {
-        const updatedModalData = [...prevModalData];
+        // 빈 슬롯을 제거한 배열을 생성
+        const updatedModalData = prevModalData.filter(Boolean);
+
         updatedModalData[selectedResultIndex] = {
-          name: selectedResultName || '', // 이름 추가
+          name: selectedResultName, // 이름 추가
           ...data,
         };
+
         return updatedModalData;
       });
     }
@@ -49,12 +52,11 @@ function AddPort() {
   };
   const createPort = async () => {
     try {
-      const requestData = modalData.map((item) => ({
-        corporation_id: item.name.corporation_id,
-        stock_count: Number(item.quantity),
-        average_price: Number(item.averagePrice),
-      }));
-
+      const requestData = {
+        corporation_id: modalData[0]?.name.corporation_id,
+        stock_count: Number(modalData[0]?.quantity),
+        average_price: Number(modalData[0]?.averagePrice),
+      };
       const response = await axiosInstance.post('/portfolio', requestData);
       console.log(response);
       navigate('/my-portfolio');
