@@ -2,7 +2,9 @@ package hasix.junear.springconfig.config;
 
 
 import hasix.junear.springconfig.config.auth.AuthenticatedMemberArgumentResolver;
+import hasix.junear.springconfig.config.logging.LoggingFilter;
 import java.util.List;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -30,5 +32,12 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
         resolvers.add(authenticatedMemberArgumentResolver());
+    }
+
+    @Bean
+    public FilterRegistrationBean commonLoggingFilter(){
+        FilterRegistrationBean bean = new FilterRegistrationBean(new LoggingFilter());
+        bean.setOrder(Integer.MIN_VALUE);
+        return bean;
     }
 }
