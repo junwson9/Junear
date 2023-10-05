@@ -1,5 +1,3 @@
-// A_PLUS.tsx
-
 import React from 'react';
 import { ReactComponent as S } from '../../assets/image/Srank.svg';
 import { ReactComponent as A_Plus } from '../../assets/image/A+rank.svg';
@@ -11,30 +9,32 @@ import { ReactComponent as C } from '../../assets/image/Crank.svg';
 
 interface RankProps {
   rank: number;
+  width?: number; // width 속성 추가
+  height?: number; // height 속성 추가
 }
 
-function Rank({ rank }: RankProps) {
-  console.log('RANK  ' + rank);
+function Rank({ rank, width, height }: RankProps) {
+  // console.log('RANK  ' + rank);
   if (rank >= 0 && rank < 1) {
-    return <C />;
+    return <C width={width} height={height} />; // width와 height 속성 전달
   } else if (rank >= 1 && rank < 2) {
-    console.log('CPlus');
-    return <C_Plus />;
+    // console.log('CPlus');
+    return <C_Plus width={width} height={height} />;
   } else if (rank >= 2 && rank < 3) {
-    console.log('B');
-    return <B />;
+    // console.log('B');
+    return <B width={width} height={height} />;
   } else if (rank >= 3 && rank < 4) {
-    console.log('BPlus');
-    return <B_Plus />;
+    // console.log('BPlus');
+    return <B_Plus width={width} height={height} />;
   } else if (rank >= 4 && rank < 5) {
-    console.log('A');
-    return <A />;
+    // console.log('A');
+    return <A width={width} height={height} />;
   } else if (rank >= 5 && rank < 6) {
-    console.log('APLUS');
-    return <A_Plus />;
+    // console.log('APLUS');
+    return <A_Plus width={width} height={height} />;
   } else {
-    console.log('S');
-    return <S />;
+    // console.log('S');
+    return <S width={width} height={height} />;
   }
 }
 
