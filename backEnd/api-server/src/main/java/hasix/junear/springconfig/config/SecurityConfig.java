@@ -10,11 +10,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.CorsUtils;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
@@ -35,7 +37,7 @@ public class SecurityConfig {
         http.formLogin()
             .disable();
 
-        http.cors();
+        http.cors(AbstractHttpConfigurer::disable);
 
         // 세션 사용 X, 인증 실패시 entriyPoint로 이동된다.
         http.exceptionHandling()
@@ -53,8 +55,8 @@ public class SecurityConfig {
             .antMatchers(HttpMethod.DELETE, "/api/portfolio").authenticated()
             .antMatchers(HttpMethod.PATCH, "/api/portfolio").authenticated()
             .antMatchers(HttpMethod.GET, "/api/portfolio").authenticated()
-            .antMatchers("/**")
-            .permitAll();
+            .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
+            .antMatchers("/**").permitAll();
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         http.addFilterBefore(jwtExceptionFilter, JwtAuthenticationFilter.class);
         return http.build();
