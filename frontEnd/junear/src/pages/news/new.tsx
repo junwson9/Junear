@@ -17,7 +17,7 @@ function News() {
           <NewsTab dataList={dataList} onDataListChange={setDataList} />
         </div>
       </div>
-      <div className="col-start-1 col-end-13 mt-[10px] mb-[20px] h-[557px] bg-zinc-700 rounded-[20px] overflow-auto">
+      <div className="col-start-1 col-end-13 mt-[10px] h-[70%] mb-[20px] bg-zinc-700 rounded-[20px] overflow-auto">
         {dataList.map((data, index) => (
           <NewsOne key={index} data={data} />
         ))}
