@@ -36,9 +36,16 @@ function MyPort() {
       setlabelsForAmount(assetsLabels);
       const eachRank = response.data.data.member_bundle.each_rank;
       const rankEntries = Object.entries(eachRank);
+
       const filteredRankEntries = rankEntries.filter(([key, value]) => value !== 0 && key !== 'total_count');
       const filteredEachRank = Object.fromEntries(filteredRankEntries);
-      const corporationRanks = Object.keys(filteredEachRank);
+      console.log(filteredEachRank);
+      const corporationRanks = Object.keys(filteredEachRank).map((key) => {
+        let transformedKey = key.toUpperCase(); // 영어 소문자를 대문자로 변환
+        transformedKey = transformedKey.replace('PLUS', '+'); // 'plus'를 '+'로 바꾸기
+        return transformedKey;
+      });
+      console.log(corporationRanks);
       const gradeLabels = Object.values(filteredEachRank);
       setseriesForGrade(gradeLabels);
       setStockInfo(response.data.data.portfolio_bundle);
