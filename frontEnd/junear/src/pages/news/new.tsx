@@ -9,7 +9,7 @@ function News() {
   return (
     <>
       <div className="col-span-3 mt-[50px]"></div>
-      <div className="col-start-1 col-end-3 ml-[5px] mt-[20px]">
+      <div className="col-start-1 col-end-13 ml-[5px] mt-[20px]">
         <p className="text-white font-bold text-[28px] text-left">산업별 뉴스</p>
       </div>
       <div className="col-start-1 col-end-13 mt-[10px] h-[70px] bg-zinc-700 rounded-[15px] overflow-hidden">
